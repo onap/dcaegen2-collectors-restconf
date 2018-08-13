@@ -1,0 +1,60 @@
+<!--
+  ~ Copyright (c) 2018. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+  ~ Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+  ~ Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+  ~ Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+  ~ Vestibulum commodo. Ut rhoncus gravida arcu.
+  -->
+<?xml version="1.0" encoding="UTF-8"?>
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <!-- <profiles>
+         <profile>
+             <id>open-ecomp</id>
+             <activation>
+                 <activeByDefault>true</activeByDefault>
+             </activation>
+             <repositories>
+                 <repository>
+                     <id>osecomp-nexus-releases</id>
+                     <name>OSECOMP Release Repository</name>
+                     <url>https://ecomp-nexus:8443/repository/maven-releases</url>
+                 </repository>
+                 <repository>
+                     <id>osecomp-nexus-snapshots</id>
+                     <name>OSECOMP Snapshot Repository</name>
+                     <url>https://ecomp-nexus:8443/repository/maven-snapshots</url>
+                 </repository>
+                 <repository>
+                     <id>eclipse</id>
+                     <url>https://repo.eclipse.org/content/repositories/releases</url>
+                     <releases>
+                         <enabled>true</enabled>
+                         <updatePolicy>daily</updatePolicy>
+                     </releases>
+                     <snapshots>
+                         <enabled>false</enabled>
+                     </snapshots>
+                 </repository>
+             </repositories>
+         </profile>
+
+     </profiles>
+ -->
+    <activeProfiles>
+        <activeProfile>docker.io</activeProfile>
+    </activeProfiles>
+
+    <servers>
+        <server>
+            <id>docker-hub</id>
+            <username>rama471</username>
+            <password>RamaSari@455</password>
+        </server>
+
+    </servers>
+
+</settings>
