@@ -1,0 +1,12 @@
+{
+  "channels": [
+    {
+      "name": "route_failure",
+      "cambria.topic": "unauthenticated.DCAE_RESTCONF_COL_OUTPUT",
+      "class": "HpCambriaOutputStream",
+      "stripHpId": "true",
+      "type": "out",
+      "cambria.hosts": "onap-message-router"
+    }
+  ]
+}
