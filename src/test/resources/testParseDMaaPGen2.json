@@ -1,0 +1,12 @@
+{
+  "event-segments-with-port": {
+    "dmaap_info": {
+      "topic_url": "http://UEBHOST:3904/events/DCAE-REST-CONF-COLLECTOR-EVENTS-DEV"
+    }
+  },
+  "other-segments-without-ports": {
+    "dmaap_info": {
+      "topic_url": "http://UEBHOST:3904/somethingHere/DCAE-REST-CONF-COLLECTOR-EVENTS-DEV"
+    }
+  }
+}
