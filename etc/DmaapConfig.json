@@ -1,0 +1,12 @@
+{
+  "channels": [
+    {
+      "name": "ves_fault",
+      "cambria.topic": "unauthenticated.SEC_FAULT_OUTPUT",
+      "class": "HpCambriaOutputStream",
+      "stripHpId": "true",
+      "type": "out",
+      "cambria.hosts": "onap-message-router"
+    }
+  ]
+}
