@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_cd19fe7a",
+        "filename": "etc/DmaapConfig.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 2081
+      },
+      "writtenOn": "2018-10-03T06:42:50Z",
+      "side": 1,
+      "message": "Initially we have used this topic because in Holmes also its referring the same topic and hence it made easy to perfrom integration test for CCVPN project.",
+      "parentUuid": "bada0100_f664d8e6",
+      "range": {
+        "startLine": 5,
+        "startChar": 40,
+        "endLine": 5,
+        "endChar": 56
+      },
+      "revId": "d681da70e0e3024a7f49219932cf9849e028013a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_9661ccd5",
         "filename": "etc/collector.properties",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2018-10-01T03:43:14Z",
       "side": 1,
       "message": "This config shouldn\u0027t apply for restconf I believe",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 223
+      },
+      "revId": "d681da70e0e3024a7f49219932cf9849e028013a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_2d20ca9a",
+        "filename": "etc/collector.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 2081
+      },
+      "writtenOn": "2018-10-03T06:42:50Z",
+      "side": 1,
+      "message": "This configuration is not using for restconf",
+      "parentUuid": "bada0100_9661ccd5",
       "range": {
         "startLine": 10,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bada0100_ed3962d9",
+        "filename": "pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 2081
+      },
+      "writtenOn": "2018-10-03T06:42:50Z",
+      "side": 1,
+      "message": "This issue has been fixed",
+      "parentUuid": "bada0100_b65e5011",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 47
+      },
+      "revId": "d681da70e0e3024a7f49219932cf9849e028013a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bada0100_569b64c9",
         "filename": "src/test/resources/testParseDMaaPCredentialsLegacy.json",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2018-10-01T03:43:14Z",
       "side": 1,
       "message": "change all topics here to restconf also",
+      "range": {
+        "startLine": 7,
+        "startChar": 24,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "d681da70e0e3024a7f49219932cf9849e028013a",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bada0100_ad335af5",
+        "filename": "src/test/resources/testParseDMaaPCredentialsLegacy.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 2081
+      },
+      "writtenOn": "2018-10-03T06:42:50Z",
+      "side": 1,
+      "message": "This issue has been fixed",
+      "parentUuid": "bada0100_569b64c9",
       "range": {
         "startLine": 7,
         "startChar": 24,
