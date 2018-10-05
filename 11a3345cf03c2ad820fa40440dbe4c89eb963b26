@@ -1,0 +1,8 @@
+Code-Review+1: Xin Miao <xin.miao@huawei.com>
+Code-Review+2: Vijay Venkatesh Kumar <vv770d@att.com>
+Verified+1: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-by: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-at: Fri, 05 Oct 2018 21:17:45 +0000
+Reviewed-on: https://gerrit.onap.org/r/66945
+Project: dcaegen2/collectors/restconf
+Branch: refs/heads/master
