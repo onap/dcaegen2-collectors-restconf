@@ -68,6 +68,10 @@ public class RestConfProcTest {
         p.put("sseConnectURL", "http://localhost:8080/ssevents");
         p.put("subscriberId", "networkId");
         p.put("responsePrefix", "restapi-result");
+        p.put("restapiUrl", "https://localhost:8080/restconf/operations/" +
+                "ietf-subscribed-notifications:establish-subscription");
+        p.put("restapiUser", "access");
+        p.put("restapiPassword", "abc@123");
 
         restConfProc.establishPersistentConnection(p, ctx);
         Thread.sleep(1000);

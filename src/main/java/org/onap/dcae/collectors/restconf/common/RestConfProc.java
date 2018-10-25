@@ -30,10 +30,17 @@ import org.onap.dcae.collectors.restconf.common.event.publishing.EventPublisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import java.nio.file.Paths;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -41,6 +48,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import static org.onap.dcae.collectors.restconf.common.RestapiCallNodeUtil.addAuthType;
+import static org.onap.dcae.collectors.restconf.common.RestapiCallNodeUtil.getParameters;
 
 public class RestConfProc {
 
@@ -72,6 +81,12 @@ public class RestConfProc {
         String respPrefix;
         String skipSending;
         String sseConnectUrl;
+        String restapiUser;
+        String restapiPassword;
+        String trustStoreFileName;
+        String trustStorePassword;
+        String keyStoreFileName;
+        String keyStorePassword;
         String[] currentConfigFile;
 
         currentConfigFile = settings.getStrings(Constants.KSETTING_DMAAPCONFIGS, Constants.KDEFAULT_DMAAPCONFIGS);
@@ -83,6 +98,12 @@ public class RestConfProc {
         respPrefix = settings.getString(Constants.KSETTING_RESP_PREFIX, null);
         skipSending = settings.getString(Constants.KSETTING_SKIP_SENDING, null);
         sseConnectUrl = settings.getString(Constants.KSETTING_SSE_CONNECT_URL, null);
+        restapiUser = settings.getString(Constants.KSETTING_UNAME, null);
+        restapiPassword = settings.getString(Constants.KSETTING_PASSWORD, null);
+        trustStoreFileName = settings.getString(Constants.KSETTING_TRUST_STORE_FILENAME, null);
+        trustStorePassword = settings.getString(Constants.KSETTING_TRUST_STORE_PASSWORD, null);
+        keyStoreFileName = settings.getString(Constants.KSETTING_KEY_STORE_FILENAME, null);
+        keyStorePassword = settings.getString(Constants.KSETTING_KEY_STORE_PASSWORD, null);
         format = settings.getString(Constants.KSETTING_FORMAT, null);
         streamID = "route=route_failure";
 
@@ -93,6 +114,12 @@ public class RestConfProc {
         paraMap.put(Constants.KSETTING_SKIP_SENDING, skipSending);
         paraMap.put(Constants.KSETTING_SSE_CONNECT_URL, sseConnectUrl);
         paraMap.put(Constants.KSETTING_FORMAT, format);
+        paraMap.put(Constants.KSETTING_UNAME, restapiUser);
+        paraMap.put(Constants.KSETTING_PASSWORD, restapiPassword);
+        paraMap.put(Constants.KSETTING_TRUST_STORE_FILENAME, trustStoreFileName);
+        paraMap.put(Constants.KSETTING_TRUST_STORE_PASSWORD, trustStorePassword);
+        paraMap.put(Constants.KSETTING_KEY_STORE_FILENAME, keyStoreFileName);
+        paraMap.put(Constants.KSETTING_KEY_STORE_PASSWORD, keyStorePassword);
 
         ctx.setAttribute("prop.encoding-json", "encoding-json");
         ctx.setAttribute("restapi-result.response-code", "200");
@@ -120,11 +147,40 @@ public class RestConfProc {
      *
      * @param paramMap holds the input configuration
      * @param ctx      restconf context
+     * @param url      url to send subscription request
      * @throws Exception exception
      */
-    public void establishSubscription(Map<String, String> paramMap, RestConfContext ctx) throws Exception {
+    public void establishSubscription(Map<String, String> paramMap,
+                                      RestConfContext ctx,
+                                      String url) throws Exception {
 
         RestapiCallNode restApiCallNode = new RestapiCallNode();
+
+        Map<String, String> params = new HashMap<>();
+        params.put("restapiUrl", "https://" + url + "/controller/v2/tokens");
+        params.put("httpMethod", "post");
+        params.put("templateFileName", "./etc/access-token.json");
+        params.put("skipSending", "false");
+        params.put("format", "json");
+        params.put("restapiUser", "test123");
+        params.put("restapiPassword", "Changeme_123");
+        params.put(Constants.KSETTING_TRUST_STORE_FILENAME,
+                   paramMap.get(Constants.KSETTING_TRUST_STORE_FILENAME));
+        params.put(Constants.KSETTING_TRUST_STORE_PASSWORD, "adminadmin");
+        params.put(Constants.KSETTING_KEY_STORE_FILENAME,
+                   paramMap.get(Constants.KSETTING_KEY_STORE_FILENAME));
+        params.put(Constants.KSETTING_KEY_STORE_PASSWORD, "adminadmin");
+
+        restApiCallNode.sendRequest(params, ctx, null);
+        log.debug("ctx response" + ctx);
+        String httpResponse = ctx.getAttribute("httpResponse");
+        JSONObject jsonObj = new JSONObject(httpResponse);
+        log.debug("http response" + httpResponse);
+        JSONObject data = jsonObj.getJSONObject("data");
+        String tokenId = data.get("token_id").toString();
+
+        paramMap.put("customHttpHeaders", "X-ACCESS-TOKEN=" + tokenId);
+        paramMap.put("TokenId", tokenId);
 
         restApiCallNode.sendRequest(paramMap, ctx, null);
 
@@ -146,7 +202,7 @@ public class RestConfProc {
 
             String url = paramMap.get(Constants.KSETTING_SSE_CONNECT_URL);
 
-            PersistentConnection connection = new PersistentConnection(url, ctx);
+            PersistentConnection connection = new PersistentConnection(url, ctx, paramMap);
             runnableInfo.put(id, connection);
             executor.execute(connection);
         } else {
@@ -177,27 +233,39 @@ public class RestConfProc {
     public class PersistentConnection implements Runnable {
         private String url;
         private RestConfContext ctx;
+        private Map<String, String> paramMap;
         private volatile boolean running = true;
 
-        public PersistentConnection(String url, RestConfContext ctx) {
+        public PersistentConnection(String url, RestConfContext ctx, Map<String, String> paramMap) {
             this.url = url;
             this.ctx = ctx;
+            this.paramMap = paramMap;
         }
 
         @Override
         public void run() {
-            Client client = ClientBuilder.newBuilder()
-                    .register(SseFeature.class).build();
-            WebTarget target = client.target(url);
-            EventSource eventSource = EventSource.target(target).build();
+            Parameters p = null;
+            try {
+                p = getParameters(paramMap);
+            } catch (Exception e) {
+                log.error("Exception occured!", e);
+                Thread.currentThread().interrupt();
+            }
+
+            Client client =  ignoreSslClient().register(SseFeature.class);
+            WebTarget target = addAuthType(client, p).target(url);
+            AdditionalHeaderWebTarget newTarget = new AdditionalHeaderWebTarget(target, paramMap.get("TokenId"));
+            EventSource eventSource = EventSource.target(newTarget).build();
             eventSource.register(new DataChangeEventListener(ctx));
             eventSource.open();
-            log.info("Connected to SSE source");
+            log.debug("Connected to SSE source");
             while (running) {
                 try {
+                    log.debug("SSE state " + eventSource.isOpen());
                     Thread.sleep(5000);
                 } catch (InterruptedException ie) {
-                    log.info("Exception: " + ie.getMessage());
+                    log.debug("Exception: " + ie.getMessage());
+                    Thread.currentThread().interrupt();
                 }
             }
             eventSource.close();
@@ -218,6 +286,32 @@ public class RestConfProc {
             }
         }
         log.debug("RestConfCollector.handleEvents:EVENTS has been published successfully!");
+    }
+
+    private Client ignoreSslClient() {
+        SSLContext sslcontext = null;
+
+        try {
+            sslcontext = SSLContext.getInstance("TLS");
+            sslcontext.init(null, new TrustManager[]{new X509TrustManager() {
+                @Override
+                public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+                }
+
+                @Override
+                public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+                }
+
+                @Override
+                public X509Certificate[] getAcceptedIssuers() {
+                    return new X509Certificate[0];
+                }
+            } }, new java.security.SecureRandom());
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
+            throw new IllegalStateException(e);
+        }
+
+        return ClientBuilder.newBuilder().sslContext(sslcontext).hostnameVerifier((s1, s2) -> true).build();
     }
 }
 

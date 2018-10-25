@@ -35,4 +35,10 @@ public class Constants {
     public static final String OUTPUT_IDENTIFIER = "restapi-result.ietf-subscribed-notifications:output.identifier";
     public static final String RESPONSE_CODE_200 = "200";
     public static final String KCONFIG = "c";
+    public static final String KSETTING_UNAME = "restapiUser";
+    public static final String KSETTING_PASSWORD = "restapiPassword";
+    public static final String KSETTING_TRUST_STORE_FILENAME = "trustStoreFileName";
+    public static final String KSETTING_TRUST_STORE_PASSWORD = "trustStorePassword";
+    public static final String KSETTING_KEY_STORE_FILENAME = "keyStoreFileName";
+    public static final String KSETTING_KEY_STORE_PASSWORD = "keyStorePassword";
 }

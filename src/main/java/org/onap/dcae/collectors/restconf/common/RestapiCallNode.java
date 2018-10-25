@@ -54,10 +54,11 @@ import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
+import static org.onap.dcae.collectors.restconf.common.RestapiCallNodeUtil.getParameters;
+import static org.onap.dcae.collectors.restconf.common.RestapiCallNodeUtil.parseParam;
 
 public class RestapiCallNode {
     private static final Logger log = LoggerFactory.getLogger(RestapiCallNode.class);
@@ -155,96 +156,6 @@ public class RestapiCallNode {
         if (r != null && r.code >= 300) {
             throw new Exception(String.valueOf(r.code) + ": " + r.message);
         }
-    }
-
-    protected Parameters getParameters(Map<String, String> paramMap) throws Exception {
-        Parameters p = new Parameters();
-        p.templateFileName = parseParam(paramMap, "templateFileName", false, null);
-        p.requestBody = parseParam(paramMap, "requestBody", false, null);
-        p.restapiUrl = parseParam(paramMap, "restapiUrl", true, null);
-        validateUrl(p.restapiUrl);
-        p.restapiUser = parseParam(paramMap, "restapiUser", false, null);
-        p.restapiPassword = parseParam(paramMap, "restapiPassword", false, null);
-        p.oAuthConsumerKey = parseParam(paramMap, "oAuthConsumerKey", false, null);
-        p.oAuthConsumerSecret = parseParam(paramMap, "oAuthConsumerSecret", false, null);
-        p.oAuthSignatureMethod = parseParam(paramMap, "oAuthSignatureMethod", false, null);
-        p.oAuthVersion = parseParam(paramMap, "oAuthVersion", false, null);
-        p.contentType = parseParam(paramMap, "contentType", false, null);
-        p.format = Format.fromString(parseParam(paramMap, "format", false, "json"));
-        p.authtype = AuthType.fromString(parseParam(paramMap, "authType", false, "unspecified"));
-        p.httpMethod = HttpMethod.fromString(parseParam(paramMap, "httpMethod", false, "post"));
-        p.responsePrefix = parseParam(paramMap, "responsePrefix", false, null);
-        p.listNameList = getListNameList(paramMap);
-        String skipSendingStr = paramMap.get("skipSending");
-        p.skipSending = "true".equalsIgnoreCase(skipSendingStr);
-        p.convertResponse = Boolean.valueOf(parseParam(paramMap, "convertResponse", false, "true"));
-        p.trustStoreFileName = parseParam(paramMap, "trustStoreFileName", false, null);
-        p.trustStorePassword = parseParam(paramMap, "trustStorePassword", false, null);
-        p.keyStoreFileName = parseParam(paramMap, "keyStoreFileName", false, null);
-        p.keyStorePassword = parseParam(paramMap, "keyStorePassword", false, null);
-        p.ssl = p.trustStoreFileName != null && p.trustStorePassword != null && p.keyStoreFileName != null &&
-                p.keyStorePassword != null;
-        p.customHttpHeaders = parseParam(paramMap, "customHttpHeaders", false, null);
-        p.partner = parseParam(paramMap, "partner", false, null);
-        p.dumpHeaders = Boolean.valueOf(parseParam(paramMap, "dumpHeaders", false, null));
-        p.returnRequestPayload = Boolean.valueOf(parseParam(paramMap, "returnRequestPayload", false, null));
-        return p;
-    }
-
-    private void validateUrl(String restapiUrl) throws Exception {
-        try {
-            URI.create(restapiUrl);
-        } catch (IllegalArgumentException e) {
-            throw new Exception("Invalid input of url " + e.getLocalizedMessage(), e);
-        }
-    }
-
-    protected Set<String> getListNameList(Map<String, String> paramMap) {
-        Set<String> ll = new HashSet<>();
-        for (Map.Entry<String, String> entry : paramMap.entrySet())
-            if (entry.getKey().startsWith("listName")) {
-                ll.add(entry.getValue());
-            }
-        return ll;
-    }
-
-    protected String parseParam(Map<String, String> paramMap, String name, boolean required, String def)
-            throws Exception {
-        String s = paramMap.get(name);
-
-        if (s == null || s.trim().length() == 0) {
-            if (!required) {
-                return def;
-            }
-            throw new Exception("Parameter " + name + " is required in RestapiCallNode");
-        }
-
-        s = s.trim();
-        StringBuilder value = new StringBuilder();
-        int i = 0;
-        int i1 = s.indexOf('%');
-        while (i1 >= 0) {
-            int i2 = s.indexOf('%', i1 + 1);
-            if (i2 < 0) {
-                break;
-            }
-
-            String varName = s.substring(i1 + 1, i2);
-            String varValue = System.getenv(varName);
-            if (varValue == null) {
-                varValue = "%" + varName + "%";
-            }
-
-            value.append(s.substring(i, i1));
-            value.append(varValue);
-
-            i = i2 + 1;
-            i1 = s.indexOf('%', i);
-        }
-        value.append(s.substring(i));
-
-        log.info("Parameter {}: [{}]", name, value);
-        return value.toString();
     }
 
     protected String buildXmlJsonRequest(RestConfContext ctx, String template, Format format) throws Exception {

@@ -49,13 +49,19 @@ public class RestConfCollector {
             Map<String, String> paraMap = restConfProc.getParaMap();
             String restApiURL = paraMap.get(Constants.KSETTING_REST_API_URL);
             String sseEventsURL = paraMap.get(Constants.KSETTING_SSE_CONNECT_URL);
+            String trustStoreFileName = paraMap.get(Constants.KSETTING_TRUST_STORE_FILENAME);
+            String keyStoreFileName = paraMap.get(Constants.KSETTING_KEY_STORE_FILENAME);
             String[] listRestApiURL = restApiURL.split(";");
             String[] listSseEventsURL = sseEventsURL.split(";");
+            String[] listTrustStoreFileName = trustStoreFileName.split(";");
+            String[] listKeyStoreFileName = keyStoreFileName.split(";");
             for (int i = 0; i < listRestApiURL.length; i++) {
-                paraMap.put(Constants.KSETTING_REST_API_URL, "http://" + listRestApiURL[i] +
-                        "/RestConfServer/rest/operations/establish-subscription");
+                paraMap.put(Constants.KSETTING_REST_API_URL, "https://" + listRestApiURL[i] +
+                        "/restconf/operations/ietf-subscribed-notifications:establish-subscription");
                 paraMap.put(Constants.KSETTING_SSE_CONNECT_URL, listSseEventsURL[i]);
-                restConfProc.establishSubscription(paraMap, restConfProc.getCtx());
+                paraMap.put(Constants.KSETTING_TRUST_STORE_FILENAME, listTrustStoreFileName[i]);
+                paraMap.put(Constants.KSETTING_KEY_STORE_FILENAME, listKeyStoreFileName[i]);
+                restConfProc.establishSubscription(paraMap, restConfProc.getCtx(), listRestApiURL[i]);
             }
 
         } catch (Exception e) {

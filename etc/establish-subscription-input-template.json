@@ -1,5 +1,5 @@
 {
-  "ietf-subscribed-notification:input": {
-    "encoding": "encoding-json"
+  "ietf-subscribed-notifications:input": {
+    "encoding": "encode-json"
   }
 }
