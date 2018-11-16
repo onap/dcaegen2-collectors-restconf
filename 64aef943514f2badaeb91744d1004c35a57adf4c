@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9adffdf1_7249a0cf",
+        "filename": "etc/collector.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2018-11-16T00:20:53Z",
+      "side": 1,
+      "message": "clear text password should be avoided. This will be flagged by security; password MUST be stored as iterated hashes with a per-user salt",
+      "range": {
+        "startLine": 24,
+        "startChar": 16,
+        "endLine": 24,
+        "endChar": 26
+      },
+      "revId": "64aef943514f2badaeb91744d1004c35a57adf4c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_321318ba",
+        "filename": "etc/collector.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2018-11-16T00:20:53Z",
+      "side": 1,
+      "message": "same comment as earlier",
+      "range": {
+        "startLine": 26,
+        "startChar": 19,
+        "endLine": 26,
+        "endChar": 29
+      },
+      "revId": "64aef943514f2badaeb91744d1004c35a57adf4c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9adffdf1_52181cd3",
+        "filename": "etc/collector.properties",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2018-11-16T00:20:53Z",
+      "side": 1,
+      "message": "same comment as earlier",
+      "range": {
+        "startLine": 28,
+        "startChar": 17,
+        "endLine": 28,
+        "endChar": 27
+      },
+      "revId": "64aef943514f2badaeb91744d1004c35a57adf4c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
