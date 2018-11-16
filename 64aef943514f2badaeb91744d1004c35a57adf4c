@@ -1,0 +1,10 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Gaurav Agrawal <gaurav.agrawal@huawei.com>
+Code-Review+1: Xin Miao <xin.miao@huawei.com>
+Code-Review+1: Rama SubbaReddy <rama.subba.reddy.s@huawei.com>
+Code-Review+2: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-by: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-at: Fri, 16 Nov 2018 00:20:57 +0000
+Reviewed-on: https://gerrit.onap.org/r/71208
+Project: dcaegen2/collectors/restconf
+Branch: refs/heads/master
