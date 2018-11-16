@@ -29,25 +29,27 @@ import java.util.Map;
 class AdditionalHeaderWebTarget implements WebTarget {
     private WebTarget base;
     private String token;
+    private String headerName;
 
-    public AdditionalHeaderWebTarget(WebTarget target, String token) {
+    public AdditionalHeaderWebTarget(WebTarget target, String token, String headerName) {
         base = target;
         this.token = token;
+        this.headerName = headerName;
     }
 
     @Override
     public Invocation.Builder request() {
-        return base.request().header("X-ACCESS-TOKEN", token);
+        return base.request().header(headerName, token);
     }
 
     @Override
     public Invocation.Builder request(String... acceptedResponseTypes) {
-        return base.request().header("X-ACCESS-TOKEN", token);
+        return base.request().header(headerName, token);
     }
 
     @Override
     public Invocation.Builder request(MediaType... acceptedResponseTypes) {
-        return base.request().header("X-ACCESS-TOKEN", token);
+        return base.request().header(headerName, token);
     }
 
     @Override

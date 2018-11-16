@@ -36,6 +36,7 @@ import javax.net.ssl.X509TrustManager;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.HttpHeaders;
 import java.nio.file.Paths;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -47,9 +48,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.Base64;
 
-import static org.onap.dcae.collectors.restconf.common.RestapiCallNodeUtil.addAuthType;
 import static org.onap.dcae.collectors.restconf.common.RestapiCallNodeUtil.getParameters;
+import static org.onap.dcae.collectors.restconf.common.RestapiCallNodeUtil.addAuthType;
 
 public class RestConfProc {
 
@@ -171,16 +173,19 @@ public class RestConfProc {
                    paramMap.get(Constants.KSETTING_KEY_STORE_FILENAME));
         params.put(Constants.KSETTING_KEY_STORE_PASSWORD, "adminadmin");
 
-        restApiCallNode.sendRequest(params, ctx, null);
-        log.debug("ctx response" + ctx);
-        String httpResponse = ctx.getAttribute("httpResponse");
-        JSONObject jsonObj = new JSONObject(httpResponse);
-        log.debug("http response" + httpResponse);
-        JSONObject data = jsonObj.getJSONObject("data");
-        String tokenId = data.get("token_id").toString();
-
-        paramMap.put("customHttpHeaders", "X-ACCESS-TOKEN=" + tokenId);
-        paramMap.put("TokenId", tokenId);
+        String httpResponse = null;
+        try {
+            restApiCallNode.sendRequest(params, ctx, null);
+            httpResponse = ctx.getAttribute("httpResponse");
+            JSONObject jsonObj = new JSONObject(httpResponse);
+            JSONObject data = jsonObj.getJSONObject("data");
+            String tokenId = data.get("token_id").toString();
+            paramMap.put("customHttpHeaders", "X-ACCESS-TOKEN=" + tokenId);
+            paramMap.put("TokenId", tokenId);
+        } catch (Exception e) {
+            log.info("Access token is not supported" + e.getMessage());
+            log.info("http response" + httpResponse);
+        }
 
         restApiCallNode.sendRequest(paramMap, ctx, null);
 
@@ -254,7 +259,13 @@ public class RestConfProc {
 
             Client client =  ignoreSslClient().register(SseFeature.class);
             WebTarget target = addAuthType(client, p).target(url);
-            AdditionalHeaderWebTarget newTarget = new AdditionalHeaderWebTarget(target, paramMap.get("TokenId"));
+            String token = paramMap.get("TokenId");
+            String headerName = "X-ACCESS-TOKEN";
+            if (token == null) {
+                headerName = HttpHeaders.AUTHORIZATION;
+                token = getAuthorizationToken(p.restapiUser, p.restapiPassword);
+            }
+            AdditionalHeaderWebTarget newTarget = new AdditionalHeaderWebTarget(target, token, headerName);
             EventSource eventSource = EventSource.target(newTarget).build();
             eventSource.register(new DataChangeEventListener(ctx));
             eventSource.open();
@@ -271,6 +282,11 @@ public class RestConfProc {
             eventSource.close();
             log.info("Closed connection to SSE source");
         }
+    }
+
+    private String getAuthorizationToken(String userName, String password) {
+        return "Basic " + Base64.getEncoder().encodeToString((
+                userName + ":" + password).getBytes());
     }
 
     /**
