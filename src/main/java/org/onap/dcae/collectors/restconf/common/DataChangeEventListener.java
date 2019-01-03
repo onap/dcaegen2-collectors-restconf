@@ -45,7 +45,7 @@ public class DataChangeEventListener implements EventListener {
         try {
             RestConfProc.handleEvents(jsonArrayMod);
         } catch (Exception e) {
-            e.printStackTrace();
+           log.error("Error occured in DataChangeEventListener.onEvent"+e);
         }
     }
 }
