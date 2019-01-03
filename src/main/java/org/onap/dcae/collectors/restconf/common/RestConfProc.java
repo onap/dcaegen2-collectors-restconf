@@ -263,7 +263,9 @@ public class RestConfProc {
             String headerName = "X-ACCESS-TOKEN";
             if (token == null) {
                 headerName = HttpHeaders.AUTHORIZATION;
-                token = getAuthorizationToken(p.restapiUser, p.restapiPassword);
+                if(null!=p) {
+                	token = getAuthorizationToken(p.restapiUser, p.restapiPassword);
+                }
             }
             AdditionalHeaderWebTarget newTarget = new AdditionalHeaderWebTarget(target, token, headerName);
             EventSource eventSource = EventSource.target(newTarget).build();
