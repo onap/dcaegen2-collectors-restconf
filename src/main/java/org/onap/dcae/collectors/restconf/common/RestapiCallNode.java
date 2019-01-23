@@ -115,7 +115,7 @@ public class RestapiCallNode {
 
             log.error("Error sending the request: " + e.getMessage(), e);
             String prefix = parseParam(paramMap, "responsePrefix", false, null);
-            if (retryPolicy == null || shouldRetry == false) {
+            if (null == retryPolicy || !shouldRetry) {
                 setFailureResponseStatus(ctx, prefix, e.getMessage(), r);
             } else {
                 if (retryCount == null) {
@@ -183,7 +183,6 @@ public class RestapiCallNode {
 
             String var1 = template.substring(i1 + 2, i2);
             String value1 = format == Format.XML ? XmlJsonUtil.getXml(mm, var1) : XmlJsonUtil.getJson(mm, var1);
-            // log.info(" " + var1 + ": " + value1);
             if (value1 == null || value1.trim().length() == 0) {
                 // delete the whole element (line)
                 int i3 = template.lastIndexOf('\n', i1);
