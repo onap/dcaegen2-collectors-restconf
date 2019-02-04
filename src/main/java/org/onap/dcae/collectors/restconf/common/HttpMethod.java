@@ -27,19 +27,19 @@ public enum HttpMethod {
         if (s == null) {
             return null;
         }
-        if (s.equalsIgnoreCase("get")) {
+        if ("get".equalsIgnoreCase(s)) {
             return GET;
         }
-        if (s.equalsIgnoreCase("post")) {
+        if ("post".equalsIgnoreCase(s)) {
             return POST;
         }
-        if (s.equalsIgnoreCase("put")) {
+        if ("put".equalsIgnoreCase(s)) {
             return PUT;
         }
-        if (s.equalsIgnoreCase("delete")) {
+        if ("delete".equalsIgnoreCase(s)) {
             return DELETE;
         }
-        if (s.equalsIgnoreCase("patch")) {
+        if ("patch".equalsIgnoreCase(s)) {
             return PATCH;
         }
         throw new IllegalArgumentException("Invalid value for HTTP Method: " + s);
