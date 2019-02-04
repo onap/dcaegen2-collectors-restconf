@@ -20,13 +20,9 @@
 
 package org.onap.dcae.collectors.restconf.common;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.HashMap;
 
 public class RetryPolicyStore {
-    private static final Logger log = LoggerFactory.getLogger(RetryPolicyStore.class);
 
     HashMap<String, RetryPolicy> retryPolicies;
     public String proxyServers;

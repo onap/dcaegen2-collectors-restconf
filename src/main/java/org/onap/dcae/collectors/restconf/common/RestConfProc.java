@@ -256,7 +256,6 @@ public class RestConfProc {
                 log.error("Exception occured!", e);
                 Thread.currentThread().interrupt();
             }
-
             Client client =  ignoreSslClient().register(SseFeature.class);
             WebTarget target = addAuthType(client, p).target(url);
             String token = paramMap.get("TokenId");

@@ -56,7 +56,7 @@ public class DMaaPEventPublisher implements EventPublisher {
 
     private void uncheckedSendEvent(JSONObject event, String domain, CambriaBatchingPublisher publisher)
             throws IOException {
-        System.out.println("printing publisher information" + publisher);
+        log.info("printing publisher information" + publisher);
         int pendingMsgs = publisher.send("MyPartitionKey", event.toString());
         if (pendingMsgs > PENDING_MESSAGE_LOG_THRESHOLD) {
             log.info("Pending messages count: " + pendingMsgs);

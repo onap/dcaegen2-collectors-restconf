@@ -24,6 +24,7 @@ import io.vavr.collection.Map;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 
+@FunctionalInterface
 public interface EventPublisher {
 
     static EventPublisher createPublisher(Logger outputLogger, Map<String, PublisherConfig> dMaaPConfig) {
