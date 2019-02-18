@@ -28,24 +28,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DataChangeEventListener implements EventListener {
-    private static final Logger log = LoggerFactory.getLogger(DataChangeEventListener.class);
-    private RestConfContext ctx;
+  private static final Logger log = LoggerFactory.getLogger(DataChangeEventListener.class);
+  private RestConfContext ctx;
 
-    public DataChangeEventListener(RestConfContext ctx) {
-        this.ctx = ctx;
-    }
+  public DataChangeEventListener(RestConfContext ctx) {
+    this.ctx = ctx;
+  }
 
-    @Override
-    public void onEvent(InboundEvent event) {
-        JSONArray jsonArrayMod;
-        log.info("On SSE Event is received");
-        String s = event.readData();
-        JSONObject jsonObj = new JSONObject(s);
-        jsonArrayMod = new JSONArray().put(jsonObj);
-        try {
-            RestConfProc.handleEvents(jsonArrayMod);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+  @Override
+  public void onEvent(InboundEvent event) {
+    JSONArray jsonArrayMod;
+    log.info("On SSE Event is received");
+    String s = event.readData();
+    JSONObject jsonObj = new JSONObject(s);
+    jsonArrayMod = new JSONArray().put(jsonObj);
+    try {
+      RestConfProc.handleEvents(jsonArrayMod);
+    } catch (Exception e) {
+      log.error("Error in DataChangeEventListener ", e.getMessage());
     }
+  }
 }
