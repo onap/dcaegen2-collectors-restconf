@@ -1,12 +1,12 @@
 {
   "channels": [
     {
-      "name": "route_failure",
-      "cambria.topic": "unauthenticated.DCAE_RESTCONF_COL_OUTPUT",
+      "name": "device-registration",
+      "cambria.topic": "unauthenticated.DCAE_RCC_OUTPUT",
       "class": "HpCambriaOutputStream",
       "stripHpId": "true",
       "type": "out",
-      "cambria.hosts": "onap-message-router"
+      "cambria.hosts": "119.3.84.152:30227:30227"
     }
   ]
 }

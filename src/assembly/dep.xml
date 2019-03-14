@@ -1,3 +1,21 @@
+<!--
+================================================================================
+Copyright (c) 2019 Huawei. All rights reserved.
+================================================================================
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+============LICENSE_END=========================================================
+-->
+
 <assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/2.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
@@ -13,15 +31,17 @@
             <directory>src/main/scripts</directory>
             <outputDirectory>bin</outputDirectory>
             <includes>
-                <include>**/*.*</include>
+                <include>**/*.sh</include>
             </includes>
             <fileMode>0755</fileMode>
             <lineEnding>unix</lineEnding>
         </fileSet>
+
         <fileSet>
             <directory>etc</directory>
             <outputDirectory>etc</outputDirectory>
         </fileSet>
+
         <fileSet>
             <directory>src/main/resources</directory>
             <includes>
@@ -30,6 +50,21 @@
             <outputDirectory>etc</outputDirectory>
         </fileSet>
 
+        <fileSet>
+            <directory>dpo/data-formats</directory>
+            <includes>
+                <include>**/*.json</include>
+            </includes>
+            <outputDirectory>specs</outputDirectory>
+        </fileSet>
+
+        <fileSet>
+            <directory>dpo/spec</directory>
+            <includes>
+                <include>**/*.json</include>
+            </includes>
+            <outputDirectory>specs</outputDirectory>
+        </fileSet>
     </fileSets>
 
     <dependencySets>
