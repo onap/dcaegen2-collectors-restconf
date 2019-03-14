@@ -1,0 +1,19 @@
+{
+  "input": {
+    "encoding": "encode-json",
+    "protocol": "sse",
+    "subscription" : [
+      {
+        "topic" : "resources",
+        "object-type-infos" : [
+          {
+            "object-type" : "onu",
+            "version" : "v1"
+          }
+        ],
+        "operation" : ["create"]
+      }
+    ]
+  }
+}
+
