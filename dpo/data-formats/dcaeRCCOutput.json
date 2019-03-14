@@ -1,0 +1,35 @@
+{
+  "self": {
+    "name": "DCAE_RCC_OUTPUT",
+    "version": "1.0.0",
+    "description": "teri format of the output CL event from DCAE to Policy"
+  },
+  "dataformatversion": "1.0.0",
+  "jsonschema": {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "RCC event Publish",
+    "type": "object",
+    "definitions": {
+      "ruleid": {
+        "description": "Rule id",
+        "type": "string"
+      },
+      "notification": {
+        "description": "Notification message",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "rule-id": {
+        "description": "Rule id to be used by VES mapper",
+        "type": "string",
+        "$ref": "#/definitions/ruleid"
+      },
+      "notification": {
+        "description": "Notification event",
+        "type": "object",
+        "$ref": "#/definitions/notification"
+      }
+    }
+  }
+}

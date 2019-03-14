@@ -1,4 +1,5 @@
 {
-  "userName" : "test123",
-  "password" : "Changeme_123"
+  "grantType" : "password",
+  "userName" : "tokenUser",
+  "value" : "Test_12345"
 }
