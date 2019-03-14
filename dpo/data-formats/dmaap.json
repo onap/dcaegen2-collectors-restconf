@@ -1,0 +1,10 @@
+{
+  "rcc_handle_out": {
+    "aaf_username": "USER",
+    "aaf_password": "PASSWORD",
+    "type": "message_router",
+    "dmaap_info": {
+      "topic_url": "https://HOSTNAME:3905/events/unauthenticated.DCAE_RCC_OUTPUT"
+    }
+  }
+}
