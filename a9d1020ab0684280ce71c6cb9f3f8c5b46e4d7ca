@@ -1,0 +1,671 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27d3faa1_c9930e7e",
+        "filename": "dpo/blueprints/k8s-rcc-policy.yaml-template",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "should be updated to R4 version; refer to current k8s blueprint under https://nexus.onap.org/#view-repositories;raw~browsestorage\norg.onap.dcaegen2.platform.blueprints/R4/blueprints/",
+      "range": {
+        "startLine": 26,
+        "startChar": 101,
+        "endLine": 26,
+        "endChar": 120
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a58fc46_2738b241",
+        "filename": "dpo/blueprints/k8s-rcc-policy.yaml-template",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "This port is already taken by DFC; change to 30416",
+      "range": {
+        "startLine": 56,
+        "startChar": 14,
+        "endLine": 56,
+        "endChar": 19
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3f591043_71e6a0ab",
+        "filename": "dpo/blueprints/k8s-rcc-policy.yaml-template",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "This will not be required as the hostname/port will be provided with notification_publish_url",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 37
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3872210_cfa4f612",
+        "filename": "dpo/blueprints/k8s-rcc-policy.yaml-template",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "Based on 3/15 discussion with BBS team, RESTConf collector wouldn\u0027t required deployed by CLAMP and policy_model is not required. Hence this node can be removed for Dublin.",
+      "range": {
+        "startLine": 129,
+        "startChar": 1,
+        "endLine": 133,
+        "endChar": 31
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b9400a04_11ba8763",
+        "filename": "dpo/spec/rcc_spec.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "Wont be needing this as separate application configuration. The dmaap host/port will be contained within URL part of stream publish.",
+      "range": {
+        "startLine": 142,
+        "startChar": 0,
+        "endLine": 157,
+        "endChar": 10
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6938750_0b54f44b",
+        "filename": "etc/DmaapConfig.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "duplicate port",
+      "range": {
+        "startLine": 9,
+        "startChar": 43,
+        "endLine": 9,
+        "endChar": 48
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d6ecc70_38595593",
+        "filename": "pom.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "why is the version jump? should be 1.0.1 if no api change; otherwise 1.1.0",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4e25f4d_dd547780",
+        "filename": "src/main/java/org/onap/dcae/common/Format.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "all existing files should have 2018-2019.",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a5384a2_a54f04c2",
+        "filename": "src/main/java/org/onap/dcae/common/HttpMethod.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2581a469_9f441683",
+        "filename": "src/main/java/org/onap/dcae/common/HttpResponse.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5099fe89_eeead670",
+        "filename": "src/main/java/org/onap/dcae/common/JsonParser.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "031636ef_b9cfeb97",
+        "filename": "src/main/java/org/onap/dcae/common/Parameters.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "530c723f_ebac2604",
+        "filename": "src/main/java/org/onap/dcae/common/RestConfContext.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08e94d92_3e85d5c1",
+        "filename": "src/main/java/org/onap/dcae/common/RestapiCallNode.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "672ca032_1d0d6ac1",
+        "filename": "src/main/java/org/onap/dcae/common/RestapiCallNodeUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2df4ffd_1fe7af86",
+        "filename": "src/main/java/org/onap/dcae/common/XmlJsonUtil.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9828771b_9e688617",
+        "filename": "src/main/java/org/onap/dcae/common/XmlParser.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e21055f_bc9cefe2",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/DMaaPConfigurationParser.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "321c3de7_31c84bc8",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/DMaaPEventPublisher.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d551b2ed_f0ccbce8",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/DMaaPPublishersBuilder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be7207e3_6c7dd8ac",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/DMaaPPublishersCache.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8706e47d_c32d3c5b",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/EventPublisher.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f564a7ce_1f26badf",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/PublisherConfig.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e782915_9de536e2",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/VavrUtils.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c30ba4c2_d1c47eec",
+        "filename": "src/main/java/org/onap/dcae/restapi/RccRestController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "112b65ba_858bde8f",
+        "filename": "src/main/scripts/docker_entry.sh",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 6,
+        "startChar": 16,
+        "endLine": 6,
+        "endChar": 20
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91bb70c7_59e78f08",
+        "filename": "src/test/java/org/onap/dcae/common/XmlParserTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e6d10c3_554d7c9d",
+        "filename": "src/test/java/org/onap/dcae/common/publishing/DMaaPEventPublisherTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "2018-2019",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d53f1edd_66274e35",
+        "filename": "version.properties",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-03-18T03:27:29Z",
+      "side": 1,
+      "message": "should match to what is pom.xml",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 7
+      },
+      "revId": "a9d1020ab0684280ce71c6cb9f3f8c5b46e4d7ca",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
