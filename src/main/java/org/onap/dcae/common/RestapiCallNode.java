@@ -265,7 +265,7 @@ public class RestapiCallNode {
             byte[] encoded = Files.readAllBytes(Paths.get(fileName));
             return new String(encoded, "UTF-8");
         } catch (IOException | SecurityException e) {
-            throw new Exception("Unable to read file " + fileName + e.getLocalizedMessage(), e);
+            throw new IOException("Unable to read file " + fileName + e.getLocalizedMessage(), e);
         }
     }
 
@@ -289,14 +289,14 @@ public class RestapiCallNode {
                 if (p.restapiUser != null && p.restapiPassword != null) {
                     client.addFilter(new HTTPDigestAuthFilter(p.restapiUser, p.restapiPassword));
                 } else {
-                    throw new Exception("oAUTH authentication type selected but all restapiUser and restapiPassword " +
+                    throw new SecurityException("oAUTH authentication type selected but all restapiUser and restapiPassword " +
                             "parameters doesn't exist", new Throwable());
                 }
             } else if (p.authtype == AuthType.BASIC) {
                 if (p.restapiUser != null && p.restapiPassword != null) {
                     client.addFilter(new HTTPBasicAuthFilter(p.restapiUser, p.restapiPassword));
                 } else {
-                    throw new Exception("oAUTH authentication type selected but all restapiUser and restapiPassword " +
+                    throw new SecurityException("oAUTH authentication type selected but all restapiUser and restapiPassword " +
                             "parameters doesn't exist", new Throwable());
                 }
             } else if (p.authtype == AuthType.OAUTH) {
@@ -310,7 +310,7 @@ public class RestapiCallNode {
                             .consumerSecret(p.oAuthConsumerSecret);
                     client.addFilter(new OAuthClientFilter(client.getProviders(), params, secrets));
                 } else {
-                    throw new Exception("oAUTH authentication type selected but all oAuthConsumerKey, voAuthConsumerSecret " +
+                    throw new SecurityException("oAUTH authentication type selected but all oAuthConsumerKey, voAuthConsumerSecret " +
                             "and oAuthSignatureMethod parameters doesn't exist", new Throwable());
                 }
             }

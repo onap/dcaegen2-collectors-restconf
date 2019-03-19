@@ -29,7 +29,6 @@ import org.onap.dcae.common.RestapiCallNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -100,6 +99,13 @@ public class AccessController {
     public RestapiCallNode getRestApiCallNode() {
         return restApiCallNode;
     }
+    public void setRestApiCallNode(RestapiCallNode node) {
+        this.restApiCallNode = node;
+    }
+
+    public void setExecutor(ExecutorService executor) {
+        this.executor = executor;
+    }
 
     private void fetch_TokenId() {
 
@@ -107,13 +113,13 @@ public class AccessController {
         modifyControllerParamMap(Constants.KSETTING_REST_API_URL, getUriMethod(this.properties.authorizationEnabled()) + cfgInfo.getController_restapiUrl() + cfgInfo.getController_accessTokenUrl());
         modifyControllerParamMap(Constants.KDEFAULT_TEMP_FILENAME, cfgInfo.getController_accessTokenFile());
         modifyControllerParamMap(Constants.KSETTING_REST_UNAME, cfgInfo.getController_restapiUser());
-        modifyControllerParamMap(Constants.KSETTING_REST_PASSWORD, cfgInfo.getController_restapiPassword());
+        modifyControllerParamMap(Constants.KSETTING_REST_PASSWD, cfgInfo.getController_restapiPassword());
         modifyControllerParamMap(Constants.KSETTING_HTTP_METHOD, cfgInfo.getController_accessTokenMethod());
 
         String httpResponse = null;
         try {
 
-            restApiCallNode.sendRequest(this.paraMap, ctx, null);
+            getRestApiCallNode().sendRequest(this.paraMap, ctx, null);
             String key = getControllerParamMapValue(Constants.KSETTING_RESP_PREFIX).concat(".").concat("httpResponse");
             httpResponse = ctx.getAttribute(key);
             log.info("httpResponse ", httpResponse + " key " + key);
@@ -136,7 +142,7 @@ public class AccessController {
         fetch_TokenId();
         printControllerParamMap();
         /* Create eventlist from properties */
-        JSONArray contollers = new JSONArray(properties.rcc_policy());
+        JSONArray contollers = new JSONArray(properties.rccPolicy());
         for (int i = 0; i < contollers.length(); i++) {
             JSONObject controller = contollers.getJSONObject(i);
             if (controller.get("controller_name").equals(this.getCfgInfo().getController_name())) {
@@ -188,7 +194,7 @@ public class AccessController {
         paraMap.put(Constants.KSETTING_FORMAT, "json");
 
         paraMap.put(Constants.KSETTING_REST_UNAME, null);
-        paraMap.put(Constants.KSETTING_REST_PASSWORD, null);
+        paraMap.put(Constants.KSETTING_REST_PASSWD, null);
         paraMap.put(Constants.KDEFAULT_REQUESTBODY, null);
 
         paraMap.put(Constants.KSETTING_AUTH_TYPE, "unspecified");
@@ -208,7 +214,7 @@ public class AccessController {
         paraMap.put(Constants.KSETTING_TRUST_STORE_PASSWORD, trustPassword);
         paraMap.put(Constants.KSETTING_KEY_STORE_FILENAME, this.getProperties().keystoreFileLocation());
         String KeyPassword = getKeyStorePassword(toAbsolutePath(this.getProperties().keystorePasswordFileLocation()));
-        paraMap.put(Constants.KSETTING_KEY_STORE_PASSWORD, KeyPassword);
+        paraMap.put(Constants.KSETTING_KEY_STORE_PASSWD, KeyPassword);
 
     }
 

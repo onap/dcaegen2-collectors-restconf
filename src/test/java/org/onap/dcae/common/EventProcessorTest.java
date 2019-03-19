@@ -33,12 +33,9 @@ import org.onap.dcae.ApplicationSettings;
 import org.onap.dcae.RestConfCollector;
 import org.onap.dcae.common.publishing.DMaaPConfigurationParser;
 import org.onap.dcae.common.publishing.EventPublisher;
-import org.onap.dcae.common.publishing.PublisherConfig;
 import org.onap.dcae.controller.AccessController;
 import org.onap.dcae.controller.PersistentEventConnection;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 
 import java.nio.file.Path;
@@ -87,8 +84,8 @@ public class EventProcessorTest {
         when(properties.truststorePasswordFileLocation()).thenReturn(TRUSTSTORE_PASSWORD_FILE.toString());
         when(properties.keystoreFileLocation()).thenReturn(KEYSTORE.toString());
         when(properties.keystorePasswordFileLocation()).thenReturn(KEYSTORE_PASSWORD_FILE.toString());
-        when(properties.rcc_keystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
-        when(properties.rcc_keystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
+        when(properties.rccKeystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
+        when(properties.rccKeystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
         JSONObject controller = new JSONObject("{\"controller_name\":\"AccessM&C\",\"controller_restapiUrl\":\"10.118.191.43:26335\",\"controller_restapiUser\":\"access\",\"controller_restapiPassword\":\"Huawei@123\",\"controller_accessTokenUrl\":\"/rest/plat/smapp/v1/oauth/token\",\"controller_accessTokenFile\":\"./etc/access-token.json\",\"controller_accessTokenMethod\":\"put\",\"controller_subsMethod\":\"post\",\"controller_subscriptionUrl\":\"/restconf/v1/operations/huawei-nce-notification-action:establish-subscription\",\"event_details\":[{\"event_name\":\"ONT_registration\",\"event_description\":\"ONTregistartionevent\",\"event_sseventUrlEmbed\":\"true\",\"event_sseventsField\":\"output.url\",\"event_sseventsUrl\":\"null\",\"event_subscriptionTemplate\":\"./etc/ont_registartion_subscription_template.json\",\"event_unSubscriptionTemplate\":\"./etc/ont_registartion_unsubscription_template.json\",\"event_ruleId\":\"777777777\"}]}");
         AccessController acClr = new AccessController(controller,
                 properties);

@@ -20,8 +20,6 @@
 
 package org.onap.dcae;
 
-import io.vavr.collection.Map;
-import org.json.JSONArray;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -31,29 +29,27 @@ import org.onap.dcae.common.RestConfContext;
 import org.onap.dcae.common.RestapiCallNode;
 import org.onap.dcae.controller.AccessController;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.ExecutorService;
+
 import org.json.JSONObject;
+import org.onap.dcae.controller.PersistentEventConnection;
 
 import static java.nio.file.Files.readAllBytes;
-import static java.util.Collections.singletonList;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static org.onap.dcae.CLIUtils.processCmdLine;
 
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class AccessControllerTest {
+
     @Mock
     private ApplicationSettings properties;
 
     @Mock
     private RestConfContext ctx;
 
-    @Mock
-    private RestapiCallNode restApiCallNode;
+
 
     protected static final Path RESOURCES = Paths.get("src", "test", "resources");
     protected static final Path KEYSTORE = Paths.get(RESOURCES.toString(), "keystore");
@@ -69,8 +65,8 @@ public class AccessControllerTest {
         when(properties.truststorePasswordFileLocation()).thenReturn(TRUSTSTORE_PASSWORD_FILE.toString());
         when(properties.keystoreFileLocation()).thenReturn(KEYSTORE.toString());
         when(properties.keystorePasswordFileLocation()).thenReturn(KEYSTORE_PASSWORD_FILE.toString());
-        when(properties.rcc_keystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
-        when(properties.rcc_keystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
+        when(properties.rccKeystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
+        when(properties.rccKeystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
         try {
             when(readAllBytes(null)).thenReturn("colletor".getBytes());
         } catch (Exception e){}
@@ -93,21 +89,26 @@ public class AccessControllerTest {
         when(properties.truststorePasswordFileLocation()).thenReturn(TRUSTSTORE_PASSWORD_FILE.toString());
         when(properties.keystoreFileLocation()).thenReturn(KEYSTORE.toString());
         when(properties.keystorePasswordFileLocation()).thenReturn(KEYSTORE_PASSWORD_FILE.toString());
-        when(properties.rcc_keystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
-        when(properties.rcc_keystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
-        when(properties.rcc_policy()).thenReturn("[{\"controller_name\":\"AccessM&C\",\"controller_restapiUrl\":\"10.118.191.43:26335\",\"controller_restapiUser\":\"access\",\"controller_restapiPassword\":\"Huawei@123\",\"controller_accessTokenUrl\":\"/rest/plat/smapp/v1/oauth/token\",\"controller_accessTokenFile\":\"./etc/access-token.json\",\"controller_accessTokenMethod\":\"put\",\"controller_subsMethod\":\"post\",\"controller_subscriptionUrl\":\"/restconf/v1/operations/huawei-nce-notification-action:establish-subscription\",\"event_details\":[{\"event_name\":\"ONT_registration\",\"event_description\":\"ONTregistartionevent\",\"event_sseventUrlEmbed\":\"true\",\"event_sseventsField\":\"output.url\",\"event_sseventsUrl\":\"null\",\"event_subscriptionTemplate\":\"./etc/ont_registartion_subscription_template.json\",\"event_unSubscriptionTemplate\":\"./etc/ont_registartion_unsubscription_template.json\",\"event_ruleId\":\"777777777\"}]}]");
+        when(properties.rccKeystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
+        when(properties.rccKeystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
+        when(properties.rccPolicy()).thenReturn("[{\"controller_name\":\"AccessM&C\",\"controller_restapiUrl\":\"10.118.191.43:26335\",\"controller_restapiUser\":\"access\",\"controller_restapiPassword\":\"Huawei@123\",\"controller_accessTokenUrl\":\"/rest/plat/smapp/v1/oauth/token\",\"controller_accessTokenFile\":\"./etc/access-token.json\",\"controller_accessTokenMethod\":\"put\",\"controller_subsMethod\":\"post\",\"controller_subscriptionUrl\":\"/restconf/v1/operations/huawei-nce-notification-action:establish-subscription\",\"event_details\":[{\"event_name\":\"ONT_registration\",\"event_description\":\"ONTregistartionevent\",\"event_sseventUrlEmbed\":\"true\",\"event_sseventsField\":\"output.url\",\"event_sseventsUrl\":\"null\",\"event_subscriptionTemplate\":\"./etc/ont_registartion_subscription_template.json\",\"event_unSubscriptionTemplate\":\"./etc/ont_registartion_unsubscription_template.json\",\"event_ruleId\":\"777777777\"}]}]");
         when(ctx.getAttribute("responsePrefix.httpResponse")).thenReturn("{\"accessSession\" : \"1234567890\",\"result\" : \"Ok\"}");
-        try {
-            doThrow(new Exception()).when(restApiCallNode).sendRequest(null, null, 0);
-        } catch (Exception e){}
-        try {
-            when(readAllBytes(null)).thenReturn("colletor".getBytes());
-        } catch (Exception e){}
 
-        JSONObject controller = new JSONObject("{\"controller_name\":\"AccessM&C\",\"controller_restapiUrl\":\"10.118.191.43:26335\",\"controller_restapiUser\":\"access\",\"controller_restapiPassword\":\"Huawei@123\",\"controller_accessTokenUrl\":\"/rest/plat/smapp/v1/oauth/token\",\"controller_accessTokenFile\":\"./etc/access-token.json\",\"controller_accessTokenMethod\":\"put\",\"controller_subsMethod\":\"post\",\"controller_subscriptionUrl\":\"/restconf/v1/operations/huawei-nce-notification-action:establish-subscription\",\"event_details\":[{\"event_name\":\"ONT_registration\",\"event_description\":\"ONTregistartionevent\",\"event_sseventUrlEmbed\":\"true\",\"event_sseventsField\":\"output.url\",\"event_sseventsUrl\":\"null\",\"event_subscriptionTemplate\":\"./etc/ont_registartion_subscription_template.json\",\"event_unSubscriptionTemplate\":\"./etc/ont_registartion_unsubscription_template.json\",\"event_ruleId\":\"777777777\"}]}");
         try {
+
+            RestapiCallNode restApiCallNode = Mockito.mock(RestapiCallNode.class);
+            Mockito.doNothing().when(restApiCallNode).sendRequest(any(), any(), any());
+            ExecutorService executor = Mockito.mock(ExecutorService.class);
+            Mockito.doNothing().when(executor).execute(any());
+            PersistentEventConnection conn = mock(PersistentEventConnection.class);
+            Mockito.doNothing().when(conn).run();
+            when(properties.authorizationEnabled()).thenReturn(true);
+            JSONObject controller = new JSONObject("{\"controller_name\":\"AccessM&C\",\"controller_restapiUrl\":\"10.118.191.43:26335\",\"controller_restapiUser\":\"access\",\"controller_restapiPassword\":\"Huawei@123\",\"controller_accessTokenUrl\":\"/rest/plat/smapp/v1/oauth/token\",\"controller_accessTokenFile\":\"./etc/access-token.json\",\"controller_accessTokenMethod\":\"put\",\"controller_subsMethod\":\"post\",\"controller_subscriptionUrl\":\"/restconf/v1/operations/huawei-nce-notification-action:establish-subscription\",\"event_details\":[{\"event_name\":\"ONT_registration\",\"event_description\":\"ONTregistartionevent\",\"event_sseventUrlEmbed\":\"true\",\"event_sseventsField\":\"output.url\",\"event_sseventsUrl\":\"null\",\"event_subscriptionTemplate\":\"./etc/ont_registartion_subscription_template.json\",\"event_unSubscriptionTemplate\":\"./etc/ont_registartion_unsubscription_template.json\",\"event_ruleId\":\"777777777\"}]}");
             AccessController acClr = new AccessController(controller,
                     properties);
+            acClr.setRestApiCallNode(restApiCallNode);
+            acClr.setExecutor(executor);
+            acClr.getCtx().setAttribute("responsePrefix.httpResponse","{\"accessSession\" : \"12dsaf4-2323-1231131232323\"}");
             acClr.activate();
         } catch (Exception e){}
     }

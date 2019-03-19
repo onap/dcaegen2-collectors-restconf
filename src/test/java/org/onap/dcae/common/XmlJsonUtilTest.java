@@ -43,6 +43,10 @@ public class XmlJsonUtilTest {
         mm.put("result.output", "xml2json");
         mm.put("result.[", "start");
         mm.put("result.]", "end");
+        mm.put("result.list", "<LIST>\n" +
+                "          <LITERAL VALUE=\"\"/>\n" +
+                "        </LIST>");
+
         try {
             String str = XmlJsonUtil.getXml(mm, var);
             assertEquals(str.startsWith("<"), true);
@@ -66,16 +70,19 @@ public class XmlJsonUtilTest {
 
     @Test
     public void removeEmptystructFromJson() {
-        String var = "{\n" +
-                "\t\"output\": \"xml2json\",\n" +
-                "\t\"time\": \"2018 12:04\",\n" +
-                "\t\"\": \"end\",\n" +
-                "\t\"status\": \"200\"\n" +
-                "}";
+        String var = "{\"name\":\"john\",\"age\":22,\"class\":\"mca\", \"data\":{}, \"arr\" : [\"some\" : {}]}";
         Map<String, String> mm = new HashMap<>();
 
         try {
             String str = XmlJsonUtil.removeEmptyStructJson(var);
+        }catch (Exception e) {}
+    }
+
+    @Test
+    public void removeLastCommaJson() {
+        String var2 ="{\"name\":\"john\",\"age\":22,\"class\":\"mca\", \"data\":{}, \"arr\" : [\"some\" : {},],}";
+        try {
+            String str = XmlJsonUtil.removeLastCommaJson(var2);
         }catch (Exception e) {}
     }
 }

@@ -51,8 +51,8 @@ public class TLSTestBase {
     protected static final Path KEYSTORE_PASSWORD_FILE = Paths.get(RESOURCES.toString(), "passwordfile");
     protected static final Path TRUSTSTORE = Paths.get(RESOURCES.toString(), "truststore");
     protected static final Path TRUSTSTORE_PASSWORD_FILE = Paths.get(RESOURCES.toString(), "trustpasswordfile");
-    protected static final Path RCC_KEYSTORE_PASSWORD_FILE = Paths.get(RESOURCES.toString(), "rcc_passwordfile");
-    protected static final Path RCC_KEYSTORE = Paths.get(RESOURCES.toString(), "sdnc.p12");
+    protected static final Path RCC_KEYSTORE_PASSWORD_FILE = Paths.get(RESOURCES.toString(), "passwordfile");
+    protected static final Path RCC_KEYSTORE = Paths.get(RESOURCES.toString(), "keystore");
 
     protected static abstract class ConfigurationBase {
         protected final ApplicationSettings settings = Mockito.mock(ApplicationSettings.class);

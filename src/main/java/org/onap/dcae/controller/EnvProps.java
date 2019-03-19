@@ -71,4 +71,9 @@ final class EnvProps {
                 Objects.equals(cbsName, envProps.cbsName) &&
                 Objects.equals(appName, envProps.appName);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(consulProtocol, consulHost, consulPort, cbsName, cbsProtocol, appName);
+    }
 }
