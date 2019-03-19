@@ -36,7 +36,7 @@ public class EventProcessor implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(EventProcessor.class);
 
     private Map<String, String[]> streamidHash = new HashMap<>();
-    public EventData ev;
+
     private EventPublisher eventPublisher;
 
     public EventProcessor(EventPublisher eventPublisher, Map<String, String[]> streamidHash) {
@@ -48,7 +48,7 @@ public class EventProcessor implements Runnable {
     @Override
     public void run() {
         try {
-
+            EventData ev;
             while (true) {
                 ev = RestConfCollector.fProcessingInputQueue.take();
 

@@ -35,6 +35,7 @@ import io.vavr.collection.Map;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Objects;
@@ -94,6 +95,12 @@ public class ApplicationSettingsTest {
 
         // then
         assertEquals("abc", actuallyOverridenByCLIParam);
+
+        configurationAccessor.reloadProperties();
+
+        Path p = configurationAccessor.configurationFileLocation();
+        boolean auth = configurationAccessor.clientTlsAuthenticationEnabled();
+        assertEquals(auth, false);
     }
 
     @Test
@@ -323,6 +330,68 @@ public class ApplicationSettingsTest {
         assertEquals(sanitizePath("etc/DmaapConfig.json"), cambriaConfigurationFileLocation);
     }
 
+    @Test
+    public void shouldrccKeystorePathExistDefault() throws IOException {
+        // when
+        String path= fromTemporaryConfiguration().rccKeystoreFileLocation();
+
+        // then
+        assertEquals(sanitizePath("etc/keystore"), path);
+    }
+
+    @Test
+    public void shouldrccKeystorePasswordExistDefault() throws IOException {
+        // when
+        String path= fromTemporaryConfiguration().rccKeystorePasswordFileLocation();
+
+        // then
+        assertEquals(sanitizePath("etc/rcc_passwordfile"), path);
+    }
+
+    @Test
+    public void shouldTruststorePathExistDefault() throws IOException {
+        // when
+        String path= fromTemporaryConfiguration().truststorePasswordFileLocation();
+
+        // then
+        assertEquals(sanitizePath("etc/trustpasswordfile"), path);
+    }
+
+    @Test
+    public void shouldTruststorePasswordExistDefault() throws IOException {
+        // when
+        String path= fromTemporaryConfiguration().truststoreFileLocation();
+
+        // then
+        assertEquals(sanitizePath("etc/truststore.onap.client.jks"), path);
+    }
+
+    @Test
+    public void shouldHaveKeyStoreAlias() throws IOException {
+        // when
+        String alias = fromTemporaryConfiguration().keystoreAlias();
+
+        // then
+        assertEquals(alias, "tomcat");
+    }
+
+    @Test
+    public void shouldHaveEmptyPolicy() throws IOException {
+        // when
+        String policy = fromTemporaryConfiguration().rccPolicy();
+
+        // then
+        assertEquals(policy, "");
+    }
+
+    @Test
+    public void shouldNotHaveStreamId() throws IOException {
+        // when
+        String stream = fromTemporaryConfiguration().dMaaPStreamsMapping();
+
+        // then
+        assertEquals(stream, null);
+    }
     private static ApplicationSettings fromTemporaryConfiguration(String... fileLines)
         throws IOException {
         File tempConfFile = File.createTempFile("doesNotMatter", "doesNotMatter");

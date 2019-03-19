@@ -61,7 +61,7 @@ public class DataChangeEventListener implements EventListener {
                 log.info("Received heart beat ");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info("InboundEvent event is malformed");
         }
     }
 

@@ -44,7 +44,7 @@ import java.util.Map;
 import static org.onap.dcae.common.RestapiCallNodeUtil.*;
 
 public class PersistentEventConnection implements Runnable {
-    public String event_name;
+    private String event_name;
     private String event_description;
     private boolean event_sseventUrlEmbed;
     private String event_sseventsField;
@@ -100,7 +100,7 @@ public class PersistentEventConnection implements Runnable {
                     + parentCtrllr.getCfgInfo().getController_subscriptionUrl());
             modifyEventParamMap(Constants.KDEFAULT_TEMP_FILENAME, event_subscriptionTemplate);
             modifyEventParamMap(Constants.KSETTING_REST_UNAME, parentCtrllr.getCfgInfo().getController_restapiUser());
-            modifyEventParamMap(Constants.KSETTING_REST_PASSWORD, parentCtrllr.getCfgInfo().getController_restapiPassword());
+            modifyEventParamMap(Constants.KSETTING_REST_PASSWD, parentCtrllr.getCfgInfo().getController_restapiPassword());
             modifyEventParamMap(Constants.KSETTING_HTTP_METHOD, parentCtrllr.getCfgInfo().getController_subsMethod());
 
             parentCtrllr.getRestApiCallNode().sendRequest(eventParaMap, ctx, null);

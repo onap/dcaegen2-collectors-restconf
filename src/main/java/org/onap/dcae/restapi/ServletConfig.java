@@ -62,10 +62,10 @@ public class ServletConfig implements WebServerFactoryCustomizer<ConfigurableSer
     private SSLContextCreator simpleHttpsContextBuilder() {
         log.info("Enabling SSL");
 
-        final Path keyStore = toAbsolutePath(properties.rcc_keystoreFileLocation());
+        final Path keyStore = toAbsolutePath(properties.rccKeystoreFileLocation());
         log.info("Using keyStore path: " + keyStore);
 
-        final Path keyStorePasswordLocation = toAbsolutePath(properties.rcc_keystorePasswordFileLocation());
+        final Path keyStorePasswordLocation = toAbsolutePath(properties.rccKeystorePasswordFileLocation());
         final String keyStorePassword = getKeyStorePassword(keyStorePasswordLocation);
         log.info("Using keyStore password from: " + keyStorePasswordLocation);
 

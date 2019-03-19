@@ -31,8 +31,8 @@ import org.springframework.http.HttpStatus;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
-import static org.onap.dcae.TLSTest.HttpsConfiguration.USERNAME;
 import static org.onap.dcae.TLSTest.HttpsConfiguration.PASSWORD;
+import static org.onap.dcae.TLSTest.HttpsConfiguration.USERNAME;
 
 public class TLSTest extends TLSTestBase {
 
@@ -51,6 +51,46 @@ public class TLSTest extends TLSTestBase {
         }
     }
 
+    @Nested
+    @Import(HttpsConfiguration.class)
+    class HttpsTest extends TestClassBase {
+
+
+        @Test
+        public void shouldHttpsRequestWithoutBasicAuthFail() {
+            assertThrows(Exception.class, this::makeHttpsRequest);
+        }
+
+        @Test
+        public void shouldHttpsRequestWithBasicAuthSucceed() {
+            assertEquals(HttpStatus.OK, makeHttpsRequestWithBasicAuth(USERNAME, PASSWORD).getStatusCode());
+        }
+    }
+
+    @Nested
+    @Import(HttpsConfigurationWithTLSAuthentication.class)
+    class HttpsWithTLSAuthenticationTest extends TestClassBase {
+
+        @Test
+        public void shouldHttpsRequestWithoutCertificateFail() {
+            assertThrows(Exception.class, this::makeHttpsRequest);
+        }
+    }
+
+    @Nested
+    @Import(HttpsConfigurationWithTLSAuthenticationAndBasicAuth.class)
+    class HttpsWithTLSAuthenticationAndBasicAuthTest extends TestClassBase {
+
+        @Test
+        public void shouldHttpsRequestWithoutBasicAuthFail() {
+            assertThrows(Exception.class, this::makeHttpsRequestWithClientCert);
+        }
+
+        @Test
+        public void shouldHttpsRequestWithBasicAuthSucceed() {
+            assertEquals(HttpStatus.OK, makeHttpsRequestWithClientCertAndBasicAuth(USERNAME, PASSWORD).getStatusCode());
+        }
+    }
 
     static class HttpConfiguration extends TLSTestBase.ConfigurationBase {
         @Override
@@ -66,8 +106,8 @@ public class TLSTest extends TLSTestBase {
         protected void configureSettings(ApplicationSettings settings) {
             when(settings.keystoreFileLocation()).thenReturn(KEYSTORE.toString());
             when(settings.keystorePasswordFileLocation()).thenReturn(KEYSTORE_PASSWORD_FILE.toString());
-            when(settings.rcc_keystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
-            when(settings.rcc_keystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
+            when(settings.rccKeystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
+            when(settings.rccKeystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
             when(settings.authorizationEnabled()).thenReturn(true);
             when(settings.validAuthorizationCredentials()).thenReturn(HashMap.of(USERNAME, "$2a$10$51tDgG2VNLde5E173Ay/YO.Fq.aD.LR2Rp8pY3QAKriOSPswvGviy"));
         }
@@ -80,6 +120,7 @@ public class TLSTest extends TLSTestBase {
             when(settings.authorizationEnabled()).thenReturn(false);
             when(settings.clientTlsAuthenticationEnabled()).thenReturn(true);
             when(settings.truststoreFileLocation()).thenReturn(TRUSTSTORE.toString());
+            when(settings.authorizationEnabled()).thenReturn(true);
             when(settings.truststorePasswordFileLocation()).thenReturn(TRUSTSTORE_PASSWORD_FILE.toString());
         }
     }

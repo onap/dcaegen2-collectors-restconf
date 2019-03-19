@@ -131,9 +131,9 @@ public class RestConfCollector {
     }
 
     private static void controllerConfig(ApplicationSettings properties) {
-        oplog.info("Policy received " + properties.rcc_policy());
-        if (!properties.rcc_policy().equals("")) {
-            JSONArray contollers = new JSONArray(properties.rcc_policy());
+        oplog.info("Policy received " + properties.rccPolicy());
+        if (!properties.rccPolicy().equals("")) {
+            JSONArray contollers = new JSONArray(properties.rccPolicy());
             for (int i = 0; i < contollers.length(); i++) {
                 JSONObject controller = contollers.getJSONObject(i);
                 oplog.info(" object " + controller.toString());
@@ -152,7 +152,7 @@ public class RestConfCollector {
 
     public static void handleEvents(EventData ev) throws Exception {
         if (!fProcessingInputQueue.offer(ev)) {
-            throw new Exception();
+            throw new InterruptedException();
         }
         log.info("RestConfCollector.handleEvents:EVENTS has been published successfully!");
     }
