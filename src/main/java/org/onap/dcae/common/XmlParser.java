@@ -59,7 +59,7 @@ public class XmlParser {
             InputStream in = new ByteArrayInputStream(s.getBytes());
             saxParser.parse(in, handler);
         } catch (ParserConfigurationException | IOException | SAXException | NumberFormatException e) {
-            throw new Exception("Unable to convert XML to properties" + e.getLocalizedMessage(), e);
+            throw new IOException("Unable to convert XML to properties" + e.getLocalizedMessage(), e);
         }
         return handler.getProperties();
     }

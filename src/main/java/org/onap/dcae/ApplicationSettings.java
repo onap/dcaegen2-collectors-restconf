@@ -120,11 +120,11 @@ public class ApplicationSettings {
         return httpsPort() > 0;
     }
 
-    public String rcc_keystorePasswordFileLocation() {
+    public String rccKeystorePasswordFileLocation() {
         return prependWithUserDirOnRelative(properties.getString("collector.keystore.passwordfile", "etc/rcc_passwordfile"));
     }
 
-    public String rcc_keystoreFileLocation() {
+    public String rccKeystoreFileLocation() {
         return prependWithUserDirOnRelative(properties.getString("collector.keystore.file.location", "etc/keystore"));
     }
 
@@ -163,7 +163,7 @@ public class ApplicationSettings {
         return prependWithUserDirOnRelative(properties.getString("collector.rcc.truststore.file.location", "etc/truststore.onap.client.jks"));
     }
 
-    public String rcc_policy() {
+    public String rccPolicy() {
         return properties.getString("rcc_policy", "");
     }
 
@@ -173,15 +173,6 @@ public class ApplicationSettings {
 
     public String dMaaPStreamsMapping() {
         return properties.getString("collector.rcc.dmaap.streamid", null);
-    }
-
-    private void updateProperty(String key, String value) {
-        if (properties.containsKey(key)) {
-            properties.setProperty(key, value);
-            log.info("Retrives property: " + key + "Value " + value);
-        } else {
-            properties.addProperty(key, value);
-        }
     }
 
     public void addOrUpdate(String key, String value) {

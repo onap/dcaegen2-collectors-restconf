@@ -31,8 +31,6 @@ import org.springframework.http.HttpStatus;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
-import static org.onap.dcae.TLSTest.HttpsConfiguration.USERNAME;
-import static org.onap.dcae.TLSTest.HttpsConfiguration.PASSWORD;
 
 public class TLSTest extends TLSTestBase {
 
@@ -66,8 +64,8 @@ public class TLSTest extends TLSTestBase {
         protected void configureSettings(ApplicationSettings settings) {
             when(settings.keystoreFileLocation()).thenReturn(KEYSTORE.toString());
             when(settings.keystorePasswordFileLocation()).thenReturn(KEYSTORE_PASSWORD_FILE.toString());
-            when(settings.rcc_keystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
-            when(settings.rcc_keystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
+            when(settings.rccKeystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
+            when(settings.rccKeystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
             when(settings.authorizationEnabled()).thenReturn(true);
             when(settings.validAuthorizationCredentials()).thenReturn(HashMap.of(USERNAME, "$2a$10$51tDgG2VNLde5E173Ay/YO.Fq.aD.LR2Rp8pY3QAKriOSPswvGviy"));
         }

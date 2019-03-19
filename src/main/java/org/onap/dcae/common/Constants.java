@@ -25,7 +25,7 @@ public class Constants {
     public static final String KDEFAULT_REQUESTBODY = "requestBody";
     public static final String KSETTING_REST_API_URL = "restapiUrl";
     public static final String KSETTING_REST_UNAME = "restapiUser";
-    public static final String KSETTING_REST_PASSWORD = "restapiPassword";
+    public static final String KSETTING_REST_PASSWD = "restapiPassword";
     public static final String KSETTING_HTTP_METHOD = "httpMethod";
     public static final String KSETTING_RESP_PREFIX = "responsePrefix";
     public static final String KSETTING_SKIP_SENDING = "skipSending";
@@ -44,5 +44,5 @@ public class Constants {
     public static final String KSETTING_TRUST_STORE_FILENAME = "trustStoreFileName";
     public static final String KSETTING_TRUST_STORE_PASSWORD = "trustStorePassword";
     public static final String KSETTING_KEY_STORE_FILENAME = "keyStoreFileName";
-    public static final String KSETTING_KEY_STORE_PASSWORD = "keyStorePassword";
+    public static final String KSETTING_KEY_STORE_PASSWD = "keyStorePassword";
 }
