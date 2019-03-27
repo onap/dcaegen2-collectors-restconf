@@ -119,7 +119,7 @@ public class ApplicationSettingsTest {
         int applicationPort = fromTemporaryConfiguration().httpPort();
 
         // then
-        assertEquals(8686, applicationPort);
+        assertEquals(8080, applicationPort);
     }
 
     @Test
@@ -135,7 +135,7 @@ public class ApplicationSettingsTest {
     @Test
     public void shouldReturnIfHTTPIsEnabled() throws IOException {
         // when
-        boolean httpsEnabled = fromTemporaryConfiguration("collector.service.port=8686").httpsEnabled();
+        boolean httpsEnabled = fromTemporaryConfiguration("collector.service.port=8080").httpsEnabled();
         // then
         assertTrue(httpsEnabled);
     }

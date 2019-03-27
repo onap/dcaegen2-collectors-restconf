@@ -24,6 +24,7 @@ import org.json.JSONObject;
 import org.onap.dcae.ApplicationException;
 import org.onap.dcae.ApplicationSettings;
 import org.onap.dcae.common.Constants;
+import org.onap.dcae.common.ControllerActivationState;
 import org.onap.dcae.common.RestConfContext;
 import org.onap.dcae.common.RestapiCallNode;
 import org.slf4j.Logger;
@@ -56,6 +57,8 @@ public class AccessController {
     private ExecutorService executor = Executors.newCachedThreadPool();
     private Map<String, String> paraMap;
 
+    ControllerActivationState state;
+
     public AccessController(JSONObject controller,
                             ApplicationSettings properties) {
         this.cfgInfo = new ControllerConfigInfo(controller.get("controller_name").toString(),
@@ -71,7 +74,7 @@ public class AccessController {
         this.ctx = new RestConfContext();
         this.restApiCallNode = new RestapiCallNode();
         this.paraMap = new HashMap<>();
-
+        this.state = ControllerActivationState.INIT;
         prepareControllerParamMap();
 
         log.info("AccesController Created {} {} {} {} {} {}",
@@ -85,10 +88,20 @@ public class AccessController {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof AccessController)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof AccessController))
+            return false;
         AccessController that = (AccessController) o;
         return that.cfgInfo.getController_name().equals(that.cfgInfo.getController_name());
+    }
+
+    public ControllerActivationState getState() {
+        return state;
+    }
+
+    public void setState(ControllerActivationState state) {
+        this.state = state;
     }
 
     @Override
@@ -107,8 +120,7 @@ public class AccessController {
         this.executor = executor;
     }
 
-    private void fetch_TokenId() {
-
+    private void fetchTokenId() {
 
         modifyControllerParamMap(Constants.KSETTING_REST_API_URL, getUriMethod(this.properties.authorizationEnabled()) + cfgInfo.getController_restapiUrl() + cfgInfo.getController_accessTokenUrl());
         modifyControllerParamMap(Constants.KDEFAULT_TEMP_FILENAME, cfgInfo.getController_accessTokenFile());
@@ -117,6 +129,7 @@ public class AccessController {
         modifyControllerParamMap(Constants.KSETTING_HTTP_METHOD, cfgInfo.getController_accessTokenMethod());
 
         String httpResponse = null;
+
         try {
 
             getRestApiCallNode().sendRequest(this.paraMap, ctx, null);
@@ -125,43 +138,46 @@ public class AccessController {
             log.info("httpResponse ", httpResponse + " key " + key);
             JSONObject jsonObj = new JSONObject(httpResponse);
             log.info("jsonObj ", jsonObj.toString());
-            //JSONObject data = jsonObj.getJSONObject("data");
-            //String tokenId = data.get("accessSession").toString();
             //@TODO: Make return field dynamic
             String tokenId = jsonObj.get("accessSession").toString();
-            log.info("token 1" + tokenId);
             modifyControllerParamMap(Constants.KSETTING_TOKENID, tokenId);
             modifyControllerParamMap(Constants.KSETTING_CUSTOMHTTP_HEADER, "X-ACCESS-TOKEN=" + tokenId);
+            setState(ControllerActivationState.ACTIVE);
+
         } catch (Exception e) {
-            log.info("Access token is not supported" + e.getMessage());
+            log.info("Access token is not supported " + e.getMessage());
             log.info("http response " + httpResponse);
         }
     }
 
-    public void activate() {
-        fetch_TokenId();
-        printControllerParamMap();
-        /* Create eventlist from properties */
-        JSONArray contollers = new JSONArray(properties.rccPolicy());
-        for (int i = 0; i < contollers.length(); i++) {
-            JSONObject controller = contollers.getJSONObject(i);
-            if (controller.get("controller_name").equals(this.getCfgInfo().getController_name())) {
-                JSONArray eventlists = controller.getJSONArray("event_details");
-                for (int j = 0; j < eventlists.length(); j++) {
-                    JSONObject event = eventlists.getJSONObject(j);
-                    String name = event.get("event_name").toString();
-                    PersistentEventConnection conn = new PersistentEventConnection(name,
-                            event.get("event_description").toString(),
-                            Boolean.parseBoolean(event.get("event_sseventUrlEmbed").toString()),
-                            event.get("event_sseventsField").toString(),
-                            event.get("event_sseventsUrl").toString(),
-                            event.get("event_subscriptionTemplate").toString(),
-                            event.get("event_unSubscriptionTemplate").toString(),
-                            event.get("event_ruleId").toString(),
-                            this);
 
-                    eventList.put(name, conn);
-                    executor.execute(conn);
+    public void activate() {
+        fetchTokenId();
+
+        if (getState() == ControllerActivationState.ACTIVE) {
+            printControllerParamMap();
+            /* Create eventlist from properties */
+            JSONArray contollers = new JSONArray(properties.rccPolicy());
+            for (int i = 0; i < contollers.length(); i++) {
+                JSONObject controller = contollers.getJSONObject(i);
+                if (controller.get("controller_name").equals(this.getCfgInfo().getController_name())) {
+                    JSONArray eventlists = controller.getJSONArray("event_details");
+                    for (int j = 0; j < eventlists.length(); j++) {
+                        JSONObject event = eventlists.getJSONObject(j);
+                        String name = event.get("event_name").toString();
+                        PersistentEventConnection conn = new PersistentEventConnection(name,
+                                event.get("event_description").toString(),
+                                Boolean.parseBoolean(event.get("event_sseventUrlEmbed").toString()),
+                                event.get("event_sseventsField").toString(),
+                                event.get("event_sseventsUrl").toString(),
+                                event.get("event_subscriptionTemplate").toString(),
+                                event.get("event_unSubscriptionTemplate").toString(),
+                                event.get("event_ruleId").toString(),
+                                this);
+
+                        eventList.put(name, conn);
+                        executor.execute(conn);
+                    }
                 }
             }
         }

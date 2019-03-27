@@ -23,11 +23,7 @@ package org.onap.dcae.controller;
 
 import static io.vavr.API.Map;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.onap.dcae.TestingUtilities.createTemporaryFile;
 import static org.onap.dcae.TestingUtilities.readFile;
 import static org.onap.dcae.TestingUtilities.readJSONFromFile;
@@ -51,24 +47,26 @@ public class ConfigLoaderIntegrationE2ETest extends WiremockBasedTest {
 
     @Test
     public void testSuccessfulE2EFlow() {
-        // given
+//        // given
 //        Path dMaaPConfigFile = createTemporaryFile("{}");
 //        Path collectorPropertiesFile = createTemporaryFile("");
 //        Path dMaaPConfigSource = Paths.get("src/test/resources/testParseDMaaPCredentialsGen2.json");
 //        JSONObject dMaaPConf = readJSONFromFile(dMaaPConfigSource);
 //        stubConsulToReturnLocalAddressOfCBS();
-//        stubCBSToReturnAppConfig(f("{\"collector.port\": 8686, \"streams_publishes\": %s}}", dMaaPConf));
+//        stubCBSToReturnAppConfig(f("{\"collector.port\": 8080, \"streams_publishes\": %s}}", dMaaPConf));
 //
 //        EventPublisher eventPublisherMock = mock(EventPublisher.class);
 //
-//        Mockito.mock(RestConfCollector.class);
+//        RestConfCollector rs = Mockito.mock(RestConfCollector.class);
+//
+//
 //        ConfigFilesFacade configFilesFacade = new ConfigFilesFacade(dMaaPConfigFile, collectorPropertiesFile);
 //        ConfigLoader configLoader = new ConfigLoader(eventPublisherMock::reconfigure, configFilesFacade, ConfigSource::getAppConfig, () -> wiremockBasedEnvProps());
 //        configLoader.updateConfig();
 //
 //        // then
 //        assertThat(readJSONFromFile(dMaaPConfigSource).toString()).isEqualTo(dMaaPConf.toString());
-//        assertThat(readFile(collectorPropertiesFile).trim()).isEqualTo("collector.port = 8686");
+//        assertThat(readFile(collectorPropertiesFile).trim()).isEqualTo("collector.port = 8080");
 //        verify(eventPublisherMock, times(1)).reconfigure(
 //            DMaaPConfigurationParser.parseToDomainMapping(dMaaPConf).get()
 //        );
@@ -81,18 +79,24 @@ public class ConfigLoaderIntegrationE2ETest extends WiremockBasedTest {
         Path collectorPropertiesFile = createTemporaryFile("");
         JSONObject dMaaPConf = readJSONFromFile(Paths.get("src/test/resources/testParseDMaaPCredentialsGen2.json"));
         stubConsulToReturnLocalAddressOfCBS();
-        stubCBSToReturnAppConfig(f("{\"collector.port\": 8686, \"streams_publishes\": %s}}", dMaaPConf));
+        stubCBSToReturnAppConfig(f("{\"collector.port\": 8080, \"streams_publishes\": %s}}", dMaaPConf));
         EventPublisher eventPublisherMock = mock(EventPublisher.class);
         ConfigFilesFacade configFilesFacade = new ConfigFilesFacade(dMaaPConfigFile, collectorPropertiesFile);
-        configFilesFacade.writeProperties(Map("collector.port", "8686"));
+        configFilesFacade.writeProperties(Map("collector.port", "8080"));
         configFilesFacade.writeDMaaPConfiguration(dMaaPConf);
 
-        // when
         ConfigLoader configLoader = new ConfigLoader(eventPublisherMock::reconfigure, configFilesFacade, ConfigSource::getAppConfig, () -> wiremockBasedEnvProps());
         configLoader.updateConfig();
-
         // then
+
         verifyZeroInteractions(eventPublisherMock);
+
+        // when
+        JSONObject dMaaPConf2 = readJSONFromFile(Paths.get("src/test/resources/testParseDMaaPCredentialsGen2Temp.json"));
+        configFilesFacade.writeDMaaPConfiguration(dMaaPConf2);
+        configFilesFacade.writeProperties(Map("collector.port", "8081"));
+        configLoader.updateConfig();
+
     }
 
 }

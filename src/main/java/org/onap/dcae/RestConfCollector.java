@@ -24,6 +24,7 @@ package org.onap.dcae;
 import io.vavr.collection.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.onap.dcae.common.ControllerActivationState;
 import org.onap.dcae.common.EventData;
 import org.onap.dcae.common.EventProcessor;
 import org.onap.dcae.common.publishing.DMaaPConfigurationParser;
@@ -43,6 +44,7 @@ import org.springframework.context.annotation.Lazy;
 
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.concurrent.*;
 
 @SpringBootApplication(exclude = {GsonAutoConfiguration.class, SecurityAutoConfiguration.class})
@@ -56,8 +58,10 @@ public class RestConfCollector {
     private static ConfigLoader configLoader;
     private static SpringApplication app;
     private static ScheduledFuture<?> scheduleFeatures;
+    private static ScheduledFuture<?> scheduleCtrlActivation;
     private static ExecutorService executor;
     private static ScheduledThreadPoolExecutor scheduledThreadPoolExecutor;
+    private static ScheduledThreadPoolExecutor scheduledThExController;
     private static EventPublisher eventPublisher;
     private static EventProcessor eventProcessor;
 
@@ -70,6 +74,7 @@ public class RestConfCollector {
         app = new SpringApplication(RestConfCollector.class);
         properties = new ApplicationSettings(args, CLIUtils::processCmdLine);
         scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
+        scheduledThExController = new ScheduledThreadPoolExecutor(1);
         init();
         app.setAddCommandLineProperties(true);
         context = app.run();
@@ -85,6 +90,7 @@ public class RestConfCollector {
             context.close();
             properties.reloadProperties();
             scheduleFeatures.cancel(true);
+            scheduleCtrlActivation.cancel(true);
             init();
             controllerConfig(properties);
             context = SpringApplication.run(RestConfCollector.class);
@@ -174,6 +180,11 @@ public class RestConfCollector {
                 10,
                 10,
                 TimeUnit.MINUTES);
+        ControllerActivationTask task = new ControllerActivationTask();
+        scheduleCtrlActivation = scheduledThExController.scheduleAtFixedRate(task,
+                10,
+                10,
+                TimeUnit.SECONDS);
     }
 
     private static void createExecutors() {
@@ -184,6 +195,30 @@ public class RestConfCollector {
         executor = Executors.newFixedThreadPool(MAX_THREADS);
         for (int i = 0; i < MAX_THREADS; ++i) {
             executor.execute(eventProcessor);
+        }
+    }
+
+    private  static class ControllerActivationTask implements Runnable
+    {
+        public ControllerActivationTask() {
+        }
+
+        @Override
+        public void run()
+        {
+            try {
+                Iterator<String> it1 = controllerStore.keySet().iterator();
+                while(it1.hasNext()){
+                    String key = it1.next();
+                    AccessController ctlr = controllerStore.get(key);
+                    if(ctlr.getState() == ControllerActivationState.INIT) {
+                        log.info("Activating controller " + key);
+                        ctlr.activate();
+                    }
+                }
+            } catch (Exception e) {
+                log.info("Activation failed");
+            }
         }
     }
 }

@@ -76,9 +76,9 @@ public class EventProcessor implements Runnable {
     private void sendEventsToStreams(String[] streamIdList, EventData ev) {
         for (String aStreamIdList : streamIdList) {
             log.info("Invoking publisher for streamId:" + aStreamIdList);
-            if (!ev.getConn().getEvent_ruleId().equals("")) {
+            if (!ev.getConn().getEventRuleId().equals("")) {
                 JSONObject customHeader = new JSONObject();
-                customHeader.put("rule-id", ev.getConn().getEvent_ruleId());
+                customHeader.put("rule-id", ev.getConn().getEventRuleId());
                 eventPublisher.sendEvent(overrideEvent(customHeader, ev.getEventObj()), aStreamIdList);
             } else {
                 eventPublisher.sendEvent(ev.getEventObj(), aStreamIdList);

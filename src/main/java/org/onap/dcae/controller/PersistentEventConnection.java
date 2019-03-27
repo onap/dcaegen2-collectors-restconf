@@ -185,7 +185,7 @@ public class PersistentEventConnection implements Runnable {
         return ClientBuilder.newBuilder().sslContext(sslcontext).hostnameVerifier((s1, s2) -> true).build();
     }
 
-    public String getEvent_ruleId() {
+    public String getEventRuleId() {
         return event_ruleId;
     }
 

@@ -6,7 +6,7 @@
       "class": "HpCambriaOutputStream",
       "stripHpId": "true",
       "type": "out",
-      "cambria.hosts": "119.3.84.152:30227"
+      "cambria.hosts": "message-router:3904"
     }
   ]
 }

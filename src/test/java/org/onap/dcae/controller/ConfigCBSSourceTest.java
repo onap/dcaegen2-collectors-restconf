@@ -38,7 +38,7 @@ public class ConfigCBSSourceTest extends WiremockBasedTest {
     @Test
     public void shouldReturnValidAppConfiguration() {
         // given
-        String sampleConfigForVES = "{\"collector.rcc.service.port\": 8686}";
+        String sampleConfigForVES = "{\"collector.rcc.service.port\": 8080}";
 
         stubConsulToReturnLocalAddressOfCBS();
         stubCBSToReturnAppConfig(sampleConfigForVES);

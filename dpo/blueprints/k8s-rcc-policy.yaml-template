@@ -76,10 +76,10 @@ node_templates:
             collector.rcc.dmaap.streamid: "notification=device-registration"
             collector.rcc.inputQueue.maxPending: "8096"
             tomcat.maxthreads: "200"
-            collector.rcc.service.port: "8686"
+            collector.rcc.service.port: "8080"
             collector.rcc.service.secure.port: "8687"
             collector.rcc.keystore.file.location: "/opt/app/restconfcollector/etc/keystore"
-            collector.rcc.keystore.passwordfile: "/opt/app/restconfcollector/etc/rcc_password"
+            collector.rcc.keystore.passwordfile: "/opt/app/restconfcollector/etc/rcc_passwordfile"
             collector.rcc.keystore.alias: "dynamically generated"
             collector.rcc.truststore.file.location: "/opt/app/restconfcollector/etc/truststore.onap.client.jks"
             collector.rcc.truststore.passwordfile: "/opt/app/restconfcollector/etc/trustpasswordfile"
@@ -89,7 +89,7 @@ node_templates:
             collector.header.authlist: "sample1,c2FtcGxlMQ=="
             collector.rcc.service.secure.clientauth: "0"
             streams_publishes:
-                        notification:
+                        device-registration:
                           dmaap_info:
                             topic_url:
                               get_input: notification_publish_url

@@ -95,6 +95,13 @@ limitations under the License.
                     <artifactId>docker-maven-plugin</artifactId>
                     <version>1.1.1</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
@@ -204,7 +211,7 @@ limitations under the License.
                     </runs>
                     <cmd>/opt/app/restconfcollector/bin/docker_entry.sh</cmd>
                     <exposes>
-                        <expose>8686</expose>
+                        <expose>8080</expose>
                         <expose>8687</expose>
                     </exposes>
                 </configuration>

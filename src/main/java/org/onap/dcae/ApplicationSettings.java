@@ -108,7 +108,7 @@ public class ApplicationSettings {
     }
 
     public int httpPort() {
-        return properties.getInt("collector.rcc.service.port", 8686);
+        return properties.getInt("collector.rcc.service.port", 8080);
     }
 
     public int httpsPort() {

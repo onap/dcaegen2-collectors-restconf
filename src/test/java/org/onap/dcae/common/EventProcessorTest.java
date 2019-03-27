@@ -92,6 +92,8 @@ public class EventProcessorTest {
 
         PersistentEventConnection p = new PersistentEventConnection("","",true, "",
         "","","","1234646346", acClr);
+        p.getEventParamMapValue("restapiUrl");
+        p.modifyEventParamMap("restapiUrl", "10.118.191.43:26335");
         RestConfCollector.fProcessingInputQueue = new LinkedBlockingQueue<>(4);
         RestConfCollector.fProcessingInputQueue.offer(new EventData(p, new JSONObject("{}")));
         RestConfCollector.fProcessingInputQueue.offer(new EventData(null, null));

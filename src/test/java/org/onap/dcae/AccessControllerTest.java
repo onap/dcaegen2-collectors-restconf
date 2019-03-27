@@ -106,6 +106,9 @@ public class AccessControllerTest {
             JSONObject controller = new JSONObject("{\"controller_name\":\"AccessM&C\",\"controller_restapiUrl\":\"10.118.191.43:26335\",\"controller_restapiUser\":\"access\",\"controller_restapiPassword\":\"Huawei@123\",\"controller_accessTokenUrl\":\"/rest/plat/smapp/v1/oauth/token\",\"controller_accessTokenFile\":\"./etc/access-token.json\",\"controller_accessTokenMethod\":\"put\",\"controller_subsMethod\":\"post\",\"controller_subscriptionUrl\":\"/restconf/v1/operations/huawei-nce-notification-action:establish-subscription\",\"event_details\":[{\"event_name\":\"ONT_registration\",\"event_description\":\"ONTregistartionevent\",\"event_sseventUrlEmbed\":\"true\",\"event_sseventsField\":\"output.url\",\"event_sseventsUrl\":\"null\",\"event_subscriptionTemplate\":\"./etc/ont_registartion_subscription_template.json\",\"event_unSubscriptionTemplate\":\"./etc/ont_registartion_unsubscription_template.json\",\"event_ruleId\":\"777777777\"}]}");
             AccessController acClr = new AccessController(controller,
                     properties);
+            AccessController acClr2 = new AccessController(controller,
+                    properties);
+            acClr.equals(acClr2);
             acClr.setRestApiCallNode(restApiCallNode);
             acClr.setExecutor(executor);
             acClr.getCtx().setAttribute("responsePrefix.httpResponse","{\"accessSession\" : \"12dsaf4-2323-1231131232323\"}");
