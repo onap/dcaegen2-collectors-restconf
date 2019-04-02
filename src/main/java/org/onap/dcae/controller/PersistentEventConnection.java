@@ -61,34 +61,91 @@ public class PersistentEventConnection implements Runnable {
     private AccessController parentCtrllr;
     private Map<String, String> eventParaMap;
 
-    public PersistentEventConnection(String event_name,
-                                     String event_description,
-                                     boolean event_sseventUrlEmbed,
-                                     String event_sseventsField,
-                                     String event_sseventsUrl,
-                                     String event_subscriptionTemplate,
-                                     String event_unSubscriptionTemplate,
-                                     String event_ruleId,
-                                     AccessController parentCtrllr) {
-        this.event_name = event_name;
-        this.event_description = event_description;
-        this.event_sseventUrlEmbed = event_sseventUrlEmbed;
-        this.event_sseventsField = event_sseventsField;
-        this.event_sseventsUrl = event_sseventsUrl;
-        this.event_subscriptionTemplate = event_subscriptionTemplate;
-        this.event_unSubscriptionTemplate = event_unSubscriptionTemplate;
-        this.event_ruleId = event_ruleId;
-        this.state = EventConnectionState.INIT;
 
-        this.ctx = new RestConfContext();
-        for (String s : parentCtrllr.getCtx().getAttributeKeySet()) {
-            this.ctx.setAttribute(s, ctx.getAttribute(s));
+    public static class PersistentEventConnectionBuilder {
+        private String event_name;
+        private String event_description;
+        private boolean event_sseventUrlEmbed;
+        private String event_sseventsField;
+        private String event_sseventsUrl;
+        private String event_subscriptionTemplate;
+        private String event_unSubscriptionTemplate;
+        private String event_ruleId;
+        private AccessController parentCtrllr;
+
+        public PersistentEventConnectionBuilder setEventName(String event_name) {
+            this.event_name = event_name;
+            return this;
         }
-        this.parentCtrllr = parentCtrllr;
-        this.eventParaMap = new HashMap<>();
-        this.eventParaMap.putAll(parentCtrllr.getParaMap());
-        printEventParamMap();
-        log.info("New persistent connection created " + event_name);
+
+        public PersistentEventConnectionBuilder setEventDescription(String event_description) {
+            this.event_description = event_description;
+            return this;
+        }
+
+        public PersistentEventConnectionBuilder setEventSseventUrlEmbed(boolean event_sseventUrlEmbed) {
+            this.event_sseventUrlEmbed = event_sseventUrlEmbed;
+            return this;
+        }
+
+        public PersistentEventConnectionBuilder setEventSseventsField(String event_sseventsField) {
+            this.event_sseventsField = event_sseventsField;
+            return this;
+        }
+
+        public PersistentEventConnectionBuilder setEventSseventsUrl(String event_sseventsUrl) {
+            this.event_sseventsUrl = event_sseventsUrl;
+            return this;
+        }
+
+        public PersistentEventConnectionBuilder setEventSubscriptionTemplate(String event_subscriptionTemplate) {
+            this.event_subscriptionTemplate = event_subscriptionTemplate;
+            return this;
+        }
+
+        public PersistentEventConnectionBuilder setEventUnSubscriptionTemplate(String event_unSubscriptionTemplate) {
+            this.event_unSubscriptionTemplate = event_unSubscriptionTemplate;
+            return this;
+        }
+
+        public PersistentEventConnectionBuilder setEventRuleId(String event_ruleId) {
+            this.event_ruleId = event_ruleId;
+            return this;
+        }
+
+        public PersistentEventConnectionBuilder setParentCtrllr(AccessController parentCtrllr) {
+            this.parentCtrllr = parentCtrllr;
+            return this;
+        }
+
+        public PersistentEventConnection createPersistentEventConnection() {
+            return new PersistentEventConnection(this);
+        }
+    }
+
+
+    private PersistentEventConnection(PersistentEventConnectionBuilder builder){
+
+            this.event_name = builder.event_name;
+            this.event_description = builder.event_description;
+            this.event_sseventUrlEmbed = builder.event_sseventUrlEmbed;
+            this.event_sseventsField = builder.event_sseventsField;
+            this.event_sseventsUrl = builder.event_sseventsUrl;
+            this.event_subscriptionTemplate = builder.event_subscriptionTemplate;
+            this.event_unSubscriptionTemplate = builder.event_unSubscriptionTemplate;
+            this.event_ruleId = builder.event_ruleId;
+            this.state = EventConnectionState.INIT;
+
+            this.ctx = new RestConfContext();
+            for (String s : builder.parentCtrllr.getCtx().getAttributeKeySet()) {
+                this.ctx.setAttribute(s, ctx.getAttribute(s));
+            }
+            this.parentCtrllr = builder.parentCtrllr;
+            this.eventParaMap = new HashMap<>();
+            this.eventParaMap.putAll(builder.parentCtrllr.getParaMap());
+            printEventParamMap();
+            log.info("New persistent connection created " + event_name);
+
     }
 
     @Override

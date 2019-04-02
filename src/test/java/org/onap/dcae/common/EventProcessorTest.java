@@ -86,12 +86,14 @@ public class EventProcessorTest {
         when(properties.keystorePasswordFileLocation()).thenReturn(KEYSTORE_PASSWORD_FILE.toString());
         when(properties.rccKeystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
         when(properties.rccKeystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
-        JSONObject controller = new JSONObject("{\"controller_name\":\"AccessM&C\",\"controller_restapiUrl\":\"10.118.191.43:26335\",\"controller_restapiUser\":\"access\",\"controller_restapiPassword\":\"Huawei@123\",\"controller_accessTokenUrl\":\"/rest/plat/smapp/v1/oauth/token\",\"controller_accessTokenFile\":\"./etc/access-token.json\",\"controller_accessTokenMethod\":\"put\",\"controller_subsMethod\":\"post\",\"controller_subscriptionUrl\":\"/restconf/v1/operations/huawei-nce-notification-action:establish-subscription\",\"event_details\":[{\"event_name\":\"ONT_registration\",\"event_description\":\"ONTregistartionevent\",\"event_sseventUrlEmbed\":\"true\",\"event_sseventsField\":\"output.url\",\"event_sseventsUrl\":\"null\",\"event_subscriptionTemplate\":\"./etc/ont_registartion_subscription_template.json\",\"event_unSubscriptionTemplate\":\"./etc/ont_registartion_unsubscription_template.json\",\"event_ruleId\":\"777777777\"}]}");
-        AccessController acClr = new AccessController(controller,
-                properties);
+        JSONObject controller = new JSONObject(
+                "{\"controller_name\":\"AccessM&C\",\"controller_restapiUrl\":\"10.118.191.43:26335\",\"controller_restapiUser\":\"access\",\"controller_restapiPassword\":\"Huawei@123\",\"controller_accessTokenUrl\":\"/rest/plat/smapp/v1/oauth/token\",\"controller_accessTokenFile\":\"./etc/access-token.json\",\"controller_accessTokenMethod\":\"put\",\"controller_subsMethod\":\"post\",\"controller_subscriptionUrl\":\"/restconf/v1/operations/huawei-nce-notification-action:establish-subscription\",\"event_details\":[{\"event_name\":\"ONT_registration\",\"event_description\":\"ONTregistartionevent\",\"event_sseventUrlEmbed\":\"true\",\"event_sseventsField\":\"output.url\",\"event_sseventsUrl\":\"null\",\"event_subscriptionTemplate\":\"./etc/ont_registartion_subscription_template.json\",\"event_unSubscriptionTemplate\":\"./etc/ont_registartion_unsubscription_template.json\",\"event_ruleId\":\"777777777\"}]}");
+        AccessController acClr = new AccessController(controller, properties);
 
-        PersistentEventConnection p = new PersistentEventConnection("","",true, "",
-        "","","","1234646346", acClr);
+        PersistentEventConnection p = new PersistentEventConnection.PersistentEventConnectionBuilder().setEventName("")
+                .setEventDescription("").setEventSseventUrlEmbed(true).setEventSseventsField("").setEventSseventsUrl("")
+                .setEventSubscriptionTemplate("").setEventUnSubscriptionTemplate("").setEventRuleId("1234646346")
+                .setParentCtrllr(acClr).createPersistentEventConnection();
         p.getEventParamMapValue("restapiUrl");
         p.modifyEventParamMap("restapiUrl", "10.118.191.43:26335");
         RestConfCollector.fProcessingInputQueue = new LinkedBlockingQueue<>(4);

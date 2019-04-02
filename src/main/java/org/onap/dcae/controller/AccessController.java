@@ -165,15 +165,19 @@ public class AccessController {
                     for (int j = 0; j < eventlists.length(); j++) {
                         JSONObject event = eventlists.getJSONObject(j);
                         String name = event.get("event_name").toString();
-                        PersistentEventConnection conn = new PersistentEventConnection(name,
-                                event.get("event_description").toString(),
-                                Boolean.parseBoolean(event.get("event_sseventUrlEmbed").toString()),
-                                event.get("event_sseventsField").toString(),
-                                event.get("event_sseventsUrl").toString(),
-                                event.get("event_subscriptionTemplate").toString(),
-                                event.get("event_unSubscriptionTemplate").toString(),
-                                event.get("event_ruleId").toString(),
-                                this);
+                        PersistentEventConnection conn =
+                                new PersistentEventConnection.PersistentEventConnectionBuilder().setEventName(name)
+                                        .setEventDescription(event.get("event_description").toString())
+                                        .setEventSseventUrlEmbed(
+                                                Boolean.parseBoolean(event.get("event_sseventUrlEmbed").toString()))
+                                        .setEventSseventsField(event.get("event_sseventsField").toString())
+                                        .setEventSseventsUrl(event.get("event_sseventsUrl").toString())
+                                        .setEventSubscriptionTemplate(
+                                                event.get("event_subscriptionTemplate").toString())
+                                        .setEventUnSubscriptionTemplate(
+                                                event.get("event_unSubscriptionTemplate").toString())
+                                        .setEventRuleId(event.get("event_ruleId").toString()).setParentCtrllr(this)
+                                        .createPersistentEventConnection();
 
                         eventList.put(name, conn);
                         executor.execute(conn);
