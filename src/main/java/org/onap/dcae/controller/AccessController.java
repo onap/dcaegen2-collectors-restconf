@@ -60,16 +60,18 @@ public class AccessController {
     ControllerActivationState state;
 
     public AccessController(JSONObject controller,
-                            ApplicationSettings properties) {
-        this.cfgInfo = new ControllerConfigInfo(controller.get("controller_name").toString(),
-                controller.get("controller_restapiUrl").toString(),
-                controller.get("controller_restapiUser").toString(),
-                controller.get("controller_restapiPassword").toString(),
-                controller.get("controller_accessTokenUrl").toString(),
-                controller.get("controller_accessTokenFile").toString(),
-                controller.get("controller_subscriptionUrl").toString(),
-                controller.get("controller_accessTokenMethod").toString(),
-                controller.get("controller_subsMethod").toString());
+            ApplicationSettings properties) {
+        this.cfgInfo = new ControllerConfigInfo.ControllerConfigInfoBuilder()
+                .setController_name(controller.get("controller_name").toString())
+                .setController_restapiUrl(controller.get("controller_restapiUrl").toString())
+                .setController_restapiUser(controller.get("controller_restapiUser").toString())
+                .setController_restapiPassword(controller.get("controller_restapiPassword").toString())
+                .setController_accessTokenUrl(controller.get("controller_accessTokenUrl").toString())
+                .setController_accessTokenFile(controller.get("controller_accessTokenFile").toString())
+                .setController_subscriptionUrl(controller.get("controller_subscriptionUrl").toString())
+                .setController_accessTokenMethod(controller.get("controller_accessTokenMethod").toString())
+                .setController_subsMethod(controller.get("controller_subsMethod").toString())
+                .createControllerConfigInfo();
         this.properties = properties;
         this.ctx = new RestConfContext();
         this.restApiCallNode = new RestapiCallNode();
@@ -77,12 +79,9 @@ public class AccessController {
         this.state = ControllerActivationState.INIT;
         prepareControllerParamMap();
 
-        log.info("AccesController Created {} {} {} {} {} {}",
-                this.cfgInfo.getController_name(),
-                this.cfgInfo.getController_restapiUrl(),
-                this.cfgInfo.getController_restapiPassword(),
-                this.cfgInfo.getController_restapiUser(),
-                this.cfgInfo.getController_accessTokenUrl(),
+        log.info("AccesController Created {} {} {} {} {} {}", this.cfgInfo.getController_name(),
+                this.cfgInfo.getController_restapiUrl(), this.cfgInfo.getController_restapiPassword(),
+                this.cfgInfo.getController_restapiUser(), this.cfgInfo.getController_accessTokenUrl(),
                 this.cfgInfo.getController_accessTokenFile());
     }
 
