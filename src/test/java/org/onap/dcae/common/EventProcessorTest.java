@@ -86,6 +86,7 @@ public class EventProcessorTest {
         when(properties.keystorePasswordFileLocation()).thenReturn(KEYSTORE_PASSWORD_FILE.toString());
         when(properties.rccKeystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
         when(properties.rccKeystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
+        when(properties.controllerConfigFileLocation()).thenReturn(Paths.get("etc/ont_config.json").toAbsolutePath().toString());
         JSONObject controller = new JSONObject(
                 "{\"controller_name\":\"AccessM&C\",\"controller_restapiUrl\":\"10.118.191.43:26335\",\"controller_restapiUser\":\"access\",\"controller_restapiPassword\":\"Huawei@123\",\"controller_accessTokenUrl\":\"/rest/plat/smapp/v1/oauth/token\",\"controller_accessTokenFile\":\"./etc/access-token.json\",\"controller_accessTokenMethod\":\"put\",\"controller_subsMethod\":\"post\",\"controller_subscriptionUrl\":\"/restconf/v1/operations/huawei-nce-notification-action:establish-subscription\",\"event_details\":[{\"event_name\":\"ONT_registration\",\"event_description\":\"ONTregistartionevent\",\"event_sseventUrlEmbed\":\"true\",\"event_sseventsField\":\"output.url\",\"event_sseventsUrl\":\"null\",\"event_subscriptionTemplate\":\"./etc/ont_registartion_subscription_template.json\",\"event_unSubscriptionTemplate\":\"./etc/ont_registartion_unsubscription_template.json\",\"event_ruleId\":\"777777777\"}]}");
         AccessController acClr = new AccessController(controller, properties);
@@ -93,11 +94,33 @@ public class EventProcessorTest {
         PersistentEventConnection p = new PersistentEventConnection.PersistentEventConnectionBuilder().setEventName("")
                 .setEventDescription("").setEventSseventUrlEmbed(true).setEventSseventsField("").setEventSseventsUrl("")
                 .setEventSubscriptionTemplate("").setEventUnSubscriptionTemplate("").setEventRuleId("1234646346")
-                .setParentCtrllr(acClr).createPersistentEventConnection();
+                .setParentCtrllr(acClr).setModifyEvent(true).setModifyMethod("modifyOntEvent").createPersistentEventConnection();
         p.getEventParamMapValue("restapiUrl");
         p.modifyEventParamMap("restapiUrl", "10.118.191.43:26335");
         RestConfCollector.fProcessingInputQueue = new LinkedBlockingQueue<>(4);
-        RestConfCollector.fProcessingInputQueue.offer(new EventData(p, new JSONObject("{}")));
+        RestConfCollector.fProcessingInputQueue.offer(new EventData(p, new JSONObject("{\n" +
+                "  \"notification\" : {\n" +
+                "    \"notification-id\" : \"01010101011\",\n" +
+                "    \"event-time\" : \"2019-3-9T3:30:30.547z\",\n" +
+                "    \"message\" : {\n" +
+                "      \"object-type\" : \"onu\",\n" +
+                "      \"topic\" : \"resources\",\n" +
+                "      \"version\" : \"v1\",\n" +
+                "      \"operation\" : \"create\",\n" +
+                "      \"content\" : {\n" +
+                "        \"onu\" : {\n" +
+                "          \"alias\" : \"\",\n" +
+                "          \"refParentLTP\" : \"gpon.0.5.1\",\n" +
+                "          \"sn\" : \"HWTCC01B7503\",\n" +
+                "          \"refParentLTPNativeId\" : \"NE=167772165,FR=0,S=5,CP=-1,PP=||1|\",\n" +
+                "          \"onuId\": \"\",\n" +
+                "          \"refParentNE\" : \"aaaaaaaaa-aaaaa-aaaa-aaaa-aaa167772165\",\n" +
+                "          \"refParentNeNativeId\": \"NE=167772165\"\n" +
+                "        }\n" +
+                "      }\n" +
+                "    }\n" +
+                "  }\n" +
+                "}")));
         RestConfCollector.fProcessingInputQueue.offer(new EventData(null, null));
         EventProcessor ev = new EventProcessor(eventPublisher, streamMap);
         ev.run();

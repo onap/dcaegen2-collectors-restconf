@@ -1,0 +1,19 @@
+{
+  "lastServiceDate" : "",
+  "macAddress" : "54:04:a6:38:12:9d",
+  "manufactureDate" : "",
+  "modelNumber": "",
+  "oamV4IpAddress": "",
+  "oamV6IpAddress": "",
+  "serialNumber": "",
+  "softwareVersion": "",
+  "unitFamily": "",
+  "unitType": "",
+  "vendorName": "Huawei",
+  "additionalFields" : {
+    "attachment-point": "",
+    "svlan": "100",
+    "cvlan": "10",
+    "remote-id": "AC9.0234.0337"
+  }
+}

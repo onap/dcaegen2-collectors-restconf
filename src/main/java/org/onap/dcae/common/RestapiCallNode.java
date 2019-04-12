@@ -34,10 +34,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
+import javax.net.ssl.*;
 import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.FileInputStream;
@@ -46,6 +43,7 @@ import java.net.SocketException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyStore;
+import java.security.cert.X509Certificate;
 import java.util.*;
 
 import static org.onap.dcae.common.RestapiCallNodeUtil.getParameters;
@@ -319,6 +317,35 @@ public class RestapiCallNode {
     }
 
     protected HttpResponse sendHttpRequest(String request, Parameters p) throws Exception {
+        /* Enable this code if external controller's keyStore file not availabale */
+        /*Create a trust manager that does not validate certificate chains*/
+//        TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
+//            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+//                return null;
+//            }
+//            public void checkClientTrusted(X509Certificate[] certs, String authType) {
+//            }
+//            public void checkServerTrusted(X509Certificate[] certs, String authType) {
+//            }
+//        }
+//        };
+//
+//        // Install the all-trusting trust manager
+//        SSLContext sc = SSLContext.getInstance("SSL");
+//        sc.init(null, trustAllCerts, new java.security.SecureRandom());
+//        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+//
+//        // Create all-trusting host name verifier
+//        HostnameVerifier allHostsValid = new HostnameVerifier() {
+//            public boolean verify(String hostname, SSLSession session) {
+//                return true;
+//            }
+//        };
+//
+//        // Install the all-trusting host verifier
+//        log.info("Warning!!! No SSL handshake  **************************************");
+//        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+        /*HELPER CODE END */
         ClientConfig config = new DefaultClientConfig();
         SSLContext ssl = null;
         if (p.ssl && p.restapiUrl.startsWith("https")) {
@@ -330,7 +357,6 @@ public class RestapiCallNode {
             config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
                     new HTTPSProperties(hostnameVerifier, ssl));
         }
-
         logProperties(config.getProperties());
 
         Client client = Client.create(config);

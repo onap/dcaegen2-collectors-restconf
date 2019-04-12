@@ -176,6 +176,8 @@ public class AccessController {
                                         .setEventUnSubscriptionTemplate(
                                                 event.get("event_unSubscriptionTemplate").toString())
                                         .setEventRuleId(event.get("event_ruleId").toString()).setParentCtrllr(this)
+                                        .setModifyEvent(Boolean.parseBoolean(event.get("modifyData").toString()))
+                                        .setModifyMethod(event.get("modifyMethod").toString())
                                         .createPersistentEventConnection();
 
                         eventList.put(name, conn);
