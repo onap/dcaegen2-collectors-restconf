@@ -55,7 +55,8 @@ public class PersistentEventConnection implements Runnable {
     private EventConnectionState state;
     private volatile boolean running = true;
     private static final Logger log = LoggerFactory.getLogger(PersistentEventConnection.class);
-
+    private boolean modifyEvent;
+    private String modifyMethod;
 
     private RestConfContext ctx;
     private AccessController parentCtrllr;
@@ -72,6 +73,8 @@ public class PersistentEventConnection implements Runnable {
         private String event_unSubscriptionTemplate;
         private String event_ruleId;
         private AccessController parentCtrllr;
+        private boolean modifyEvent;
+        private String modifyMethod;
 
         public PersistentEventConnectionBuilder setEventName(String event_name) {
             this.event_name = event_name;
@@ -118,9 +121,20 @@ public class PersistentEventConnection implements Runnable {
             return this;
         }
 
+        public PersistentEventConnectionBuilder setModifyEvent(boolean modifyEvent) {
+            this.modifyEvent = modifyEvent;
+            return this;
+        }
+
+        public PersistentEventConnectionBuilder setModifyMethod(String modifyMethod) {
+            this.modifyMethod = modifyMethod;
+            return this;
+        }
         public PersistentEventConnection createPersistentEventConnection() {
             return new PersistentEventConnection(this);
         }
+
+
     }
 
 
@@ -135,6 +149,8 @@ public class PersistentEventConnection implements Runnable {
             this.event_unSubscriptionTemplate = builder.event_unSubscriptionTemplate;
             this.event_ruleId = builder.event_ruleId;
             this.state = EventConnectionState.INIT;
+            this.modifyEvent = builder.modifyEvent;
+            this.modifyMethod = builder.modifyMethod;
 
             this.ctx = new RestConfContext();
             for (String s : builder.parentCtrllr.getCtx().getAttributeKeySet()) {
@@ -144,7 +160,7 @@ public class PersistentEventConnection implements Runnable {
             this.eventParaMap = new HashMap<>();
             this.eventParaMap.putAll(builder.parentCtrllr.getParaMap());
             printEventParamMap();
-            log.info("New persistent connection created " + event_name);
+            log.info("New persistent connection created " + event_name + "modify event " + modifyEvent);
 
     }
 
@@ -252,6 +268,18 @@ public class PersistentEventConnection implements Runnable {
 
     public String getEventParamMapValue(String fieldName) {
         return eventParaMap.get(fieldName);
+    }
+
+    public AccessController getParentCtrllr() {
+        return parentCtrllr;
+    }
+
+    public boolean isModifyEvent() {
+        return modifyEvent;
+    }
+
+    public String getModifyMethod() {
+        return modifyMethod;
     }
 
     public void printEventParamMap() {

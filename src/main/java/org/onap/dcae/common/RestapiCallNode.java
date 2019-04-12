@@ -46,6 +46,7 @@ import java.net.SocketException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyStore;
+import java.security.cert.X509Certificate;
 import java.util.*;
 
 import static org.onap.dcae.common.RestapiCallNodeUtil.getParameters;
@@ -330,7 +331,6 @@ public class RestapiCallNode {
             config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
                     new HTTPSProperties(hostnameVerifier, ssl));
         }
-
         logProperties(config.getProperties());
 
         Client client = Client.create(config);

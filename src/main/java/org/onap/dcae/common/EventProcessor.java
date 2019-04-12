@@ -25,9 +25,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.onap.dcae.RestConfCollector;
 import org.onap.dcae.common.publishing.EventPublisher;
+import org.onap.dcae.controller.PersistentEventConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,7 +69,7 @@ public class EventProcessor implements Runnable {
                 } else {
                     sendEventsToStreams(streamIdList, ev);
                 }
-                log.info("Event published" + ev.getEventObj());
+
             }
         } catch (Exception e) {
             log.error("EventProcessor InterruptedException" + e.getMessage());
@@ -75,11 +79,24 @@ public class EventProcessor implements Runnable {
 
     private void sendEventsToStreams(String[] streamIdList, EventData ev) {
         for (String aStreamIdList : streamIdList) {
-            log.info("Invoking publisher for streamId:" + aStreamIdList);
+            log.info("Invoking publisher for streamId: " + aStreamIdList);
             if (!ev.getConn().getEventRuleId().equals("")) {
-                JSONObject customHeader = new JSONObject();
-                customHeader.put("rule-id", ev.getConn().getEventRuleId());
-                eventPublisher.sendEvent(overrideEvent(customHeader, ev.getEventObj()), aStreamIdList);
+                JSONObject modifiedObj = ev.getEventObj();
+                if (ev.getConn().isModifyEvent()){
+                    try {
+                        log.info("Invoking method " + ev.getConn().getModifyMethod() + " isModify " + ev.getConn().isModifyEvent());
+                        modifiedObj = (JSONObject)(this.getClass().getMethod(ev.getConn().getModifyMethod(), EventData.class).invoke(this, ev));
+                    }catch (Exception e) {
+                        log.warn("No such method exist" + e);
+                    }
+                }
+                JSONObject addRuleId = new JSONObject();
+                addRuleId.put("rule-id", ev.getConn().getEventRuleId());
+                JSONObject customHeader = overrideEvent(addRuleId, modifiedObj);
+                customHeader.put("notification-id", ev.getEventObj().getJSONObject("notification").get("notification-id"));
+                JSONObject finalObject = overrideEvent(customHeader, addRuleId);
+                log.info("Event published" + finalObject);
+                eventPublisher.sendEvent(finalObject, aStreamIdList);
             } else {
                 eventPublisher.sendEvent(ev.getEventObj(), aStreamIdList);
             }
@@ -97,7 +114,57 @@ public class EventProcessor implements Runnable {
         } catch (JSONException e) {
             throw new RuntimeException("JSON Exception" + e);
         }
-        log.info("Merged json " + mergedJSON);
+        
         return mergedJSON;
+    }
+
+    public JSONObject modifyOntEvent(EventData ev) {
+        PersistentEventConnection conn = ev.getConn();
+        JSONObject json1 = ev.getEventObj();
+        log.info("modifyOntEvent");
+        JSONObject newJSON = new JSONObject();
+        JSONObject finalObj = new JSONObject();
+        Path configFile =  Paths.get(conn.getParentCtrllr().getProperties().controllerConfigFileLocation());
+        try {
+            //log.info("Paths " + configFile.toString());
+            String bytes = new String(Files.readAllBytes(configFile));
+            //log.info("Bytes " + bytes);
+            newJSON = new JSONObject(bytes);
+            newJSON.put("serialNumber", json1.getJSONObject("notification").getJSONObject("message").getJSONObject("content").getJSONObject("onu").get("sn"));
+            newJSON.put("softwareVersion", json1.getJSONObject("notification").getJSONObject("message").get("version"));
+
+            String refParentLTPNativeId = json1.getJSONObject("notification").getJSONObject("message").getJSONObject("content").getJSONObject("onu").get("refParentLTPNativeId").toString();
+            String olt_slot = "";
+            String olt_port = "";
+            String[] list = refParentLTPNativeId.split(",");
+            for (String aList : list) {
+                String domain = aList.split("=")[0];
+                String value = aList.substring(aList.indexOf('=') + 1);
+                switch (domain)
+                {
+                    case "S":
+                        olt_slot = value;
+                        break;
+                    case "PP":
+                        olt_port = value.replaceAll("[^a-zA-Z0-9]", "");
+                        break;
+                    default:
+                        log.info("Field" + domain + " value " + value);
+                        break;
+                }
+            }
+            String oltName = json1.getJSONObject("notification").getJSONObject("message").getJSONObject("content").getJSONObject("onu").get("refParentNeNativeId").toString();
+            oltName = oltName.substring(3);
+            JSONObject additionalfields = newJSON.getJSONObject("additionalFields");
+            String attachment_point = oltName + "-" + olt_slot + "-" + olt_port;
+            additionalfields.put("attachment-point", attachment_point);
+            //additionalfields.put("remote-id", attachment-point);
+        } catch (Exception e) {
+            log.info("File reading error " + e);
+        }
+        //log.info("Modified json " + newJSON);
+        finalObj.put("pnfRegistration", newJSON);
+        log.info("final obj"+ finalObj.toString());
+        return finalObj;
     }
 }

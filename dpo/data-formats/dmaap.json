@@ -4,7 +4,7 @@
     "aaf_password": "PASSWORD",
     "type": "message_router",
     "dmaap_info": {
-      "topic_url": "https://HOSTNAME:3905/events/unauthenticated.DCAE_RCC_OUTPUT"
+      "topic_url": "https://HOSTNAME:3904/events/unauthenticated.DCAE_RCC_OUTPUT"
     }
   }
 }

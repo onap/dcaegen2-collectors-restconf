@@ -171,6 +171,11 @@ public class ApplicationSettings {
         return prependWithUserDirOnRelative(properties.getString("collector.dmaapfile", "etc/DmaapConfig.json"));
     }
 
+    public String controllerConfigFileLocation() {
+        return prependWithUserDirOnRelative(properties.getString("collector.eventinfo", "etc/ont_config.json"));
+    }
+
+
     public String dMaaPStreamsMapping() {
         return properties.getString("collector.rcc.dmaap.streamid", null);
     }
