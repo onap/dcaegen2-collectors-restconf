@@ -45,4 +45,5 @@ public class Constants {
     public static final String KSETTING_TRUST_STORE_PASSWORD = "trustStorePassword";
     public static final String KSETTING_KEY_STORE_FILENAME = "keyStoreFileName";
     public static final String KSETTING_KEY_STORE_PASSWD = "keyStorePassword";
+    public static final String KDEFAULT_DISABLE_SSL = "disableSsl";
 }

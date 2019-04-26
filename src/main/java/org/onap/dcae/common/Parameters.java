@@ -49,4 +49,5 @@ public class Parameters {
     public String oAuthVersion;
     public AuthType authtype;
     public Boolean returnRequestPayload;
+    public boolean disableSsl;
 }

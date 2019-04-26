@@ -318,44 +318,46 @@ public class RestapiCallNode {
 
     protected HttpResponse sendHttpRequest(String request, Parameters p) throws Exception {
         /* Enable this code if external controller's keyStore file not availabale */
-        /*Create a trust manager that does not validate certificate chains*/
-//        TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
-//            public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-//                return null;
-//            }
-//            public void checkClientTrusted(X509Certificate[] certs, String authType) {
-//            }
-//            public void checkServerTrusted(X509Certificate[] certs, String authType) {
-//            }
-//        }
-//        };
-//
-//        // Install the all-trusting trust manager
-//        SSLContext sc = SSLContext.getInstance("SSL");
-//        sc.init(null, trustAllCerts, new java.security.SecureRandom());
-//        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-//
-//        // Create all-trusting host name verifier
-//        HostnameVerifier allHostsValid = new HostnameVerifier() {
-//            public boolean verify(String hostname, SSLSession session) {
-//                return true;
-//            }
-//        };
-//
-//        // Install the all-trusting host verifier
-//        log.info("Warning!!! No SSL handshake  **************************************");
-//        HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
-        /*HELPER CODE END */
         ClientConfig config = new DefaultClientConfig();
-        SSLContext ssl = null;
-        if (p.ssl && p.restapiUrl.startsWith("https")) {
-            ssl = createSSLContext(p);
-        }
-        if (ssl != null) {
-            HostnameVerifier hostnameVerifier = (hostname, session) -> true;
+        if (!p.disableSsl) {
+            SSLContext ssl = null;
+            if (p.ssl && p.restapiUrl.startsWith("https")) {
+                ssl = createSSLContext(p);
+            }
+            if (ssl != null) {
+                HostnameVerifier hostnameVerifier = (hostname, session) -> true;
 
-            config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
-                    new HTTPSProperties(hostnameVerifier, ssl));
+                config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
+                        new HTTPSProperties(hostnameVerifier, ssl));
+            }
+        } else {
+
+            /* Create a trust manager that does not validate certificate chains */
+            TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+            }
+            };
+
+            /* Install the all-trusting trust manager */
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+            /* Create all-trusting host name verifier */
+            HostnameVerifier allHostsValid = new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
+
+            /* Install the all-trusting host verifier*/
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
         }
         logProperties(config.getProperties());
 

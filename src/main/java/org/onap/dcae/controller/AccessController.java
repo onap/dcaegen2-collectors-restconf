@@ -71,6 +71,7 @@ public class AccessController {
                 .setController_subscriptionUrl(controller.get("controller_subscriptionUrl").toString())
                 .setController_accessTokenMethod(controller.get("controller_accessTokenMethod").toString())
                 .setController_subsMethod(controller.get("controller_subsMethod").toString())
+                .setController_disableSsl(controller.get("controller_disableSsl").toString())
                 .createControllerConfigInfo();
         this.properties = properties;
         this.ctx = new RestConfContext();
@@ -237,6 +238,7 @@ public class AccessController {
         String KeyPassword = getKeyStorePassword(toAbsolutePath(this.getProperties().keystorePasswordFileLocation()));
         paraMap.put(Constants.KSETTING_KEY_STORE_PASSWD, KeyPassword);
 
+        paraMap.put(Constants.KDEFAULT_DISABLE_SSL, "true");
     }
 
     private Path toAbsolutePath(final String path) {

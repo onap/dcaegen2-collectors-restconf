@@ -175,6 +175,7 @@ public class PersistentEventConnection implements Runnable {
             modifyEventParamMap(Constants.KSETTING_REST_UNAME, parentCtrllr.getCfgInfo().getController_restapiUser());
             modifyEventParamMap(Constants.KSETTING_REST_PASSWD, parentCtrllr.getCfgInfo().getController_restapiPassword());
             modifyEventParamMap(Constants.KSETTING_HTTP_METHOD, parentCtrllr.getCfgInfo().getController_subsMethod());
+            modifyEventParamMap(Constants.KDEFAULT_DISABLE_SSL, parentCtrllr.getCfgInfo().getController_disableSsl());
 
             parentCtrllr.getRestApiCallNode().sendRequest(eventParaMap, ctx, null);
         } catch (Exception e) {

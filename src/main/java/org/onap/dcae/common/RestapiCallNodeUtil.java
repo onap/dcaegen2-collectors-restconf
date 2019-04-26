@@ -84,6 +84,7 @@ public class RestapiCallNodeUtil {
         p.partner = parseParam(paramMap, "partner", false, null);
         p.dumpHeaders = Boolean.valueOf(parseParam(paramMap, "dumpHeaders", false, null));
         p.returnRequestPayload = Boolean.valueOf(parseParam(paramMap, "returnRequestPayload", false, null));
+        p.disableSsl = Boolean.valueOf(parseParam(paramMap, "disableSsl", false, "true"));
         log.info(p.toString());
         return p;
     }

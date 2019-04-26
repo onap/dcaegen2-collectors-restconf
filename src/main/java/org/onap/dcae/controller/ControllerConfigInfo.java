@@ -29,7 +29,7 @@ public class ControllerConfigInfo {
     private String controller_subscriptionUrl;
     private String controller_accessTokenMethod;
     private String controller_subsMethod;
-
+    private String controller_disableSsl;
 
 
     public static class ControllerConfigInfoBuilder {
@@ -42,6 +42,7 @@ public class ControllerConfigInfo {
         private String controller_subscriptionUrl;
         private String controller_accessTokenMethod;
         private String controller_subsMethod;
+        private String controller_disableSsl;
 
         public ControllerConfigInfoBuilder setController_name(String controller_name) {
             this.controller_name = controller_name;
@@ -88,6 +89,11 @@ public class ControllerConfigInfo {
             return this;
         }
 
+        public ControllerConfigInfoBuilder setController_disableSsl(String controller_disableSsl) {
+            this.controller_disableSsl = controller_disableSsl;
+            return this;
+        }
+
         public ControllerConfigInfo createControllerConfigInfo() {
             return new ControllerConfigInfo(this);
         }
@@ -104,7 +110,7 @@ public class ControllerConfigInfo {
         this.controller_subscriptionUrl = controllerConfigInfoBuilder.controller_subscriptionUrl;
         this.controller_accessTokenMethod = controllerConfigInfoBuilder.controller_accessTokenMethod;
         this.controller_subsMethod = controllerConfigInfoBuilder.controller_subsMethod;
-
+        this.controller_disableSsl = controllerConfigInfoBuilder.controller_disableSsl;
     }
 
 
@@ -143,4 +149,9 @@ public class ControllerConfigInfo {
     public String getController_subscriptionUrl() {
         return controller_subscriptionUrl;
     }
+
+    public String getController_disableSsl() {
+        return controller_disableSsl;
+    }
+
 }
