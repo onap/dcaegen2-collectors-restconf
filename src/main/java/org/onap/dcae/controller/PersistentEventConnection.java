@@ -57,7 +57,7 @@ public class PersistentEventConnection implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(PersistentEventConnection.class);
     private boolean modifyEvent;
     private String modifyMethod;
-
+    private String userData;
     private RestConfContext ctx;
     private AccessController parentCtrllr;
     private Map<String, String> eventParaMap;
@@ -75,6 +75,7 @@ public class PersistentEventConnection implements Runnable {
         private AccessController parentCtrllr;
         private boolean modifyEvent;
         private String modifyMethod;
+        private String userData;
 
         public PersistentEventConnectionBuilder setEventName(String event_name) {
             this.event_name = event_name;
@@ -130,6 +131,12 @@ public class PersistentEventConnection implements Runnable {
             this.modifyMethod = modifyMethod;
             return this;
         }
+
+        public PersistentEventConnectionBuilder setUserData(String userData) {
+            this.userData = userData;
+            return this;
+        }
+
         public PersistentEventConnection createPersistentEventConnection() {
             return new PersistentEventConnection(this);
         }
@@ -151,6 +158,7 @@ public class PersistentEventConnection implements Runnable {
             this.state = EventConnectionState.INIT;
             this.modifyEvent = builder.modifyEvent;
             this.modifyMethod = builder.modifyMethod;
+            this.userData = builder.userData;
 
             this.ctx = new RestConfContext();
             for (String s : builder.parentCtrllr.getCtx().getAttributeKeySet()) {
@@ -281,6 +289,10 @@ public class PersistentEventConnection implements Runnable {
 
     public String getModifyMethod() {
         return modifyMethod;
+    }
+
+    public String getUserData() {
+        return userData;
     }
 
     public void printEventParamMap() {
