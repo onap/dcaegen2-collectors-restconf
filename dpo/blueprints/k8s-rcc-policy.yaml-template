@@ -24,7 +24,7 @@ description: >
 
 imports:
   - http://www.getcloudify.org/spec/cloudify/3.4/types.yaml
-  - https://nexus.onap.org/service/local/repositories/raw/content/org.onap.dcaegen2.platform.plugins/R4/k8splugin/1.4.5/k8splugin_types.yaml
+  - https://nexus.onap.org/service/local/repositories/raw/content/org.onap.dcaegen2.platform.plugins/R4/k8splugin/1.4.13/k8splugin_types.yaml
 inputs:
   dmaap_host:
     type: string
@@ -94,7 +94,7 @@ node_templates:
                             topic_url:
                               get_input: notification_publish_url
                           type: message_router
-            rcc_policy: '[{"controller_name":"AccessM&C","controller_restapiUrl":"172.30.0.55:26335","controller_restapiUser":"access","controller_restapiPassword":"Huawei@123","controller_accessTokenUrl":"/rest/plat/smapp/v1/oauth/token","controller_accessTokenFile":"./etc/access-token.json","controller_accessTokenMethod":"put","controller_subsMethod":"post","controller_subscriptionUrl":"/restconf/v1/operations/huawei-nce-notification-action:establish-subscription","controller_disableSsl":"true","event_details":[{"event_name":"ONT_registration","event_description":"ONTregistartionevent","event_sseventUrlEmbed":"true","event_sseventsField":"output.url","event_sseventsUrl":"null","event_subscriptionTemplate":"./etc/ont_registartion_subscription_template.json","event_unSubscriptionTemplate":"./etc/ont_registartion_unsubscription_template.json","event_ruleId":"12345678", "modifyData": "true", "modifyMethod": "modifyOntEvent"}]}]'
+            rcc_policy: '[{"controller_name":"AccessM&C","controller_restapiUrl":"172.30.0.55:26335","controller_restapiUser":"access","controller_restapiPassword":"Huawei@123","controller_accessTokenUrl":"/rest/plat/smapp/v1/oauth/token","controller_accessTokenFile":"./etc/access-token.json","controller_accessTokenMethod":"put","controller_subsMethod":"post","controller_subscriptionUrl":"/restconf/v1/operations/huawei-nce-notification-action:establish-subscription","controller_disableSsl":"true","event_details":[{"event_name":"ONT_registration","event_description":"ONTregistartionevent","event_sseventUrlEmbed":"true","event_sseventsField":"output.url","event_sseventsUrl":"null","event_subscriptionTemplate":"./etc/ont_registartion_subscription_template.json","event_unSubscriptionTemplate":"./etc/ont_registartion_unsubscription_template.json","event_ruleId":"12345678", "modifyData": "true", "modifyMethod": "modifyOntEvent", "userData": "remote_id=AC9.0234.0337;svlan=100;cvlan=10;"}]}]'
     interfaces:
       cloudify.interfaces.lifecycle:
         start:
