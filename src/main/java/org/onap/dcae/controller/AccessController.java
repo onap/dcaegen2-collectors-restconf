@@ -179,6 +179,7 @@ public class AccessController {
                                         .setEventRuleId(event.get("event_ruleId").toString()).setParentCtrllr(this)
                                         .setModifyEvent(Boolean.parseBoolean(event.get("modifyData").toString()))
                                         .setModifyMethod(event.get("modifyMethod").toString())
+                                        .setUserData(event.get("userData").toString())
                                         .createPersistentEventConnection();
 
                         eventList.put(name, conn);
