@@ -94,7 +94,9 @@ public class EventProcessorTest {
         PersistentEventConnection p = new PersistentEventConnection.PersistentEventConnectionBuilder().setEventName("")
                 .setEventDescription("").setEventSseventUrlEmbed(true).setEventSseventsField("").setEventSseventsUrl("")
                 .setEventSubscriptionTemplate("").setEventUnSubscriptionTemplate("").setEventRuleId("1234646346")
-                .setParentCtrllr(acClr).setModifyEvent(true).setModifyMethod("modifyOntEvent").createPersistentEventConnection();
+                .setParentCtrllr(acClr).setModifyEvent(true).setModifyMethod("modifyOntEvent")
+                .setUserData("remote_id=AC9.0234.0337;svlan=1001;macAddress=00:11:22:33:44:55;")
+                .createPersistentEventConnection();
         p.getEventParamMapValue("restapiUrl");
         p.modifyEventParamMap("restapiUrl", "10.118.191.43:26335");
         RestConfCollector.fProcessingInputQueue = new LinkedBlockingQueue<>(4);

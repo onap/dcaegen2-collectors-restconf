@@ -85,7 +85,8 @@ public class EventProcessor implements Runnable {
                 if (ev.getConn().isModifyEvent()){
                     try {
                         log.info("Invoking method " + ev.getConn().getModifyMethod() + " isModify " + ev.getConn().isModifyEvent());
-                        modifiedObj = (JSONObject)(this.getClass().getMethod(ev.getConn().getModifyMethod(), EventData.class).invoke(this, ev));
+                        modifiedObj = (JSONObject)(this.getClass().getMethod(ev.getConn().getModifyMethod(),
+                                EventData.class, String.class).invoke(this, ev, ev.getConn().getUserData()));
                     }catch (Exception e) {
                         log.warn("No such method exist" + e);
                     }
@@ -118,7 +119,7 @@ public class EventProcessor implements Runnable {
         return mergedJSON;
     }
 
-    public JSONObject modifyOntEvent(EventData ev) {
+    public JSONObject modifyOntEvent(EventData ev, String userData) {
         PersistentEventConnection conn = ev.getConn();
         JSONObject json1 = ev.getEventObj();
         log.info("modifyOntEvent");
@@ -158,6 +159,28 @@ public class EventProcessor implements Runnable {
             JSONObject additionalfields = newJSON.getJSONObject("additionalFields");
             String attachment_point = oltName + "-" + olt_slot + "-" + olt_port;
             additionalfields.put("attachment-point", attachment_point);
+            if (!userData.isEmpty()) {
+                java.util.Map<String, String> usrDataMap = parseuserDataToDataHashMapping(userData);
+                if (usrDataMap.containsKey("remote_id")) {
+                    additionalfields.put("remote-id", usrDataMap.get("remote_id"));
+                }
+
+                if (usrDataMap.containsKey("cvlan")) {
+                    additionalfields.put("cvlan", usrDataMap.get("cvlan"));
+                }
+
+                if (usrDataMap.containsKey("svlan")) {
+                    additionalfields.put("svlan", usrDataMap.get("svlan"));
+                }
+
+                if (usrDataMap.containsKey("macAddress")) {
+                    newJSON.put("macAddress", usrDataMap.get("macAddress"));
+                }
+
+                if (usrDataMap.containsKey("vendorName")) {
+                    newJSON.put("vendorName", usrDataMap.get("vendorName"));
+                }
+            }
             //additionalfields.put("remote-id", attachment-point);
         } catch (Exception e) {
             log.info("File reading error " + e);
@@ -166,5 +189,17 @@ public class EventProcessor implements Runnable {
         finalObj.put("pnfRegistration", newJSON);
         log.info("final obj"+ finalObj.toString());
         return finalObj;
+    }
+
+    public static java.util.Map<String, String> parseuserDataToDataHashMapping(String userData) {
+        java.util.Map<String, String> userDataHash = new HashMap<>();
+        String[] list = userData.split("\\;");
+        for (String aList : list) {
+            String key = aList.split("=")[0];
+            String value = aList.substring(aList.indexOf('=') + 1);
+            userDataHash.put(key, value);
+            log.info("adding key " + key + " value " + value);
+        }
+        return userDataHash;
     }
 }
