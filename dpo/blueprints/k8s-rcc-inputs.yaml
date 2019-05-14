@@ -16,7 +16,7 @@
 # limitations under the License.
 # ============LICENSE_END=========================================================
 
-tag_version: nexus.onap.org:10001/org.onap.dcaegen2.collectors.restconfcollector:1.1.1
+tag_version: nexus.onap.org:10001/onap/org.onap.dcaegen2.collectors.restconfcollector:1.1.2
 
 external_port: 30416
 
