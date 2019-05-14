@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cc2197e_49b6af28",
+        "filename": "version.properties",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-05-14T17:09:17Z",
+      "side": 1,
+      "message": "change not required",
+      "range": {
+        "startLine": 3,
+        "startChar": 6,
+        "endLine": 3,
+        "endChar": 7
+      },
+      "revId": "6d220d18326ebcc9d9a78c3dcd3f876e0714013c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
