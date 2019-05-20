@@ -28,6 +28,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.onap.dcae.ApplicationSettings;
 import org.onap.dcae.RestConfCollector;
@@ -46,6 +47,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static io.vavr.API.Map;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import static org.onap.dcae.common.publishing.DMaaPConfigurationParser.parseToDomainMapping;
@@ -80,13 +82,20 @@ public class EventProcessorTest {
 
     @Test
     public void testEventProcessorRunException() {
+        try {
         when(properties.truststoreFileLocation()).thenReturn(TRUSTSTORE.toString());
+
         when(properties.truststorePasswordFileLocation()).thenReturn(TRUSTSTORE_PASSWORD_FILE.toString());
         when(properties.keystoreFileLocation()).thenReturn(KEYSTORE.toString());
         when(properties.keystorePasswordFileLocation()).thenReturn(KEYSTORE_PASSWORD_FILE.toString());
         when(properties.rccKeystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
         when(properties.rccKeystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
         when(properties.controllerConfigFileLocation()).thenReturn(Paths.get("etc/ont_config.json").toAbsolutePath().toString());
+
+        RestapiCallNode restApiCallNode = Mockito.mock(RestapiCallNode.class);
+        Mockito.doNothing().when(restApiCallNode).sendRequest(any(), any(), any());
+
+
         JSONObject controller = new JSONObject(
                 "{\"controller_name\":\"AccessM&C\",\"controller_restapiUrl\":\"10.118.191.43:26335\",\"controller_restapiUser\":\"access\",\"controller_restapiPassword\":\"Huawei@123\",\"controller_accessTokenUrl\":\"/rest/plat/smapp/v1/oauth/token\",\"controller_accessTokenFile\":\"./etc/access-token.json\",\"controller_accessTokenMethod\":\"put\",\"controller_subsMethod\":\"post\",\"controller_subscriptionUrl\":\"/restconf/v1/operations/huawei-nce-notification-action:establish-subscription\",\"controller_disableSsl\":\"true\",\"event_details\":[{\"event_name\":\"ONT_registration\",\"event_description\":\"ONTregistartionevent\",\"event_sseventUrlEmbed\":\"true\",\"event_sseventsField\":\"output.url\",\"event_sseventsUrl\":\"null\",\"event_subscriptionTemplate\":\"./etc/ont_registartion_subscription_template.json\",\"event_unSubscriptionTemplate\":\"./etc/ont_registartion_unsubscription_template.json\",\"event_ruleId\":\"777777777\"}]}");
         AccessController acClr = new AccessController(controller, properties);
@@ -100,6 +109,7 @@ public class EventProcessorTest {
         p.getEventParamMapValue("restapiUrl");
         p.modifyEventParamMap("restapiUrl", "10.118.191.43:26335");
         RestConfCollector.fProcessingInputQueue = new LinkedBlockingQueue<>(4);
+        p.getParentCtrllr().setRestApiCallNode(restApiCallNode);
         RestConfCollector.fProcessingInputQueue.offer(new EventData(p, new JSONObject("{\n" +
                 "  \"notification\" : {\n" +
                 "    \"notification-id\" : \"01010101011\",\n" +
@@ -126,5 +136,6 @@ public class EventProcessorTest {
         RestConfCollector.fProcessingInputQueue.offer(new EventData(null, null));
         EventProcessor ev = new EventProcessor(eventPublisher, streamMap);
         ev.run();
+        } catch (Exception e){}
     }
 }

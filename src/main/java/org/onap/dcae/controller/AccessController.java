@@ -19,6 +19,9 @@
  */
 package org.onap.dcae.controller;
 
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.onap.dcae.ApplicationException;
@@ -59,6 +62,10 @@ public class AccessController {
 
     ControllerActivationState state;
 
+    private static ScheduledFuture<?> accesstokenRenewal;
+    private static ScheduledThreadPoolExecutor scheduledThreadPoolExecutor;
+
+
     public AccessController(JSONObject controller,
             ApplicationSettings properties) {
         this.cfgInfo = new ControllerConfigInfo.ControllerConfigInfoBuilder()
@@ -79,7 +86,7 @@ public class AccessController {
         this.paraMap = new HashMap<>();
         this.state = ControllerActivationState.INIT;
         prepareControllerParamMap();
-
+        this.scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
         log.info("AccesController Created {} {} {} {} {} {}", this.cfgInfo.getController_name(),
                 this.cfgInfo.getController_restapiUrl(), this.cfgInfo.getController_restapiPassword(),
                 this.cfgInfo.getController_restapiUser(), this.cfgInfo.getController_accessTokenUrl(),
@@ -153,7 +160,11 @@ public class AccessController {
 
     public void activate() {
         fetchTokenId();
-
+        AccessTokenRenewalTask task = new AccessTokenRenewalTask();
+        accesstokenRenewal = scheduledThreadPoolExecutor.scheduleAtFixedRate(task,
+                5,
+                10,
+                TimeUnit.MINUTES);
         if (getState() == ControllerActivationState.ACTIVE) {
             printControllerParamMap();
             /* Create eventlist from properties */
@@ -268,6 +279,19 @@ public class AccessController {
         for (String name : paraMap.keySet()) {
             String value = paraMap.get(name);
             log.info(name + " : " + value);
+        }
+    }
+
+    private class AccessTokenRenewalTask implements Runnable
+    {
+        public AccessTokenRenewalTask() {
+        }
+
+        @Override
+        public void run()
+        {
+            /* Renew token Id */
+            fetchTokenId();
         }
     }
 }
