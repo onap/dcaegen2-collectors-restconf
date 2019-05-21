@@ -20,8 +20,13 @@
 
 package org.onap.dcae.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.glassfish.jersey.media.sse.EventSource;
 import org.glassfish.jersey.media.sse.SseFeature;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.onap.dcae.common.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -187,8 +192,13 @@ public class PersistentEventConnection implements Runnable {
 
             parentCtrllr.getRestApiCallNode().sendRequest(eventParaMap, ctx, null);
         } catch (Exception e) {
-            log.error("Exception occured!", e);
-            Thread.currentThread().interrupt();
+            log.error("Failed to receive sbscription notiication, trying again", e);
+            try {
+                parentCtrllr.getRestApiCallNode().sendRequest(eventParaMap, ctx, null);
+            }catch (Exception ex){
+                log.error("Exception occured again! Trying again", e);
+                Thread.currentThread().interrupt();
+            }
         }
 
         /* Retrieve url from result and construct SSE url */
@@ -222,6 +232,7 @@ public class PersistentEventConnection implements Runnable {
         eventSource.register(new DataChangeEventListener(this));
         eventSource.open();
         log.info("Connected to SSE source");
+
         while (running) {
             try {
                 log.info("SSE state " + eventSource.isOpen());
@@ -301,5 +312,13 @@ public class PersistentEventConnection implements Runnable {
             String value = eventParaMap.get(name);
             log.info(name + " : " + value);
         }
+    }
+
+    public Map<String, String> getEventParaMap() {
+        return eventParaMap;
+    }
+
+    public RestConfContext getCtx() {
+        return ctx;
     }
 }

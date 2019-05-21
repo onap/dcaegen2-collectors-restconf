@@ -368,7 +368,7 @@ public class RestapiCallNode {
 
         log.info("Sending request:");
         log.info(request);
-        log.info("URL: " + p.restapiUrl + " method " + p.httpMethod.toString() + " Custome headr " + p.customHttpHeaders);
+        log.info("URL: " + p.restapiUrl + " method " + p.httpMethod.toString() + " Custom header " + p.customHttpHeaders);
 
         long t1 = System.currentTimeMillis();
 
