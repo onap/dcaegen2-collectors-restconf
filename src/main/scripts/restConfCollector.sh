@@ -32,7 +32,7 @@ cd -
 
 restConfCollector_start() {
         echo `date +"%Y%m%d.%H%M%S%3N"` - restConfCollector_start | tee -a ${BASEDIR}/logs/console.txt
-        collectorPid=`pgrep -f org.onap.restconf.common`
+        collectorPid=`pidof java`
 
         if [ ! -z "$collectorPid" ]; then
                 echo  "WARNING: restConf Collector already running as PID $collectorPid" | tee -a ${BASEDIR}/logs/console.txt
@@ -50,12 +50,8 @@ restConfCollector_start() {
         if [ $? -ne 0 ]; then
                 echo "restConf Collector has been started!!!" | tee -a ${BASEDIR}/logs/console.txt
         fi
-
-
 }
 
-## Pre-setting
-JAVA_HOME=/usr/bin/java
 
 # use JAVA_HOME if provided
 if [ -z "$JAVA_HOME" ]; then
@@ -63,7 +59,8 @@ if [ -z "$JAVA_HOME" ]; then
         echo "Startup Aborted!!"
         exit 1
 else
-        JAVA=$JAVA_HOME
+        echo "$JAVA_HOME"
+        JAVA=$JAVA_HOME/bin/java
 fi
 
 MAINCLASS=org.onap.dcae.RestConfCollector
@@ -88,13 +85,13 @@ esac
 
 restConfCollector_stop() {
          echo `date +"%Y%m%d.%H%M%S%3N"` - collector_stop
-         collectorPid=`pgrep -f org.onap.dcae.collectors.restconf.common`
+         collectorPid=`pidof java`
          if [ ! -z "$collectorPid" ]; then
                 echo "Stopping PID $collectorPid"
 
                 kill -9 $collectorPid
                 sleep 5
-                if [ ! "$(pgrep -f org.onap.restconf.common)" ]; then
+                if [ ! $(pidof java) ]; then
                          echo "restConf Collector has been stopped!!!"
                 else
                          echo "restConf Collector is being stopped!!!"
