@@ -195,7 +195,7 @@ limitations under the License.
                     <imageTags>
                         <tag>latest</tag>
                     </imageTags>
-                    <baseImage>openjdk:8-jre-slim</baseImage>
+                    <baseImage>openjdk:8-jre-alpine</baseImage>
                     <env>
                         <HOSTALIASES>/etc/host.aliases</HOSTALIASES>
                     </env>
