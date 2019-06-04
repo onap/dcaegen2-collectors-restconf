@@ -22,6 +22,7 @@
 
 package org.onap.dcae.restapi;
 
+import org.eclipse.jetty.util.security.Password;
 import org.onap.dcae.ApplicationException;
 import org.onap.dcae.ApplicationSettings;
 import org.onap.dcae.common.SSLContextCreator;
@@ -99,7 +100,7 @@ public class ServletConfig implements WebServerFactoryCustomizer<ConfigurableSer
 
     private String getKeyStorePassword(final Path location) {
         try {
-            return new String(readAllBytes(location));
+            return Password.deobfuscate(new String(readAllBytes(location)));
         } catch (IOException e) {
             log.error("Could not read keystore password from: '" + location + "'.", e);
             throw new ApplicationException(e);

@@ -186,7 +186,7 @@ public class PersistentEventConnection implements Runnable {
                     + parentCtrllr.getCfgInfo().getController_subscriptionUrl());
             modifyEventParamMap(Constants.KDEFAULT_TEMP_FILENAME, event_subscriptionTemplate);
             modifyEventParamMap(Constants.KSETTING_REST_UNAME, parentCtrllr.getCfgInfo().getController_restapiUser());
-            modifyEventParamMap(Constants.KSETTING_REST_PASSWD, parentCtrllr.getCfgInfo().getController_restapiPassword());
+            modifyEventParamMap(Constants.KSETTING_REST_PASSWD, parentCtrllr.getControllerRestapiPassword());
             modifyEventParamMap(Constants.KSETTING_HTTP_METHOD, parentCtrllr.getCfgInfo().getController_subsMethod());
             modifyEventParamMap(Constants.KDEFAULT_DISABLE_SSL, parentCtrllr.getCfgInfo().getController_disableSsl());
 
@@ -225,7 +225,7 @@ public class PersistentEventConnection implements Runnable {
         if (tokenId == null) {
             headerName = HttpHeaders.AUTHORIZATION;
             tokenId = getAuthorizationToken(parentCtrllr.getCfgInfo().getController_restapiUser(),
-                    parentCtrllr.getCfgInfo().getController_restapiPassword());
+                    parentCtrllr.getControllerRestapiPassword());
         }
         AdditionalHeaderWebTarget newTarget = new AdditionalHeaderWebTarget(target, tokenId, headerName);
         EventSource eventSource = EventSource.target(newTarget).build();
@@ -310,6 +310,9 @@ public class PersistentEventConnection implements Runnable {
         log.info("----------------Event Param Map-------------------");
         for (String name : eventParaMap.keySet()) {
             String value = eventParaMap.get(name);
+            if (name.toLowerCase().contains("password".toLowerCase())) {
+                value = "*********";
+            }
             log.info(name + " : " + value);
         }
     }

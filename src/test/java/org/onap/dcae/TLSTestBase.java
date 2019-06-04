@@ -21,6 +21,7 @@
  */
 package org.onap.dcae;
 
+import org.eclipse.jetty.util.security.Password;
 import org.json.JSONObject;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -80,8 +81,8 @@ public class TLSTestBase {
         private final String trustStorePassword;
 
         public TestClassBase() {
-            keyStorePassword = readFile(RCC_KEYSTORE_PASSWORD_FILE);
-            trustStorePassword = readFile(TRUSTSTORE_PASSWORD_FILE);
+            keyStorePassword = Password.deobfuscate(readFile(RCC_KEYSTORE_PASSWORD_FILE));
+            trustStorePassword = Password.deobfuscate(readFile(TRUSTSTORE_PASSWORD_FILE));
         }
 
         private String getURL(final String protocol, final String uri) {

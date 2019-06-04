@@ -22,6 +22,7 @@
 package org.onap.dcae;
 
 import io.vavr.collection.Map;
+import org.eclipse.jetty.util.security.Password;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.onap.dcae.common.ControllerActivationState;
