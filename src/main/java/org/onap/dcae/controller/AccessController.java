@@ -41,6 +41,7 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import org.eclipse.jetty.util.security.Password;
 
 import static java.nio.file.Files.readAllBytes;
 import static org.onap.dcae.common.RestapiCallNodeUtil.getUriMethod;
@@ -72,7 +73,7 @@ public class AccessController {
                 .setController_name(controller.get("controller_name").toString())
                 .setController_restapiUrl(controller.get("controller_restapiUrl").toString())
                 .setController_restapiUser(controller.get("controller_restapiUser").toString())
-                .setController_restapiPassword(controller.get("controller_restapiPassword").toString())
+                .setcontroller_restapiPassFile(controller.get("controller_restapiPassFile").toString())
                 .setController_accessTokenUrl(controller.get("controller_accessTokenUrl").toString())
                 .setController_accessTokenFile(controller.get("controller_accessTokenFile").toString())
                 .setController_subscriptionUrl(controller.get("controller_subscriptionUrl").toString())
@@ -85,10 +86,11 @@ public class AccessController {
         this.restApiCallNode = new RestapiCallNode();
         this.paraMap = new HashMap<>();
         this.state = ControllerActivationState.INIT;
+        this.
         prepareControllerParamMap();
         this.scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
         log.info("AccesController Created {} {} {} {} {} {}", this.cfgInfo.getController_name(),
-                this.cfgInfo.getController_restapiUrl(), this.cfgInfo.getController_restapiPassword(),
+                this.cfgInfo.getController_restapiUrl(), this.cfgInfo.getcontroller_restapiPassFile(),
                 this.cfgInfo.getController_restapiUser(), this.cfgInfo.getController_accessTokenUrl(),
                 this.cfgInfo.getController_accessTokenFile());
     }
@@ -132,7 +134,7 @@ public class AccessController {
         modifyControllerParamMap(Constants.KSETTING_REST_API_URL, getUriMethod(this.properties.authorizationEnabled()) + cfgInfo.getController_restapiUrl() + cfgInfo.getController_accessTokenUrl());
         modifyControllerParamMap(Constants.KDEFAULT_TEMP_FILENAME, cfgInfo.getController_accessTokenFile());
         modifyControllerParamMap(Constants.KSETTING_REST_UNAME, cfgInfo.getController_restapiUser());
-        modifyControllerParamMap(Constants.KSETTING_REST_PASSWD, cfgInfo.getController_restapiPassword());
+        modifyControllerParamMap(Constants.KSETTING_REST_PASSWD, getControllerRestapiPassword());
         modifyControllerParamMap(Constants.KSETTING_HTTP_METHOD, cfgInfo.getController_accessTokenMethod());
 
         String httpResponse = null;
@@ -156,6 +158,7 @@ public class AccessController {
             log.info("http response " + httpResponse);
         }
     }
+
 
 
     public void activate() {
@@ -259,7 +262,7 @@ public class AccessController {
 
     private String getKeyStorePassword(final Path location) {
         try {
-            return new String(readAllBytes(location));
+            return Password.deobfuscate(new String(readAllBytes(location)));
         } catch (Exception e) {
             log.error("Could not read password from: '" + location + "'.", e);
             throw new ApplicationException(e);
@@ -278,7 +281,21 @@ public class AccessController {
         log.info("----------------Controller Param Map-------------------");
         for (String name : paraMap.keySet()) {
             String value = paraMap.get(name);
+            if (name.toLowerCase().contains("password".toLowerCase())) {
+                value = "*********";
+            }
+
             log.info(name + " : " + value);
+        }
+    }
+
+    public String getControllerRestapiPassword() {
+        final Path location = toAbsolutePath(this.cfgInfo.getcontroller_restapiPassFile());
+        try {
+            return Password.deobfuscate(new String(readAllBytes(location)));
+        } catch (Exception e) {
+            log.error("Could not read password from: '" + location + "'.", e);
+            throw new ApplicationException(e);
         }
     }
 

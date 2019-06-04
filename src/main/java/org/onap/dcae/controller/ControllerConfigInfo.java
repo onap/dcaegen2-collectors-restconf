@@ -22,6 +22,7 @@ package org.onap.dcae.controller;
 public class ControllerConfigInfo {
     private String controller_name;
     private String controller_restapiUrl;
+    private String controller_restapiPassFile;
     private String controller_restapiUser;
     private String controller_restapiPassword;
     private String controller_accessTokenUrl;
@@ -36,7 +37,7 @@ public class ControllerConfigInfo {
         private String controller_name;
         private String controller_restapiUrl;
         private String controller_restapiUser;
-        private String controller_restapiPassword;
+        private String controller_restapiPassFile;
         private String controller_accessTokenUrl;
         private String controller_accessTokenFile;
         private String controller_subscriptionUrl;
@@ -54,16 +55,14 @@ public class ControllerConfigInfo {
             return this;
         }
 
+        public ControllerConfigInfoBuilder setcontroller_restapiPassFile(String controller_restapiPassFile) {
+            this.controller_restapiPassFile = controller_restapiPassFile;
+            return this;
+        }
         public ControllerConfigInfoBuilder setController_restapiUser(String controller_restapiUser) {
             this.controller_restapiUser = controller_restapiUser;
             return this;
         }
-
-        public ControllerConfigInfoBuilder setController_restapiPassword(String controller_restapiPassword) {
-            this.controller_restapiPassword = controller_restapiPassword;
-            return this;
-        }
-
         public ControllerConfigInfoBuilder setController_accessTokenUrl(String controller_accessTokenUrl) {
             this.controller_accessTokenUrl = controller_accessTokenUrl;
             return this;
@@ -104,7 +103,7 @@ public class ControllerConfigInfo {
         this.controller_name = controllerConfigInfoBuilder.controller_name;
         this.controller_restapiUrl = controllerConfigInfoBuilder.controller_restapiUrl;
         this.controller_restapiUser = controllerConfigInfoBuilder.controller_restapiUser;
-        this.controller_restapiPassword = controllerConfigInfoBuilder.controller_restapiPassword;
+        this.controller_restapiPassFile = controllerConfigInfoBuilder.controller_restapiPassFile;
         this.controller_accessTokenUrl = controllerConfigInfoBuilder.controller_accessTokenUrl;
         this.controller_accessTokenFile = controllerConfigInfoBuilder.controller_accessTokenFile;
         this.controller_subscriptionUrl = controllerConfigInfoBuilder.controller_subscriptionUrl;
@@ -126,8 +125,8 @@ public class ControllerConfigInfo {
         return controller_restapiUser;
     }
 
-    public String getController_restapiPassword() {
-        return controller_restapiPassword;
+    public String getcontroller_restapiPassFile() {
+        return controller_restapiPassFile;
     }
 
     public String getController_accessTokenUrl() {
@@ -153,5 +152,6 @@ public class ControllerConfigInfo {
     public String getController_disableSsl() {
         return controller_disableSsl;
     }
+
 
 }
