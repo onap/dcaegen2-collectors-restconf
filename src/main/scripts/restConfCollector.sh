@@ -45,7 +45,6 @@ restConfCollector_start() {
         # for all the jars.
 
         cd ${BASEDIR}
-        echo "192.168.17.11 onap-message-router" >> /etc/hosts
         nohup $JAVA -cp "etc${PATHSEP}lib/*" $JAVA_OPTS -Dhttps.protocols=TLSv1.1,TLSv1.2 $MAINCLASS $* &
         if [ $? -ne 0 ]; then
                 echo "restConf Collector has been started!!!" | tee -a ${BASEDIR}/logs/console.txt

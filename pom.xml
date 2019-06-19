@@ -35,6 +35,8 @@ limitations under the License.
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>8</java.version>
         <docker.image.name>onap/org.onap.dcaegen2.collectors.restconfcollector</docker.image.name>
+        <docker.user.name>restconf</docker.user.name>
+        <docker.user.dir>/opt/app/restconfcollector</docker.user.dir>
         <!-- TEST SETTINGS -->
         <surefire.redirectTestOutputToFile>true</surefire.redirectTestOutputToFile>
         <!-- PLUGIN SETTINGS -->
@@ -199,7 +201,7 @@ limitations under the License.
                     <env>
                         <HOSTALIASES>/etc/host.aliases</HOSTALIASES>
                     </env>
-                    <workdir>/opt/app/restconfcollector</workdir>
+                    <workdir>${docker.user.dir}</workdir>
                     <resources>
                         <resource>
                             <targetPath>.</targetPath>
@@ -207,13 +209,14 @@ limitations under the License.
                         </resource>
                     </resources>
                     <runs>
-                        <run>chmod +x /opt/app/restconfcollector/bin/*.sh</run> <!-- Maven is loosing file permissions during artifacts copy -->
+                        <run>adduser -h ${docker.user.dir} -D ${docker.user.name}; chown -R ${docker.user.name}: ${docker.user.dir}; chmod +x ${docker.user.dir}/bin/*.sh</run>
                     </runs>
-                    <cmd>/opt/app/restconfcollector/bin/docker_entry.sh</cmd>
+                    <cmd>${docker.user.dir}/bin/docker_entry.sh</cmd>
                     <exposes>
                         <expose>8080</expose>
                         <expose>8687</expose>
                     </exposes>
+                    <user>${docker.user.name}</user>
                 </configuration>
                 <executions>
                     <execution>
