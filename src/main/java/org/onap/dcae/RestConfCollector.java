@@ -153,6 +153,11 @@ public class RestConfCollector {
     }
 
     private static void controllerConfigCleanup() {
+        log.info("controller ConfigCleanup!");
+        for (java.util.Map.Entry<String, AccessController> entry : controllerStore.entrySet()) {
+            AccessController acstlr = entry.getValue();
+            acstlr.clearAllPersistentConnectios();
+        }
         controllerStore.clear();
     }
 

@@ -294,4 +294,13 @@ public class AccessController {
             fetchTokenId();
         }
     }
+
+    public void clearAllPersistentConnectios() {
+        log.info("clearAll PersistentConnectios !");
+        for (java.util.Map.Entry<String, PersistentEventConnection> entry : eventList.entrySet()) {
+            PersistentEventConnection conn = entry.getValue();
+            conn.shutdown();
+        }
+        scheduledThreadPoolExecutor.shutdown();
+    }
 }
