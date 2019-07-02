@@ -41,7 +41,6 @@ public class DataChangeEventListener implements EventListener {
     @Override
     public void onEvent(InboundEvent event) {
         try {
-            log.info("SSE Event is received");
             String s = event.readData();
             jsonType type = isJSONValid(s);
             if (type == jsonType.OBJECT) {

@@ -78,8 +78,8 @@ public class RestConfCollector {
         init();
         app.setAddCommandLineProperties(true);
         context = app.run();
-        configLoader.updateConfig();
         controllerConfig(properties);
+        configLoader.updateConfig();
         oplog.info("RestConfController running .....");
     }
 
@@ -153,6 +153,13 @@ public class RestConfCollector {
     }
 
     private static void controllerConfigCleanup() {
+        log.info("controller ConfigCleanup!");
+        for (java.util.Map.Entry<String, AccessController> entry : controllerStore.entrySet()) {
+            AccessController acstlr = entry.getValue();
+            log.info("controller detail " + acstlr.getCfgInfo().getController_restapiUrl());
+            acstlr.clearAllPersistentConnectios();
+            controllerStore.remove(acstlr);
+        }
         controllerStore.clear();
     }
 
