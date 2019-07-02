@@ -193,7 +193,6 @@ public class PersistentEventConnection implements Runnable {
                     openState = eventSrc.isOpen();
                     log.info("SSE state " + eventSrc.isOpen());
                 }
-                log.info("SSE state " + openState);
                 if (eventSrc != null && !openState)
                 {
                     log.info("SSE state " + eventSrc.isOpen() + " Resubscribing after 1 minute...");
@@ -201,10 +200,14 @@ public class PersistentEventConnection implements Runnable {
                     /* Resubscribe again */
                     subscribe = true;
                 }
+            } catch (InterruptedException ie) {
+                log.info("Exception: " + ie.getMessage());
+                Thread.currentThread().interrupt();
+                running = false;
+                return;
             } catch (Exception e){
                 /* Other exception we can keep on retrying */
                 log.info("Connection failed: " + e.getMessage());
-                running = true;
                 subscribe = true;
                 if (eventSrc != null) {
                     eventSrc.close();
@@ -348,5 +351,9 @@ public class PersistentEventConnection implements Runnable {
 
     public RestConfContext getCtx() {
         return ctx;
+    }
+
+    public void shutdown() {
+        running = false;
     }
 }

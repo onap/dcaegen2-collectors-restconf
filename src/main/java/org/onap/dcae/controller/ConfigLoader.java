@@ -91,6 +91,7 @@ public class ConfigLoader {
         if (toRestart) {
             log.info("New app config - Application will be restarted");
             RestConfCollector.restartApplication();
+            toRestart = false;
         }
     }
 
