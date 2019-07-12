@@ -17,11 +17,14 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.dcae.common;
+
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+
 
 public class EventConnectionStateTest {
 
@@ -30,7 +33,7 @@ public class EventConnectionStateTest {
         assertEquals(EventConnectionState.INIT, EventConnectionState.fromString("init"));
         assertEquals(EventConnectionState.SUBSCRIBED, EventConnectionState.fromString("subscribed"));
         assertEquals(EventConnectionState.UNSUBSCRIBED, EventConnectionState.fromString("unsubscribed"));
-        assertEquals(EventConnectionState.Unspecified, EventConnectionState.fromString("unspecified"));
+        assertEquals(EventConnectionState.UNSPECIFIED, EventConnectionState.fromString("unspecified"));
     }
 
     @Test(expected = IllegalArgumentException.class)

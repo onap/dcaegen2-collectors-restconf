@@ -17,6 +17,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.dcae.controller;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
@@ -33,21 +34,21 @@ import org.junit.Test;
 import org.onap.dcae.WiremockBasedTest;
 
 
-public class ConfigCBSSourceTest extends WiremockBasedTest {
+public class ConfigCbsSourceTest extends WiremockBasedTest {
 
     @Test
     public void shouldReturnValidAppConfiguration() {
         // given
-        String sampleConfigForVES = "{\"collector.rcc.service.port\": 8080}";
+        String sampleConfigForVes = "{\"collector.rcc.service.port\": 8080}";
 
-        stubConsulToReturnLocalAddressOfCBS();
-        stubCBSToReturnAppConfig(sampleConfigForVES);
+        stubConsulToReturnLocalAddressOfCbs();
+        stubCbsToReturnAppConfig(sampleConfigForVes);
 
         // when
         Try<JSONObject> actual = tryToGetConfig();
 
         // then
-        assertThat(actual.get().toString()).isEqualTo(new JSONObject(sampleConfigForVES).toString());
+        assertThat(actual.get().toString()).isEqualTo(new JSONObject(sampleConfigForVes).toString());
     }
 
     @Test
@@ -115,10 +116,10 @@ public class ConfigCBSSourceTest extends WiremockBasedTest {
 
 
     @Test
-    public void shouldReturnFailureOnFailureToCommunicateWithCBS() {
+    public void shouldReturnFailureOnFailureToCommunicateWithCbs() {
         // given
         stubFor(get(urlEqualTo("/v1/catalog/service/CBSName"))
-            .willReturn(aResponse().withStatus(200).withBody(validLocalCBSConf())));
+            .willReturn(aResponse().withStatus(200).withBody(validLocalCbsConf())));
         stubFor(get(urlEqualTo("/service_component/restconfcollector"))
             .willReturn(aResponse().withStatus(400)));
 
@@ -134,8 +135,8 @@ public class ConfigCBSSourceTest extends WiremockBasedTest {
     public void shouldReturnFailureIfAppIsInvalidJsonDocument() {
         // given
         String invalidAppConf = "[$";
-        stubConsulToReturnLocalAddressOfCBS();
-        stubCBSToReturnAppConfig(invalidAppConf);
+        stubConsulToReturnLocalAddressOfCbs();
+        stubCbsToReturnAppConfig(invalidAppConf);
 
         // when
         Try<JSONObject> actual = tryToGetConfig();
@@ -145,7 +146,8 @@ public class ConfigCBSSourceTest extends WiremockBasedTest {
     }
 
     private Try<JSONObject> tryToGetConfig() {
-        return getAppConfig(new EnvProps("http", "localhost", wireMockRule.port(), "http", "CBSName", "restconfcollector"));
+        return getAppConfig(new EnvProps("http", "localhost", wireMockRule.port(),
+                "http", "CBSName", "restconfcollector"));
     }
 }
 

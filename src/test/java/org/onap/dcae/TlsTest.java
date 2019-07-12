@@ -22,19 +22,20 @@
 
 package org.onap.dcae;
 
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+import static org.onap.dcae.TlsTest.HttpsConfiguration.PASSWORD;
+import static org.onap.dcae.TlsTest.HttpsConfiguration.USERNAME;
+
 import io.vavr.collection.HashMap;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
-import static org.onap.dcae.TLSTest.HttpsConfiguration.PASSWORD;
-import static org.onap.dcae.TLSTest.HttpsConfiguration.USERNAME;
-
-public class TLSTest extends TLSTestBase {
+public class TlsTest extends TlsTestBase {
 
     @Nested
     @Import(HttpConfiguration.class)
@@ -68,8 +69,8 @@ public class TLSTest extends TLSTestBase {
     }
 
     @Nested
-    @Import(HttpsConfigurationWithTLSAuthentication.class)
-    class HttpsWithTLSAuthenticationTest extends TestClassBase {
+    @Import(HttpsConfigurationWithTlsAuthentication.class)
+    class HttpsWithTlsAuthenticationTest extends TestClassBase {
 
         @Test
         public void shouldHttpsRequestWithoutCertificateFail() {
@@ -78,8 +79,8 @@ public class TLSTest extends TLSTestBase {
     }
 
     @Nested
-    @Import(HttpsConfigurationWithTLSAuthenticationAndBasicAuth.class)
-    class HttpsWithTLSAuthenticationAndBasicAuthTest extends TestClassBase {
+    @Import(HttpsConfigurationWithTlsAuthenticationAndBasicAuth.class)
+    class HttpsWithTlsAuthenticationAndBasicAuthTest extends TestClassBase {
 
         @Test
         public void shouldHttpsRequestWithoutBasicAuthFail() {
@@ -88,17 +89,18 @@ public class TLSTest extends TLSTestBase {
 
         @Test
         public void shouldHttpsRequestWithBasicAuthSucceed() {
-            assertEquals(HttpStatus.OK, makeHttpsRequestWithClientCertAndBasicAuth(USERNAME, PASSWORD).getStatusCode());
+            assertEquals(HttpStatus.OK,
+                    makeHttpsRequestWithClientCertAndBasicAuth(USERNAME, PASSWORD).getStatusCode());
         }
     }
 
-    static class HttpConfiguration extends TLSTestBase.ConfigurationBase {
+    static class HttpConfiguration extends TlsTestBase.ConfigurationBase {
         @Override
         protected void configureSettings(ApplicationSettings settings) {
         }
     }
 
-    static class HttpsConfiguration extends TLSTestBase.ConfigurationBase {
+    static class HttpsConfiguration extends TlsTestBase.ConfigurationBase {
         public static final String USERNAME = "TestUser";
         public static final String PASSWORD = "TestPassword";
 
@@ -109,11 +111,12 @@ public class TLSTest extends TLSTestBase {
             when(settings.rccKeystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
             when(settings.rccKeystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
             when(settings.authorizationEnabled()).thenReturn(true);
-            when(settings.validAuthorizationCredentials()).thenReturn(HashMap.of(USERNAME, "$2a$10$51tDgG2VNLde5E173Ay/YO.Fq.aD.LR2Rp8pY3QAKriOSPswvGviy"));
+            when(settings.validAuthorizationCredentials()).thenReturn(HashMap.of(USERNAME,
+                    "$2a$10$51tDgG2VNLde5E173Ay/YO.Fq.aD.LR2Rp8pY3QAKriOSPswvGviy"));
         }
     }
 
-    static class HttpsConfigurationWithTLSAuthentication extends HttpsConfiguration {
+    static class HttpsConfigurationWithTlsAuthentication extends HttpsConfiguration {
         @Override
         protected void configureSettings(ApplicationSettings settings) {
             super.configureSettings(settings);
@@ -125,7 +128,7 @@ public class TLSTest extends TLSTestBase {
         }
     }
 
-    static class HttpsConfigurationWithTLSAuthenticationAndBasicAuth extends HttpsConfigurationWithTLSAuthentication {
+    static class HttpsConfigurationWithTlsAuthenticationAndBasicAuth extends HttpsConfigurationWithTlsAuthentication {
         @Override
         protected void configureSettings(ApplicationSettings settings) {
             super.configureSettings(settings);
