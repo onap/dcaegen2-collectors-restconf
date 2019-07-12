@@ -22,12 +22,13 @@
 
 package org.onap.dcae;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import io.vavr.collection.Map;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 
-public class CLIUtilsTest {
+public class CliUtilsTest {
 
     @Test
     public void shouldConvertArgsToPropertiesMap() {

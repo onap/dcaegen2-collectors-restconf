@@ -20,15 +20,13 @@
 
 package org.onap.dcae.common;
 
-import org.json.XML;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
+
 
 public class XmlJsonUtilTest {
 
@@ -43,29 +41,33 @@ public class XmlJsonUtilTest {
         mm.put("result.output", "xml2json");
         mm.put("result.[", "start");
         mm.put("result.]", "end");
-        mm.put("result.list", "<LIST>\n" +
-                "          <LITERAL VALUE=\"\"/>\n" +
-                "        </LIST>");
+        mm.put("result.list", "<LIST>\n"
+                + "          <LITERAL VALUE=\"\"/>\n"
+                + "        </LIST>");
 
         try {
             String str = XmlJsonUtil.getXml(mm, var);
             assertEquals(str.startsWith("<"), true);
             String str2 = XmlJsonUtil.getJson(mm, var);
             assertEquals(str2.startsWith("{"), true);
-        }catch (Exception e) {}
+        } catch (Exception e) {
+            System.out.println("Exception " + e);
+        }
     }
 
     @Test
     public void removeEmptystructFromXml() {
-        String var = "<time>2018 12:04</time>\n" +
-                "<output>t2</output>\n" +
-                "<start>bad\n" +
-                "<status>200</status>";
+        String var = "<time>2018 12:04</time>\n"
+                + "<output>t2</output>\n"
+                + "<start>bad\n"
+                + "<status>200</status>";
         Map<String, String> mm = new HashMap<>();
         try {
             String str = XmlJsonUtil.removeEmptyStructXml(var);
 
-        }catch (Exception e) {}
+        } catch (Exception e) {
+            System.out.println("Exception " + e);
+        }
     }
 
     @Test
@@ -75,14 +77,37 @@ public class XmlJsonUtilTest {
 
         try {
             String str = XmlJsonUtil.removeEmptyStructJson(var);
-        }catch (Exception e) {}
+        } catch (Exception e) {
+            System.out.println("Exception " + e);
+        }
     }
 
     @Test
     public void removeLastCommaJson() {
-        String var2 ="{\"name\":\"john\",\"age\":22,\"class\":\"mca\", \"data\":{}, \"arr\" : [\"some\" : {},],}";
+        String var2 = "{\"name\":\"john\",\"age\":22,\"class\":\"mca\", \"data\":{}, \"arr\" : [\"some\" : {},],}";
         try {
             String str = XmlJsonUtil.removeLastCommaJson(var2);
-        }catch (Exception e) {}
+        } catch (Exception e) {
+            System.out.println("Exception " + e);
+        }
     }
+
+    @Test
+    public void getJsonOrXmlTest2() {
+        String var = "result";
+        Map<String, String> mm = new HashMap<>();
+
+        mm.put("result[0]", "{\"metaname\": \"remote-id\",\"metaval\": "
+                + "\"AC9.0234.0337\",\"resource-version\": \"1553802421110\"}");
+        mm.put("result[1]", "{\"metaname\": \"remote-id\",\"metaval\": "
+                + "\"AC9.0234.0337\",\"resource-version\": \"1553802421110\"}");
+
+        try {
+            String str2 = XmlJsonUtil.getJson(mm, var);
+            assertEquals(str2.startsWith("["), true);
+        } catch (Exception e) {
+            System.out.println("Exception " + e);
+        }
+    }
+
 }
