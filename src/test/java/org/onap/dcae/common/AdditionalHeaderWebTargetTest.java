@@ -20,31 +20,61 @@
 
 package org.onap.dcae.common;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.util.HashMap;
+import java.util.Map;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import javax.ws.rs.client.WebTarget;
-import static org.mockito.Mockito.*;
+
 
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class AdditionalHeaderWebTargetTest {
 
-
     @Test
-    public void  AdditionalHaderWebTargettestBase() {
+    public void  additionalHaderWebTargettestBase() {
+        final Invocation.Builder mockBuilder = Mockito.mock(Invocation.Builder.class);
+
         WebTarget target = mock(WebTarget.class);
-        AdditionalHeaderWebTarget t =  new AdditionalHeaderWebTarget(target, "aaa112", "someheader");
-        t.getConfiguration();
-        t.getUri();
-        t.getUriBuilder();
-        t.path("");
-        t.register(AdditionalHeaderWebTarget.class);
-        t.register(AdditionalHeaderWebTarget.class,0);
-        t.register(AdditionalHeaderWebTarget.class, AdditionalHeaderWebTarget.class);
+        when(target.request()).thenReturn(mockBuilder);
+        when(target.request("application/json")).thenReturn(mockBuilder);
+        when(target.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
+        JSONObject jsonObject = new JSONObject("{\"key\": 1}");
+        Map<String, Object> someMap = new HashMap<>();
+        someMap.put("id", jsonObject);
+        AdditionalHeaderWebTarget webTarget =  new AdditionalHeaderWebTarget(target, "aaa112",
+                "someheader");
+        webTarget.getConfiguration();
+        webTarget.getUri();
+        webTarget.getUriBuilder();
+        webTarget.path("");
+        webTarget.register(AdditionalHeaderWebTarget.class);
+        webTarget.register(AdditionalHeaderWebTarget.class,0);
+        webTarget.register(AdditionalHeaderWebTarget.class, AdditionalHeaderWebTarget.class);
         Object obj = new Object();
-        t.register(obj);
-        t.register(obj, 0);
-        t.register(obj, AdditionalHeaderWebTarget.class);
+        webTarget.register(obj);
+        webTarget.register(obj, 0);
+        webTarget.register(obj, AdditionalHeaderWebTarget.class);
+        webTarget.request();
+        webTarget.request("application/json");
+        webTarget.request(MediaType.APPLICATION_JSON_TYPE);
+        webTarget.resolveTemplate("key", jsonObject);
+        webTarget.resolveTemplate("key", jsonObject, false);
+        webTarget.resolveTemplateFromEncoded("key", jsonObject);
+        webTarget.resolveTemplates(someMap);
+        webTarget.resolveTemplates(someMap, false);
+        webTarget.resolveTemplatesFromEncoded(someMap);
+
+        webTarget.matrixParam("key", jsonObject);
+        webTarget.queryParam("key", jsonObject);
+        webTarget.property("key", jsonObject);
     }
 }

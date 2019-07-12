@@ -39,14 +39,14 @@ public class WiremockBasedTest {
     public WireMockRule wireMockRule = new WireMockRule(
         wireMockConfig().dynamicPort().dynamicHttpsPort().keystorePath(null));
 
-    protected void stubConsulToReturnLocalAddressOfCBS() {
+    protected void stubConsulToReturnLocalAddressOfCbs() {
         stubFor(get(urlEqualTo("/v1/catalog/service/CBSName"))
-            .willReturn(aResponse().withBody(validLocalCBSConf())));
+            .willReturn(aResponse().withBody(validLocalCbsConf())));
     }
 
-    protected void stubCBSToReturnAppConfig(String sampleConfigForVES) {
+    protected void stubCbsToReturnAppConfig(String sampleConfigForVes) {
         stubFor(get(urlEqualTo("/service_component/restconfcollector"))
-            .willReturn(aResponse().withBody(sampleConfigForVES)));
+            .willReturn(aResponse().withBody(sampleConfigForVes)));
     }
 
     protected Map<String, String> wiremockBasedEnvProps() {
@@ -58,7 +58,7 @@ public class WiremockBasedTest {
         );
     }
 
-    protected String validLocalCBSConf() {
+    protected String validLocalCbsConf() {
         return ""
             + "[{ "
             + "\"ServiceAddress\": \"localhost\","

@@ -20,27 +20,26 @@
 
 package org.onap.dcae.common;
 
-import org.junit.Test;
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class XmlParserTest {
 
     @Test
     public void setAttribute() {
-        String convert =  "<time>2018 12:04</time>\n" +
-                "<output>t2</output>\n" +
-                "<status>200</status>";
+        String convert =  "<time>2018 12:04</time>\n"
+                + "<output>t2</output>\n"
+                + "<status>200</status>";
         Set<String> listNameList = new HashSet<>();
         listNameList.add("result");
         Map<String, String> propMap;
         try {
             propMap = XmlParser.convertToProperties(convert, listNameList);
             System.out.println(propMap);
-        }catch (Exception e) {}
+        } catch (Exception e) {
+            System.out.println("Exception " + e);
+        }
     }
 }

@@ -20,10 +20,13 @@
 
 package org.onap.dcae.common;
 
-import org.junit.Test;
-import org.onap.dcae.common.RestConfContext;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+
 
 public class RestConfContextTest {
 
@@ -47,6 +50,7 @@ public class RestConfContextTest {
         RestConfContext restConfContext = new RestConfContext();
         restConfContext.setAttribute(key,value);
         restConfContext.setAttribute(key1,value1);
-        assertTrue(restConfContext.getAttributeKeySet().contains(key) && restConfContext.getAttributeKeySet().contains(key1));
+        assertTrue(restConfContext.getAttributeKeySet().contains(key)
+                && restConfContext.getAttributeKeySet().contains(key1));
     }
 }

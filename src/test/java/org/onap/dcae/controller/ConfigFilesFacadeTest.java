@@ -19,16 +19,17 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.dcae.controller;
 
 import static io.vavr.API.Map;
 import static io.vavr.API.Some;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.onap.dcae.TestingUtilities.assertFailureHasInfo;
-import static org.onap.dcae.TestingUtilities.assertJSONObjectsEqual;
+import static org.onap.dcae.TestingUtilities.assertJsonObjectsEqual;
 import static org.onap.dcae.TestingUtilities.createTemporaryFile;
 import static org.onap.dcae.TestingUtilities.readFile;
-import static org.onap.dcae.TestingUtilities.readJSONFromFile;
+import static org.onap.dcae.TestingUtilities.readJsonFromFile;
 
 import io.vavr.collection.Map;
 import io.vavr.control.Try;
@@ -39,14 +40,14 @@ import org.junit.Test;
 
 public class ConfigFilesFacadeTest {
 
-    private static final Path NON_EXISTENT = Paths.get("/non-existent");
+    private static final Path NON_EXISTENT = Paths.get("/non-existent-file");
     private static final ConfigFilesFacade TO_NON_EXISTENT_POINTING_FACADE = new ConfigFilesFacade(NON_EXISTENT,
         NON_EXISTENT);
 
     @Test
     public void shouldReadPropertyFile() {
         // given
-        Path temporaryFile = createTemporaryFile("some.property=10");
+        Path temporaryFile = createTemporaryFile("temp_shouldReadPropertyFile","some.property=10");
 
         // when
         ConfigFilesFacade configFilesFacade = new ConfigFilesFacade(temporaryFile, temporaryFile);
@@ -63,22 +64,22 @@ public class ConfigFilesFacadeTest {
     @Test
     public void shouldReadDMaaPFile() {
         // given
-        Path temporaryFile = createTemporaryFile("{}");
+        Path temporaryFile = createTemporaryFile("temp_shouldReadDMaaPFile","{}");
 
         // when
         ConfigFilesFacade configFilesFacade = new ConfigFilesFacade(temporaryFile, temporaryFile);
 
-        Try<JSONObject> dMaaPConfiguration = configFilesFacade.readDMaaPConfiguration();
+        Try<JSONObject> dmaapconfiguration = configFilesFacade.readDMaaPConfiguration();
 
         // then
-        assertThat(dMaaPConfiguration.isSuccess()).isTrue();
-        assertThat(dMaaPConfiguration.get().toString()).isEqualTo("{}");
+        assertThat(dmaapconfiguration.isSuccess()).isTrue();
+        assertThat(dmaapconfiguration.get().toString()).isEqualTo("{}");
     }
 
     @Test
     public void shouldWriteDMaaPConf() {
         // given
-        Path temporaryFile = createTemporaryFile("{}");
+        Path temporaryFile = createTemporaryFile("temp_shouldWriteDMaaPConf","{}");
         JSONObject desiredConf = new JSONObject("{\"key\": 1}");
 
         // when
@@ -88,14 +89,14 @@ public class ConfigFilesFacadeTest {
 
         // then
         assertThat(propertiesConfigurations.isSuccess()).isTrue();
-        assertJSONObjectsEqual(readJSONFromFile(temporaryFile), desiredConf);
+        assertJsonObjectsEqual(readJsonFromFile(temporaryFile), desiredConf);
     }
 
 
     @Test
     public void shouldWriteProperties() {
         // given
-        Path temporaryFile = createTemporaryFile("{}");
+        Path temporaryFile = createTemporaryFile("temp_shouldWriteProperties", "{}");
 
         // when
         ConfigFilesFacade configFilesFacade = new ConfigFilesFacade(temporaryFile, temporaryFile);

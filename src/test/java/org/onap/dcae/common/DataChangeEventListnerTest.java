@@ -17,28 +17,21 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.dcae.common;
 
+import static org.mockito.Mockito.when;
 
-import org.glassfish.jersey.media.sse.EventInput;
+import java.util.concurrent.LinkedBlockingQueue;
 import org.glassfish.jersey.media.sse.InboundEvent;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import static org.mockito.Mockito.*;
-
 import org.onap.dcae.RestConfCollector;
-import org.onap.dcae.common.publishing.DMaaPConfigurationParser;
-import org.onap.dcae.common.publishing.EventPublisher;
 
 
-import org.slf4j.LoggerFactory;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.concurrent.LinkedBlockingQueue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DataChangeEventListnerTest {
@@ -59,9 +52,12 @@ public class DataChangeEventListnerTest {
         DataChangeEventListener listner = new DataChangeEventListener(null);
         listner.onEvent(event);
     }
+
     @Test
     public void testDataChangeEventListenerJsonArray() {
-        when(event.readData()).thenReturn("[{ \"name\":\"Ford\", \"models\":[ \"Fiesta\",\"Focus\", \"Mustang\" ] },{\"name\":\"BMW\", \"models\":[ \"320\", \"X3\",\"X5\" ] },{\"name\":\"Fiat\",\"models\":[ \"500\", \"Panda\" ]}]");
+        when(event.readData()).thenReturn("[{ \"name\":\"Ford\", \"models\":[ \"Fiesta\",\"Focus\", \"Mustang\" ] },"
+                + "{\"name\":\"BMW\", \"models\":[ \"320\", \"X3\",\"X5\" ] },{\"name\":\"Fiat\",\"models\":"
+                + "[ \"500\", \"Panda\" ]}]");
         RestConfCollector.fProcessingInputQueue = new LinkedBlockingQueue<>(4);
         DataChangeEventListener listner = new DataChangeEventListener(null);
         listner.onEvent(event);
