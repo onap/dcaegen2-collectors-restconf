@@ -180,7 +180,7 @@ public class PersistentEventConnection implements Runnable {
 
     @Override
     public void run() {
-        int sleep_time = 5000;
+        long sleep_time = 5000;
         boolean openState = false;
         EventSource eventSrc = null;
         while (running) {
@@ -243,7 +243,7 @@ public class PersistentEventConnection implements Runnable {
             log.error("Failed to receive sbscription notiication, trying again", e);
             try {
                 parentCtrllr.getRestApiCallNode().sendRequest(eventParaMap, ctx, null);
-            }catch (Exception ex){
+            } catch (Exception ex){
                 log.error("Exception occured again! Trying again", e);
                 Thread.currentThread().interrupt();
             }

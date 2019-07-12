@@ -37,6 +37,9 @@ public final class VavrUtils {
 
     /**
      * Shortcut for 'string interpolation'
+     * @param msg String message
+     * @param args var args
+     * @return String
      */
     public static String f(String msg, Object... args) {
         return String.format(msg, args);
@@ -45,6 +48,8 @@ public final class VavrUtils {
     /**
      * Wrap failure with a more descriptive message of what has failed and chain original cause. Used to provide a
      * context for errors instead of raw exception.
+     * @param msg String message
+     * @return Case
      */
     public static Case<Throwable, Throwable> enhanceError(String msg) {
         return API.Case($(), e -> new RuntimeException(msg, e));

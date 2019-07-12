@@ -20,22 +20,25 @@
 
 package org.onap.dcae.controller;
 
-import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import junit.framework.Assert;
-import org.junit.Rule;
-import org.junit.Test;
-import org.onap.dcae.common.Format;
-
-
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 import static org.junit.Assert.assertEquals;
 
+import com.github.tomakehurst.wiremock.junit.WireMockRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+
 public class EnvPropsTest {
+
     @Rule
     public WireMockRule wireMockRule = new WireMockRule(
             wireMockConfig().dynamicPort().dynamicHttpsPort().keystorePath(null));
+
     @Test
     public void fromString() {
-        Assert.assertEquals(new EnvProps("http", "localhost", wireMockRule.port(), "http", "CBSName", "restconfcollector").equals(new EnvProps("http", "localhost", wireMockRule.port(), "http", "CBSName", "restconfcollector")), true);
+        assertEquals(new EnvProps("http", "localhost", wireMockRule.port(),
+                "http", "CBSName", "restconfcollector")
+                .equals(new EnvProps("http", "localhost", wireMockRule.port(),
+                        "http", "CBSName", "restconfcollector")), true);
     }
 }
