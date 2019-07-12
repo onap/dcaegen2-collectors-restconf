@@ -19,25 +19,20 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.dcae;
 
 import static java.nio.file.Files.readAllBytes;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.vavr.control.Try;
-
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
-
+import javax.net.ssl.SSLContext;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.HttpClients;
@@ -48,7 +43,7 @@ import org.json.JSONObject;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
-import javax.net.ssl.SSLContext;
+
 
 public final class TestingUtilities {
 
@@ -56,18 +51,38 @@ public final class TestingUtilities {
         // utility class, no objects allowed
     }
 
-    public static void assertJSONObjectsEqual(JSONObject o1, JSONObject o2) {
+    /**
+     * Assert if JSON Objects are Equal.
+     * @param o1 JSONObject one.
+     * @param o2 JSONObject two.
+     */
+    public static void assertJsonObjectsEqual(JSONObject o1, JSONObject o2) {
         assertThat(o1.toString()).isEqualTo(o2.toString());
     }
 
-    public static JSONObject readJSONFromFile(Path path) {
+    /**
+     * Read JSON From File.
+     * @param path path of file.
+     * @return JSON Object.
+     */
+    public static JSONObject readJsonFromFile(Path path) {
         return rethrow(() -> new JSONObject(readFile(path)));
     }
 
+    /**
+     * Read File from givn path.
+     * @param path path of file.
+     * @return String content.
+     */
     public static String readFile(Path path) {
         return rethrow(() -> new String(readAllBytes(path)));
     }
 
+    /**
+     * Create Temporary File.
+     * @param content content of file.
+     * @return Path.
+     */
     public static Path createTemporaryFile(String content) {
         return rethrow(() -> {
             File temp = File.createTempFile("restconf-collector-tests-created-this-file", ".tmp");
@@ -82,6 +97,7 @@ public final class TestingUtilities {
      * Exception in test case usually means there is something wrong, it should never be catched, but rather thrown to
      * be handled by JUnit framework.
      */
+
     public static <T> T rethrow(CheckedSupplier<T> supplier) {
         try {
             return supplier.get();
@@ -90,21 +106,36 @@ public final class TestingUtilities {
         }
     }
 
+    /**
+     *
+     * @param <T> .
+     */
     @FunctionalInterface
     interface CheckedSupplier<T> {
 
         T get() throws Exception;
     }
 
+    /** Assert if Failure Has Info.
+     *
+     * @param any any object
+     * @param msgPart  msg part
+     */
     public static void assertFailureHasInfo(Try any, String... msgPart) {
         Java6Assertions.assertThat(any.isFailure()).isTrue();
-        AbstractThrowableAssert<?, ? extends Throwable> o = Java6Assertions.assertThat(any.getCause())
+        AbstractThrowableAssert<?, ? extends Throwable> instance = Java6Assertions.assertThat(any.getCause())
                 .hasCauseInstanceOf(Exception.class);
         for (String s : msgPart) {
-            o.hasStackTraceContaining(s);
+            instance.hasStackTraceContaining(s);
         }
     }
 
+    /**
+     * SSL Builder With TrustStore.
+     * @param trustStore path of file.
+     * @param pass password.
+     * @return SSLContextBuilder.
+     */
     public static SSLContextBuilder sslBuilderWithTrustStore(final Path trustStore, final String pass) {
         return rethrow(() ->
                 new SSLContextBuilder()
@@ -112,6 +143,13 @@ public final class TestingUtilities {
         );
     }
 
+    /**
+     * Configure Key Store for testing.
+     * @param builder class builder.
+     * @param keyStore path of file.
+     * @param pass password.
+     * @return SSLContextBuilder.
+     */
     public static SSLContextBuilder configureKeyStore(
             final SSLContextBuilder builder,
             final Path keyStore,
@@ -126,6 +164,11 @@ public final class TestingUtilities {
         });
     }
 
+    /**
+     * Create Rest Template With Ssl.
+     * @param context ssl context
+     * @return RestTemplate
+     */
     public static RestTemplate createRestTemplateWithSsl(final SSLContext context) {
         final SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(context);
         final HttpClient httpClient = HttpClients

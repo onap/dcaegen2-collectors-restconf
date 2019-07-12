@@ -60,7 +60,7 @@ public class DataChangeEventListener implements EventListener {
                 log.info("Received heart beat ");
             }
         } catch (Exception e) {
-            log.info("InboundEvent event is malformed");
+            log.info("InboundEvent event is malformed " + e);
         }
     }
 
@@ -75,6 +75,7 @@ public class DataChangeEventListener implements EventListener {
         } catch (JSONException ex) {
             try {
                 new JSONArray(test);
+
                 return jsonType.ARRAY;
             } catch (JSONException ex1) {
                 return jsonType.NONE;

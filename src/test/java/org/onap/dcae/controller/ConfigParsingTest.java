@@ -25,14 +25,11 @@ package org.onap.dcae.controller;
 
 import static io.vavr.API.Map;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.onap.dcae.TestingUtilities.assertJSONObjectsEqual;
-import static org.onap.dcae.TestingUtilities.readJSONFromFile;
+import static org.onap.dcae.TestingUtilities.assertJsonObjectsEqual;
 
 import io.vavr.collection.Map;
 import io.vavr.control.Option;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,16 +40,16 @@ public class ConfigParsingTest {
 
     @Test
     public void shouldReturnDMaaPConfig() {
-        JSONObject dMaaPConf = new JSONObject("{\"auth-credentials-present\": {\"aaf_username\": \"sampleUser\",\"dmaap_info\": {\"topic_url\": \"http://UEBHOST:3904/events/DCAE-SE-COLLECTOR-EVENTS-DEV\",},\"aaf_password\": \"samplePassword\"}}");
+        JSONObject dmaapConf = new JSONObject("{\"auth-credentials-present\": {\"aaf_username\": \"sampleUser\",\"dmaap_info\": {\"topic_url\": \"http://UEBHOST:3904/events/DCAE-SE-COLLECTOR-EVENTS-DEV\",},\"aaf_password\": \"samplePassword\"}}");
         JSONObject root = new JSONObject();
         root.put("key1", "someProperty");
         root.put("key2", "someProperty");
-        root.put("streams_publishes", dMaaPConf);
+        root.put("streams_publishes", dmaapConf);
 
-        Option<JSONObject> dMaaPConfig = ConfigParsing.getDMaaPConfig(root);
+        Option<JSONObject> dmaapConfig = ConfigParsing.getDMaaPConfig(root);
 
-        assertThat(dMaaPConfig.isEmpty()).isFalse();
-        assertJSONObjectsEqual(dMaaPConfig.get(), dMaaPConf);
+        assertThat(dmaapConfig.isEmpty()).isFalse();
+        assertJsonObjectsEqual(dmaapConfig.get(), dmaapConf);
     }
 
     @Test
@@ -60,18 +57,18 @@ public class ConfigParsingTest {
         JSONObject root = new JSONObject();
         root.put("streams_publishes", 1);
 
-        Option<JSONObject> dMaaPConfig = ConfigParsing.getDMaaPConfig(root);
+        Option<JSONObject> dmaapConfig = ConfigParsing.getDMaaPConfig(root);
 
-        assertThat(dMaaPConfig.isEmpty()).isTrue();
+        assertThat(dmaapConfig.isEmpty()).isTrue();
     }
 
     @Test
     public void getProperties() {
-        JSONObject dMaaPConf = new JSONObject("{\"auth-credentials-present\": {\"aaf_username\": \"sampleUser\",\"dmaap_info\": {\"topic_url\": \"http://UEBHOST:3904/events/DCAE-SE-COLLECTOR-EVENTS-DEV\",},\"aaf_password\": \"samplePassword\"}}");
+        JSONObject dmaapConf = new JSONObject("{\"auth-credentials-present\": {\"aaf_username\": \"sampleUser\",\"dmaap_info\": {\"topic_url\": \"http://UEBHOST:3904/events/DCAE-SE-COLLECTOR-EVENTS-DEV\",},\"aaf_password\": \"samplePassword\"}}");
         JSONObject root = new JSONObject();
         root.put("key1", "someProperty");
         root.put("key2", "someProperty");
-        root.put("streams_publishes", dMaaPConf);
+        root.put("streams_publishes", dmaapConf);
 
         Map<String, String> properties = ConfigParsing.getProperties(root);
         assertThat(properties).isEqualTo(Map("key1", "someProperty", "key2", "someProperty"));

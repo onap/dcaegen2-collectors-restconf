@@ -87,7 +87,7 @@ public class EventProcessor implements Runnable {
                         log.info("Invoking method " + ev.getConn().getModifyMethod() + " isModify " + ev.getConn().isModifyEvent());
                         modifiedObj = (JSONObject)(this.getClass().getMethod(ev.getConn().getModifyMethod(),
                                 EventData.class, String.class).invoke(this, ev, ev.getConn().getUserData()));
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         log.warn("No such method exist" + e);
                     }
                 }

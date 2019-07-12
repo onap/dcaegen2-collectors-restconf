@@ -18,6 +18,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.dcae.common.publishing;
 
 import static io.vavr.API.Option;
@@ -40,14 +41,17 @@ public class DMaaPEventPublisherTest {
 
     private DMaaPEventPublisher eventPublisher;
     private CambriaBatchingPublisher cambriaPublisher;
-    private DMaaPPublishersCache DMaaPPublishersCache;
+    private DMaaPPublishersCache dmaapPublishersCache;
 
+    /**
+     * Setup before test.
+     */
     @Before
     public void setUp() {
         cambriaPublisher = mock(CambriaBatchingPublisher.class);
-        DMaaPPublishersCache = mock(DMaaPPublishersCache.class);
-        when(DMaaPPublishersCache.getPublisher(anyString())).thenReturn(Option(cambriaPublisher));
-        eventPublisher = new DMaaPEventPublisher(DMaaPPublishersCache, mock(Logger.class));
+        dmaapPublishersCache = mock(DMaaPPublishersCache.class);
+        when(dmaapPublishersCache.getPublisher(anyString())).thenReturn(Option(cambriaPublisher));
+        eventPublisher = new DMaaPEventPublisher(dmaapPublishersCache, mock(Logger.class));
     }
 
     @Test
@@ -74,6 +78,6 @@ public class DMaaPEventPublisherTest {
         eventPublisher.sendEvent(event, STREAM_ID);
 
         // then
-        verify(DMaaPPublishersCache).closePublisherFor(STREAM_ID);
+        verify(dmaapPublishersCache).closePublisherFor(STREAM_ID);
     }
 }

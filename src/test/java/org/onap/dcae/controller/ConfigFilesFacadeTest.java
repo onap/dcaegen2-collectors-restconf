@@ -19,16 +19,17 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.dcae.controller;
 
 import static io.vavr.API.Map;
 import static io.vavr.API.Some;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.onap.dcae.TestingUtilities.assertFailureHasInfo;
-import static org.onap.dcae.TestingUtilities.assertJSONObjectsEqual;
+import static org.onap.dcae.TestingUtilities.assertJsonObjectsEqual;
 import static org.onap.dcae.TestingUtilities.createTemporaryFile;
 import static org.onap.dcae.TestingUtilities.readFile;
-import static org.onap.dcae.TestingUtilities.readJSONFromFile;
+import static org.onap.dcae.TestingUtilities.readJsonFromFile;
 
 import io.vavr.collection.Map;
 import io.vavr.control.Try;
@@ -39,7 +40,7 @@ import org.junit.Test;
 
 public class ConfigFilesFacadeTest {
 
-    private static final Path NON_EXISTENT = Paths.get("/non-existent");
+    private static final Path NON_EXISTENT = Paths.get("/non-existent-file");
     private static final ConfigFilesFacade TO_NON_EXISTENT_POINTING_FACADE = new ConfigFilesFacade(NON_EXISTENT,
         NON_EXISTENT);
 
@@ -68,11 +69,11 @@ public class ConfigFilesFacadeTest {
         // when
         ConfigFilesFacade configFilesFacade = new ConfigFilesFacade(temporaryFile, temporaryFile);
 
-        Try<JSONObject> dMaaPConfiguration = configFilesFacade.readDMaaPConfiguration();
+        Try<JSONObject> dmaapconfiguration = configFilesFacade.readDMaaPConfiguration();
 
         // then
-        assertThat(dMaaPConfiguration.isSuccess()).isTrue();
-        assertThat(dMaaPConfiguration.get().toString()).isEqualTo("{}");
+        assertThat(dmaapconfiguration.isSuccess()).isTrue();
+        assertThat(dmaapconfiguration.get().toString()).isEqualTo("{}");
     }
 
     @Test
@@ -88,7 +89,7 @@ public class ConfigFilesFacadeTest {
 
         // then
         assertThat(propertiesConfigurations.isSuccess()).isTrue();
-        assertJSONObjectsEqual(readJSONFromFile(temporaryFile), desiredConf);
+        assertJsonObjectsEqual(readJsonFromFile(temporaryFile), desiredConf);
     }
 
 
