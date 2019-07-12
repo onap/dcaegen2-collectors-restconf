@@ -17,12 +17,13 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.dcae.common;
 
-import org.junit.Test;
-import org.onap.dcae.common.Format;
 
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 public class FormatTest {
 

@@ -56,8 +56,8 @@ public class EventProcessor implements Runnable {
             while (true) {
                 ev = RestConfCollector.fProcessingInputQueue.take();
 
-                // As long as the producer is running we remove elements from
-                // the queue.
+                /* As long as the producer is running we remove elements from
+                 * the queue */
                 log.info("QueueSize:" + RestConfCollector.fProcessingInputQueue.size() + "\tEventProcessor\tRemoving element: " +
                         ev.getEventObj());
                 /*@TODO: Right now all event publish to single domain and consume by VES collector. Later maybe send to specific domain */
@@ -72,7 +72,7 @@ public class EventProcessor implements Runnable {
 
             }
         } catch (Exception e) {
-            log.error("EventProcessor InterruptedException" + e.getMessage());
+            log.error("EventProcessor InterruptedException " + e));
             Thread.currentThread().interrupt();
         }
     }
@@ -87,7 +87,7 @@ public class EventProcessor implements Runnable {
                         log.info("Invoking method " + ev.getConn().getModifyMethod() + " isModify " + ev.getConn().isModifyEvent());
                         modifiedObj = (JSONObject)(this.getClass().getMethod(ev.getConn().getModifyMethod(),
                                 EventData.class, String.class).invoke(this, ev, ev.getConn().getUserData()));
-                    }catch (Exception e) {
+                    } catch (Exception e) {
                         log.warn("No such method exist" + e);
                     }
                 }
@@ -127,9 +127,7 @@ public class EventProcessor implements Runnable {
         JSONObject finalObj = new JSONObject();
         Path configFile =  Paths.get(conn.getParentCtrllr().getProperties().controllerConfigFileLocation());
         try {
-            //log.info("Paths " + configFile.toString());
             String bytes = new String(Files.readAllBytes(configFile));
-            //log.info("Bytes " + bytes);
             newJSON = new JSONObject(bytes);
             newJSON.put("serialNumber", json1.getJSONObject("notification").getJSONObject("message").getJSONObject("content").getJSONObject("onu").get("sn"));
             newJSON.put("softwareVersion", json1.getJSONObject("notification").getJSONObject("message").get("version"));
@@ -181,11 +179,9 @@ public class EventProcessor implements Runnable {
                     newJSON.put("vendorName", usrDataMap.get("vendorName"));
                 }
             }
-            //additionalfields.put("remote-id", attachment-point);
         } catch (Exception e) {
             log.info("File reading error " + e);
         }
-        //log.info("Modified json " + newJSON);
         finalObj.put("pnfRegistration", newJSON);
         log.info("final obj"+ finalObj.toString());
         return finalObj;
