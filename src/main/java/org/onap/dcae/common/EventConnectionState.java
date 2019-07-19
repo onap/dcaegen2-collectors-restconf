@@ -22,7 +22,7 @@ package org.onap.dcae.common;
 
 public enum EventConnectionState {
 
-    INIT, SUBSCRIBED, UNSUBSCRIBED, Unspecified;
+    INIT, SUBSCRIBED, UNSUBSCRIBED, UNSPECIFIED;
 
     public static EventConnectionState fromString(String s) {
         if ("init".equalsIgnoreCase(s)) {
@@ -35,7 +35,7 @@ public enum EventConnectionState {
             return UNSUBSCRIBED;
         }
         if ("unspecified".equalsIgnoreCase(s)) {
-            return Unspecified;
+            return UNSPECIFIED;
         }
         throw new IllegalArgumentException("Invalid value for format: " + s);
     }

@@ -19,6 +19,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.dcae.controller;
 
 import static io.vavr.API.Map;
@@ -41,7 +42,7 @@ public class EnvPropertiesReaderTest {
     }
 
     @Test
-    public void shouldReturnEmptyOnMissingCBSName() {
+    public void shouldReturnEmptyOnMissingCbsName() {
         Map<String, String> envs = Map(
             "CONSUL_HOST", "doesNotMatter",
             "HOSTNAME", "doesNotMatter");
@@ -49,7 +50,7 @@ public class EnvPropertiesReaderTest {
     }
 
     @Test
-    public void shouldReturnEmptyOnMissingVESAppName() {
+    public void shouldReturnEmptyOnMissingVesAppName() {
         Map<String, String> envs = Map(
             "CONSUL_HOST", "doesNotMatter",
             "CONFIG_BINDING_SERVICE", "doesNotMatter");

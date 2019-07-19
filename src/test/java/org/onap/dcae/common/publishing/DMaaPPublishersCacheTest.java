@@ -18,6 +18,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.dcae.common.publishing;
 
 import static io.vavr.API.List;
@@ -43,22 +44,41 @@ import org.onap.dcae.common.publishing.DMaaPPublishersCache.OnPublisherRemovalLi
 public class DMaaPPublishersCacheTest {
 
     private String streamId1;
-    private Map<String, PublisherConfig> dMaaPConfigs;
-
+    private Map<String, PublisherConfig> dmaapconfigs;
+    private Map<String, PublisherConfig> dmaapconfigs2;
+    /**
+     * Setup before test.
+     */
     @Before
     public void setUp() {
         streamId1 = "sampleStream1";
-        dMaaPConfigs = Map("sampleStream1", new PublisherConfig(List("destination1"), "topic1"));
+        dmaapconfigs = Map("sampleStream1", new PublisherConfig(List("destination1"), "topic1"));
+        dmaapconfigs2 = Map("sampleStream1", new PublisherConfig(List("destination1"),
+                "topic1", "user", "pass"));
+
     }
 
     @Test
     public void shouldReturnTheSameCachedInstanceOnConsecutiveRetrievals() {
         // given
-        DMaaPPublishersCache dMaaPPublishersCache = new DMaaPPublishersCache(dMaaPConfigs);
+        DMaaPPublishersCache dmaapPublishersCache = new DMaaPPublishersCache(dmaapconfigs);
 
         // when
-        Option<CambriaBatchingPublisher> firstPublisher = dMaaPPublishersCache.getPublisher(streamId1);
-        Option<CambriaBatchingPublisher> secondPublisher = dMaaPPublishersCache.getPublisher(streamId1);
+        Option<CambriaBatchingPublisher> firstPublisher = dmaapPublishersCache.getPublisher(streamId1);
+        Option<CambriaBatchingPublisher> secondPublisher = dmaapPublishersCache.getPublisher(streamId1);
+
+        // then
+        assertSame("should return same instance", firstPublisher.get(), secondPublisher.get());
+    }
+
+    @Test
+    public void shouldReturnTheSameCachedInstanceOnConsecutiveRetrievals2() {
+        // given
+        DMaaPPublishersCache dmaapPublishersCache = new DMaaPPublishersCache(dmaapconfigs2);
+
+        // when
+        Option<CambriaBatchingPublisher> firstPublisher = dmaapPublishersCache.getPublisher(streamId1);
+        Option<CambriaBatchingPublisher> secondPublisher = dmaapPublishersCache.getPublisher(streamId1);
 
         // then
         assertSame("should return same instance", firstPublisher.get(), secondPublisher.get());
@@ -69,14 +89,14 @@ public class DMaaPPublishersCacheTest {
         // given
         CambriaBatchingPublisher cambriaPublisherMock1 = mock(CambriaBatchingPublisher.class);
         CambriaPublishersCacheLoader cacheLoaderMock = mock(CambriaPublishersCacheLoader.class);
-        DMaaPPublishersCache dMaaPPublishersCache = new DMaaPPublishersCache(cacheLoaderMock,
+        DMaaPPublishersCache dmaapPublishersCache = new DMaaPPublishersCache(cacheLoaderMock,
                                                                              new OnPublisherRemovalListener(),
-                                                                             dMaaPConfigs);
+                dmaapconfigs);
         when(cacheLoaderMock.load(streamId1)).thenReturn(cambriaPublisherMock1);
 
         // when
-        dMaaPPublishersCache.getPublisher(streamId1);
-        dMaaPPublishersCache.closePublisherFor(streamId1);
+        dmaapPublishersCache.getPublisher(streamId1);
+        dmaapPublishersCache.closePublisherFor(streamId1);
 
         // then
         verify(cambriaPublisherMock1).close(20, TimeUnit.SECONDS);
@@ -84,12 +104,12 @@ public class DMaaPPublishersCacheTest {
     }
 
     @Test
-    public void shouldReturnNoneIfThereIsNoDMaaPConfigurationForGivenStreamID() {
+    public void shouldReturnNoneIfThereIsNoDmaaPConfigurationForGivenStreamId() {
         // given
-        DMaaPPublishersCache dMaaPPublishersCache = new DMaaPPublishersCache(dMaaPConfigs);
+        DMaaPPublishersCache dmaapPublishersCache = new DMaaPPublishersCache(dmaapconfigs);
 
         // then
-        assertTrue("should not exist", dMaaPPublishersCache.getPublisher("non-existing").isEmpty());
+        assertTrue("should not exist", dmaapPublishersCache.getPublisher("non-existing").isEmpty());
     }
 
 
@@ -106,19 +126,22 @@ public class DMaaPPublishersCacheTest {
                                                      secondDomain,
                                                      new PublisherConfig(List("destination2"), "topic2",
                                                                          "user", "pass"));
-        Map<String, PublisherConfig> newConfig = Map(firstDomain, new PublisherConfig(List("destination1"), "topic1"),
-                                                     secondDomain, new PublisherConfig(List("destination2"), "topic2"));
-        DMaaPPublishersCache dMaaPPublishersCache = new DMaaPPublishersCache(cacheLoaderMock,
+
+        DMaaPPublishersCache dmaapPublishersCache = new DMaaPPublishersCache(cacheLoaderMock,
                                                                              new OnPublisherRemovalListener(),
                                                                              oldConfig);
+        final Map<String, PublisherConfig> newConfig = Map(firstDomain,
+                new PublisherConfig(List("destination1"), "topic1"),
+                secondDomain, new PublisherConfig(List("destination2"), "topic2"));
+
         when(cacheLoaderMock.load(firstDomain)).thenReturn(cambriaPublisherMock1);
         when(cacheLoaderMock.load(secondDomain)).thenReturn(cambriaPublisherMock2);
 
-        dMaaPPublishersCache.getPublisher(firstDomain);
-        dMaaPPublishersCache.getPublisher(secondDomain);
+        dmaapPublishersCache.getPublisher(firstDomain);
+        dmaapPublishersCache.getPublisher(secondDomain);
 
         // when
-        dMaaPPublishersCache.reconfigure(newConfig);
+        dmaapPublishersCache.reconfigure(newConfig);
 
         // then
         verify(cambriaPublisherMock2).close(20, TimeUnit.SECONDS);

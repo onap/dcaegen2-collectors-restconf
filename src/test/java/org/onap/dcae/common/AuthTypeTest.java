@@ -17,12 +17,12 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.dcae.common;
 
-import org.junit.Test;
-import org.onap.dcae.common.AuthType;
+import static org.junit.Assert.assertEquals;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class AuthTypeTest {
 

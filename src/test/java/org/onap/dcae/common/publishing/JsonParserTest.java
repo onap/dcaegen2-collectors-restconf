@@ -17,22 +17,30 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+
 package org.onap.dcae.common.publishing;
 
-import java.util.Map;
+import static org.junit.Assert.assertEquals;
 
+import java.util.Map;
 import org.junit.Test;
 import org.onap.dcae.common.JsonParser;
 
-import junit.framework.Assert;
-
-
 public class JsonParserTest {
 
-	@Test
-	public void convertToPropertiesTest() throws Exception {
-		String testJson="{\"prop2\"=\"value\", \"prop1\"=\"value\"}";
-		Map<String, String> response= JsonParser.convertToProperties(testJson);
-		Assert.assertEquals("value", response.get("prop2"));
-	}
+    @Test
+    public void convertToPropertiesTest() throws Exception {
+        String testJson = "{\"prop2\"=\"value\", \"prop1\"=\"value\"}";
+        Map<String, String> response = JsonParser.convertToProperties(testJson);
+        assertEquals("value", response.get("prop2"));
+    }
+
+    @Test
+    public void convertToPropertiesTestwithArray() throws Exception {
+        String testJson = "{\"metadatum\": [{\"metaname\": \"remote-id\",\"metaval\": \"AC9.0234.0337\","
+                + "\"resource-version\": \"1553802421110\"},{\"metaname\": \"svlan\",\"metaval\": \"100\","
+                + "\"resource-version\": \"1553802421082\"}]}";
+        Map<String, String> response = JsonParser.convertToProperties(testJson);
+        assertEquals("100", response.get("metadatum[1].metaval"));
+    }
 }

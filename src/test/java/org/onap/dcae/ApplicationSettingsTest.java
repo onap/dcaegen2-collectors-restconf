@@ -44,7 +44,7 @@ import org.junit.Test;
 public class ApplicationSettingsTest {
 
     @Test
-    public void shouldMakeApplicationSettingsOutOfCLIArguments() {
+    public void shouldMakeApplicationSettingsOutOfCliArguments() {
         // given
         String[] cliArguments = {"-param1", "param1value", "-param2", "param2value"};
 
@@ -59,7 +59,7 @@ public class ApplicationSettingsTest {
     }
 
     @Test
-    public void shouldMakeApplicationSettingsOutOfCLIArgumentsAndAConfigurationFile()
+    public void shouldMakeApplicationSettingsOutOfCliArgumentsAndAConfigurationFile()
         throws IOException {
         // given
         File tempConfFile = File.createTempFile("doesNotMatter", "doesNotMatter");
@@ -71,18 +71,21 @@ public class ApplicationSettingsTest {
         ApplicationSettings configurationAccessor = new ApplicationSettings(cliArguments, CLIUtils::processCmdLine);
         String param1value = configurationAccessor.getStringDirectly("param1");
         String param2value = configurationAccessor.getStringDirectly("param2");
-        String fromFileParam1Value = configurationAccessor.getStringDirectly("section.subSection1");
-        String fromFileParam2Value = configurationAccessor.getStringDirectly("section.subSection2");
 
         // then
         assertEquals("param1value", param1value);
         assertEquals("param2value", param2value);
+
+        String fromFileParam1Value = configurationAccessor.getStringDirectly("section.subSection1");
+        String fromFileParam2Value = configurationAccessor.getStringDirectly("section.subSection2");
+
+        // then
         assertEquals("abc", fromFileParam1Value);
         assertEquals("zxc", fromFileParam2Value);
     }
 
     @Test
-    public void shouldCLIArgumentsOverrideConfigFileParameters() throws IOException {
+    public void shouldCliArgumentsOverrideConfigFileParameters() throws IOException {
         // given
         String[] cliArguments = {"-section.subSection1", "abc"};
         File tempConfFile = File.createTempFile("doesNotMatter", "doesNotMatter");
@@ -91,20 +94,19 @@ public class ApplicationSettingsTest {
 
         // when
         ApplicationSettings configurationAccessor = new ApplicationSettings(cliArguments, CLIUtils::processCmdLine);
-        String actuallyOverridenByCLIParam = configurationAccessor.getStringDirectly("section.subSection1");
+        String actuallyOverridenByCliParam = configurationAccessor.getStringDirectly("section.subSection1");
 
         // then
-        assertEquals("abc", actuallyOverridenByCLIParam);
+        assertEquals("abc", actuallyOverridenByCliParam);
 
         configurationAccessor.reloadProperties();
 
-        Path p = configurationAccessor.configurationFileLocation();
         boolean auth = configurationAccessor.clientTlsAuthenticationEnabled();
         assertEquals(auth, false);
     }
 
     @Test
-    public void shouldReturnHTTPPort() throws IOException {
+    public void shouldReturnHttpPort() throws IOException {
         // when
         int applicationPort = fromTemporaryConfiguration("collector.rcc.service.port=8090")
             .httpPort();
@@ -114,7 +116,7 @@ public class ApplicationSettingsTest {
     }
 
     @Test
-    public void shouldReturnDefaultHTTPPort() throws IOException {
+    public void shouldReturnDefaultHttpPort() throws IOException {
         // when
         int applicationPort = fromTemporaryConfiguration().httpPort();
 
@@ -123,7 +125,7 @@ public class ApplicationSettingsTest {
     }
 
     @Test
-    public void shouldReturnIfHTTPSIsEnabled() throws IOException {
+    public void shouldReturnIfHttpSIsEnabled() throws IOException {
         // when
         boolean httpsEnabled = fromTemporaryConfiguration("collector.rcc.service.secure.port=8687")
             .httpsEnabled();
@@ -133,7 +135,7 @@ public class ApplicationSettingsTest {
     }
 
     @Test
-    public void shouldReturnIfHTTPIsEnabled() throws IOException {
+    public void shouldReturnIfHttpIsEnabled() throws IOException {
         // when
         boolean httpsEnabled = fromTemporaryConfiguration("collector.service.port=8080").httpsEnabled();
         // then
@@ -141,7 +143,7 @@ public class ApplicationSettingsTest {
     }
 
     @Test
-    public void shouldByDefaultHTTPSBeDisabled() throws IOException {
+    public void shouldByDefaultHttpSBeDisabled() throws IOException {
         // when
         boolean httpsEnabled = fromTemporaryConfiguration().httpsEnabled();
 
@@ -150,7 +152,7 @@ public class ApplicationSettingsTest {
     }
 
     @Test
-    public void shouldReturnHTTPSPort() throws IOException {
+    public void shouldReturnHttpSPort() throws IOException {
         // when
         int httpsPort = fromTemporaryConfiguration("collector.service.secure.port=8687")
             .httpsPort();
@@ -163,7 +165,8 @@ public class ApplicationSettingsTest {
     @Test
     public void shouldReturnLocationOfThePasswordFile() throws IOException {
         // when
-        String passwordFileLocation = fromTemporaryConfiguration("collector.rcc.keystore.passwordfile=/somewhere/password")
+        String passwordFileLocation = fromTemporaryConfiguration(
+                "collector.rcc.keystore.passwordfile=/somewhere/password")
             .keystorePasswordFileLocation();
 
         // then
@@ -182,7 +185,8 @@ public class ApplicationSettingsTest {
     @Test
     public void shouldReturnLocationOfTheKeystoreFile() throws IOException {
         // when
-        String keystoreFileLocation = fromTemporaryConfiguration("collector.rcc.keystore.file.location=/somewhere/keystore")
+        String keystoreFileLocation = fromTemporaryConfiguration(
+                "collector.rcc.keystore.file.location=/somewhere/keystore")
             .keystoreFileLocation();
 
         // then
@@ -199,9 +203,10 @@ public class ApplicationSettingsTest {
     }
 
     @Test
-    public void shouldReturnDMAAPConfigFileLocation() throws IOException {
+    public void shouldReturnDmaapConfigFileLocation() throws IOException {
         // when
-        String dmaapConfigFileLocation = fromTemporaryConfiguration("collector.dmaapfile=/somewhere/dmaapFile")
+        String dmaapConfigFileLocation = fromTemporaryConfiguration(
+                "collector.dmaapfile=/somewhere/dmaapFile")
             .dMaaPConfigurationFileLocation();
 
         // then
@@ -209,7 +214,7 @@ public class ApplicationSettingsTest {
     }
 
     @Test
-    public void shouldReturnDefaultDMAAPConfigFileLocation() throws IOException {
+    public void shouldReturnDefaultDmaapConfigFileLocation() throws IOException {
         // when
         String dmaapConfigFileLocation = fromTemporaryConfiguration().dMaaPConfigurationFileLocation();
 
@@ -220,7 +225,8 @@ public class ApplicationSettingsTest {
     @Test
     public void shouldReturnMaximumAllowedQueuedEvents() throws IOException {
         // when
-        int maximumAllowedQueuedEvents = fromTemporaryConfiguration("collector.rcc.inputQueue.maxPending=10000")
+        int maximumAllowedQueuedEvents = fromTemporaryConfiguration(
+                "collector.rcc.inputQueue.maxPending=10000")
             .maximumAllowedQueuedEvents();
 
         // then
@@ -235,37 +241,6 @@ public class ApplicationSettingsTest {
         // then
         assertEquals(1024 * 4, maximumAllowedQueuedEvents);
     }
-
-
-
-
-//    @Test
-//    public void shouldReturnDMAAPStreamId() throws IOException {
-//        // given
-//        Map<String, String[]> expected = HashMap.of(
-//            "s", new String[]{"something", "something2"},
-//            "s2", new String[]{"something3"}
-//        );
-//
-//        // when
-//        Map<String, String[]> dmaapStreamID = fromTemporaryConfiguration(
-//            "collector.dmaap.streamid=s=something,something2|s2=something3")
-//            .dMaaPStreamsMapping();
-//
-//        // then
-//        assertArrayEquals(expected.get("s").get(), Objects.requireNonNull(dmaapStreamID).get("s").get());
-//        assertArrayEquals(expected.get("s2").get(), Objects.requireNonNull(dmaapStreamID).get("s2").get());
-//        assertEquals(expected.keySet(), dmaapStreamID.keySet());
-//    }
-//
-//    @Test
-//    public void shouldReturnDefaultDMAAPStreamId() throws IOException {
-//        // when
-//        Map<String, String[]> dmaapStreamID = fromTemporaryConfiguration().dMaaPStreamsMapping();
-//
-//        // then
-//        assertEquals(dmaapStreamID, HashMap.empty());
-//    }
 
     @Test
     public void shouldReturnIfAuthorizationIsEnabled() throws IOException {
@@ -301,8 +276,8 @@ public class ApplicationSettingsTest {
     @Test
     public void shouldbyDefaultThereShouldBeNoValidCredentials() throws IOException {
         // when
-        Map<String, String> userToBase64PasswordDelimitedByCommaSeparatedByPipes = fromTemporaryConfiguration().
-            validAuthorizationCredentials();
+        Map<String, String> userToBase64PasswordDelimitedByCommaSeparatedByPipes = fromTemporaryConfiguration()
+                .validAuthorizationCredentials();
 
         // then
         assertTrue(userToBase64PasswordDelimitedByCommaSeparatedByPipes.isEmpty());
@@ -333,7 +308,7 @@ public class ApplicationSettingsTest {
     @Test
     public void shouldrccKeystorePathExistDefault() throws IOException {
         // when
-        String path= fromTemporaryConfiguration().rccKeystoreFileLocation();
+        String path = fromTemporaryConfiguration().rccKeystoreFileLocation();
 
         // then
         assertEquals(sanitizePath("etc/keystore"), path);
@@ -342,7 +317,7 @@ public class ApplicationSettingsTest {
     @Test
     public void shouldrccKeystorePasswordExistDefault() throws IOException {
         // when
-        String path= fromTemporaryConfiguration().rccKeystorePasswordFileLocation();
+        String path = fromTemporaryConfiguration().rccKeystorePasswordFileLocation();
 
         // then
         assertEquals(sanitizePath("etc/rcc_passwordfile"), path);
@@ -351,7 +326,7 @@ public class ApplicationSettingsTest {
     @Test
     public void shouldTruststorePathExistDefault() throws IOException {
         // when
-        String path= fromTemporaryConfiguration().truststorePasswordFileLocation();
+        String path = fromTemporaryConfiguration().truststorePasswordFileLocation();
 
         // then
         assertEquals(sanitizePath("etc/trustpasswordfile"), path);
@@ -360,7 +335,7 @@ public class ApplicationSettingsTest {
     @Test
     public void shouldTruststorePasswordExistDefault() throws IOException {
         // when
-        String path= fromTemporaryConfiguration().truststoreFileLocation();
+        String path = fromTemporaryConfiguration().truststoreFileLocation();
 
         // then
         assertEquals(sanitizePath("etc/truststore.onap.client.jks"), path);
@@ -392,12 +367,16 @@ public class ApplicationSettingsTest {
         // then
         assertEquals(stream, null);
     }
+
     private static ApplicationSettings fromTemporaryConfiguration(String... fileLines)
         throws IOException {
         File tempConfFile = File.createTempFile("doesNotMatter", "doesNotMatter");
         Files.write(tempConfFile.toPath(), Arrays.asList(fileLines));
         tempConfFile.deleteOnExit();
-        return new ApplicationSettings(new String[]{"-c", tempConfFile.toString()}, args -> processCmdLine(args), "");
+        return new ApplicationSettings(
+            new String[]{"-c", tempConfFile.toString()},
+            args -> processCmdLine(args),
+            "");
     }
 
     private String sanitizePath(String path) {
