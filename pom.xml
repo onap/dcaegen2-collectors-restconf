@@ -2,6 +2,7 @@
 <!--
 ================================================================================
 Copyright (c) 2019 Huawei. All rights reserved.
+Copyright (c) 2019 AT&T. All rights reserved.
 ================================================================================
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -193,9 +194,11 @@ limitations under the License.
                 <artifactId>docker-maven-plugin</artifactId>
                 <configuration>
                     <serverId>${onap.nexus.dockerregistry.daily}</serverId>
-                    <imageName>${docker.image.name}</imageName>
+                    <imageName>${onap.nexus.dockerregistry.daily}/${docker.image.name}</imageName>
                     <imageTags>
-                        <tag>latest</tag>
+                         <imageTag>${project.version}-${maven.build.timestamp}Z</imageTag>
+                         <imageTag>${project.version}</imageTag>
+                         <imageTag>latest</imageTag>
                     </imageTags>
                     <baseImage>openjdk:8-jre-alpine</baseImage>
                     <env>
@@ -218,6 +221,7 @@ limitations under the License.
                     </exposes>
                     <user>${docker.user.name}</user>
                 </configuration>
+<!--
                 <executions>
                     <execution>
                         <id>build-image</id>
@@ -263,6 +267,7 @@ limitations under the License.
                         </configuration>
                     </execution>
                 </executions>
+-->
             </plugin>
         </plugins>
     </build>
