@@ -22,6 +22,30 @@
       "revId": "666ae309a2b105478c4d92bf2dbae80a78f56583",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc2eb2f7_315ee3bd",
+        "filename": "dpo/tosca_models/policy.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2019-08-12T23:19:02Z",
+      "side": 1,
+      "message": "I believe this file is consolidated representation of policy definition. I see the actual policy datatype/policytype was updated under this submission - https://gerrit.onap.org/r/#/c/sdc/+/92559/\n\nVidyashree - Can you clarify how this file was created? If  added for reference purpose, possibly the same datatype/policytype can be added here.",
+      "parentUuid": "a4c27829_812e7efe",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 1
+      },
+      "revId": "666ae309a2b105478c4d92bf2dbae80a78f56583",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
