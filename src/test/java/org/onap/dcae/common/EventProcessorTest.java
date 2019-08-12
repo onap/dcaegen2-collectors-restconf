@@ -57,8 +57,6 @@ public class EventProcessorTest {
     protected static final Path KEYSTORE_PASSWORD_FILE = Paths.get(RESOURCES.toString(), "passwordfile");
     protected static final Path TRUSTSTORE = Paths.get(RESOURCES.toString(), "truststore");
     protected static final Path TRUSTSTORE_PASSWORD_FILE = Paths.get(RESOURCES.toString(), "trustpasswordfile");
-    protected static final Path RCC_KEYSTORE_PASSWORD_FILE = Paths.get(RESOURCES.toString(), "rcc_passwordfile");
-    protected static final Path RCC_KEYSTORE = Paths.get(RESOURCES.toString(), "sdnc.p12");
 
     /**
      * set up before testcase.
@@ -78,8 +76,6 @@ public class EventProcessorTest {
             when(properties.truststorePasswordFileLocation()).thenReturn(TRUSTSTORE_PASSWORD_FILE.toString());
             when(properties.keystoreFileLocation()).thenReturn(KEYSTORE.toString());
             when(properties.keystorePasswordFileLocation()).thenReturn(KEYSTORE_PASSWORD_FILE.toString());
-            when(properties.rccKeystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
-            when(properties.rccKeystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
             when(properties.controllerConfigFileLocation())
                     .thenReturn(Paths.get("etc/ont_config.json").toAbsolutePath().toString());
 

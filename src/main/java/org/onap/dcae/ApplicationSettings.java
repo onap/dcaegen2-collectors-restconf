@@ -29,6 +29,7 @@ import io.vavr.collection.List;
 import io.vavr.collection.Map;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.onap.dcae.common.AuthMethodType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,7 +55,8 @@ public class ApplicationSettings {
         this(args, argsParser, System.getProperty("user.dir"));
     }
 
-    public ApplicationSettings(String[] args, Function1<String[], Map<String, String>> argsParser, String appInvocationDir) {
+    public ApplicationSettings(String[] args, Function1<String[],
+            Map<String, String>> argsParser, String appInvocationDir) {
         log.info("New ApplicationSettings........");
         this.appInvocationDir = appInvocationDir;
         properties.setDelimiterParsingDisabled(true);
@@ -120,24 +122,18 @@ public class ApplicationSettings {
         return httpsPort() > 0;
     }
 
-    public String rccKeystorePasswordFileLocation() {
-        return prependWithUserDirOnRelative(properties.getString("collector.keystore.passwordfile", "etc/rcc_passwordfile"));
-    }
-
-    public String rccKeystoreFileLocation() {
-        return prependWithUserDirOnRelative(properties.getString("collector.keystore.file.location", "etc/keystore"));
-    }
-
     public String keystorePasswordFileLocation() {
-        return prependWithUserDirOnRelative(properties.getString("collector.rcc.keystore.passwordfile", "etc/passwordfile"));
+        return prependWithUserDirOnRelative(properties.getString("collector.keystore.passwordfile",
+                "etc/passwordfile"));
     }
 
     public String keystoreFileLocation() {
-        return prependWithUserDirOnRelative(properties.getString("collector.rcc.keystore.file.location", "etc/sdnc.p12"));
+        return prependWithUserDirOnRelative(properties.getString("collector.keystore.file.location",
+                "etc/keystore"));
     }
 
     public boolean clientTlsAuthenticationEnabled() {
-        return httpsEnabled() && properties.getInt("collector.rcc.service.secure.clientauth", 0) > 0;
+        return httpsEnabled() && properties.getInt("collector.service.secure.clientauth", 0) > 0;
     }
 
     public Map<String, String> validAuthorizationCredentials() {
@@ -152,15 +148,17 @@ public class ApplicationSettings {
     }
 
     public String keystoreAlias() {
-        return properties.getString("collector.rcc.keystore.alias", "tomcat");
+        return properties.getString("collector.keystore.alias", "tomcat");
     }
 
     public String truststorePasswordFileLocation() {
-        return prependWithUserDirOnRelative(properties.getString("collector.rcc.truststore.passwordfile", "etc/trustpasswordfile"));
+        return prependWithUserDirOnRelative(properties.getString("collector.rcc.truststore.passwordfile",
+                "etc/trustpasswordfile"));
     }
 
     public String truststoreFileLocation() {
-        return prependWithUserDirOnRelative(properties.getString("collector.rcc.truststore.file.location", "etc/truststore.onap.client.jks"));
+        return prependWithUserDirOnRelative(properties.getString("collector.rcc.truststore.file.location",
+                "etc/truststore"));
     }
 
     public String rccPolicy() {
@@ -168,15 +166,23 @@ public class ApplicationSettings {
     }
 
     public String dMaaPConfigurationFileLocation() {
-        return prependWithUserDirOnRelative(properties.getString("collector.dmaapfile", "etc/DmaapConfig.json"));
+        return prependWithUserDirOnRelative(properties.getString("collector.dmaapfile",
+                "etc/DmaapConfig.json"));
     }
 
     public String controllerConfigFileLocation() {
-        return prependWithUserDirOnRelative(properties.getString("collector.eventinfo", "etc/ont_config.json"));
+        return prependWithUserDirOnRelative(properties.getString("collector.eventinfo",
+                "etc/ont_config.json"));
+    }
+    public String certSubjectMatcher() {
+        return prependWithUserDirOnRelative(properties.getString("collector.cert.subject.matcher",
+                "etc/certSubjectMatcher.properties"));
+    }
+    public String authMethod() {
+        return properties.getString("auth.method", AuthMethodType.NO_AUTH.value());
     }
 
-
-    public String dMaaPStreamsMapping() {
+    public String dMaapStreamsMapping() {
         return properties.getString("collector.rcc.dmaap.streamid", null);
     }
 

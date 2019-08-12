@@ -30,15 +30,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.onap.dcae.CLIUtils.processCmdLine;
 
-import io.vavr.collection.HashMap;
 import io.vavr.collection.Map;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.Objects;
 import org.junit.Test;
 
 public class ApplicationSettingsTest {
@@ -166,7 +163,7 @@ public class ApplicationSettingsTest {
     public void shouldReturnLocationOfThePasswordFile() throws IOException {
         // when
         String passwordFileLocation = fromTemporaryConfiguration(
-                "collector.rcc.keystore.passwordfile=/somewhere/password")
+                "collector.keystore.passwordfile=/somewhere/password")
             .keystorePasswordFileLocation();
 
         // then
@@ -186,7 +183,7 @@ public class ApplicationSettingsTest {
     public void shouldReturnLocationOfTheKeystoreFile() throws IOException {
         // when
         String keystoreFileLocation = fromTemporaryConfiguration(
-                "collector.rcc.keystore.file.location=/somewhere/keystore")
+                "collector.keystore.file.location=/somewhere/keystore")
             .keystoreFileLocation();
 
         // then
@@ -199,7 +196,7 @@ public class ApplicationSettingsTest {
         String keystoreFileLocation = fromTemporaryConfiguration().keystoreFileLocation();
 
         // then
-        assertEquals(sanitizePath("etc/sdnc.p12"), keystoreFileLocation);
+        assertEquals(sanitizePath("etc/keystore"), keystoreFileLocation);
     }
 
     @Test
@@ -306,24 +303,6 @@ public class ApplicationSettingsTest {
     }
 
     @Test
-    public void shouldrccKeystorePathExistDefault() throws IOException {
-        // when
-        String path = fromTemporaryConfiguration().rccKeystoreFileLocation();
-
-        // then
-        assertEquals(sanitizePath("etc/keystore"), path);
-    }
-
-    @Test
-    public void shouldrccKeystorePasswordExistDefault() throws IOException {
-        // when
-        String path = fromTemporaryConfiguration().rccKeystorePasswordFileLocation();
-
-        // then
-        assertEquals(sanitizePath("etc/rcc_passwordfile"), path);
-    }
-
-    @Test
     public void shouldTruststorePathExistDefault() throws IOException {
         // when
         String path = fromTemporaryConfiguration().truststorePasswordFileLocation();
@@ -338,7 +317,7 @@ public class ApplicationSettingsTest {
         String path = fromTemporaryConfiguration().truststoreFileLocation();
 
         // then
-        assertEquals(sanitizePath("etc/truststore.onap.client.jks"), path);
+        assertEquals(sanitizePath("etc/truststore"), path);
     }
 
     @Test
@@ -362,7 +341,7 @@ public class ApplicationSettingsTest {
     @Test
     public void shouldNotHaveStreamId() throws IOException {
         // when
-        String stream = fromTemporaryConfiguration().dMaaPStreamsMapping();
+        String stream = fromTemporaryConfiguration().dMaapStreamsMapping();
 
         // then
         assertEquals(stream, null);

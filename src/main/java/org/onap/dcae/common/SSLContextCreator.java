@@ -21,9 +21,9 @@
 
 package org.onap.dcae.common;
 
-import org.springframework.boot.web.server.Ssl;
-
 import java.nio.file.Path;
+import org.springframework.boot.web.server.Ssl;
+import org.springframework.boot.web.server.Ssl.ClientAuth;
 
 public class SSLContextCreator {
     private final String keyStorePassword;
@@ -33,6 +33,7 @@ public class SSLContextCreator {
     private Path trustStoreFile;
     private String trustStorePassword;
     private boolean hasTlsClientAuthentication = false;
+    private ClientAuth clientAuth;
 
     public static SSLContextCreator create(final Path keyStoreFile, final String certAlias, final String password) {
         return new SSLContextCreator(keyStoreFile, certAlias, password);
@@ -44,8 +45,9 @@ public class SSLContextCreator {
         this.keyStorePassword = password;
     }
 
-    public SSLContextCreator withTlsClientAuthentication(final Path trustStoreFile, final String password) {
-        hasTlsClientAuthentication = true;
+    public SSLContextCreator withTlsClientAuthentication(final Path trustStoreFile, final String password, final ClientAuth clientAuth) {
+        this.clientAuth = clientAuth;
+        this.hasTlsClientAuthentication = true;
         this.trustStoreFile = trustStoreFile;
         this.trustStorePassword = password;
 
@@ -54,7 +56,6 @@ public class SSLContextCreator {
 
     private void configureKeyStore(final Ssl ssl) {
         final String keyStore = keyStoreFile.toAbsolutePath().toString();
-
         ssl.setKeyStore(keyStore);
         ssl.setKeyPassword(keyStorePassword);
         ssl.setKeyAlias(certAlias);
@@ -65,7 +66,7 @@ public class SSLContextCreator {
 
         ssl.setTrustStore(trustStore);
         ssl.setTrustStorePassword(trustStorePassword);
-        ssl.setClientAuth(Ssl.ClientAuth.NEED);
+        ssl.setClientAuth(clientAuth);
     }
 
     public Ssl build() {
@@ -77,7 +78,6 @@ public class SSLContextCreator {
         if (hasTlsClientAuthentication) {
             configureTrustStore(ssl);
         }
-
         return ssl;
     }
 }

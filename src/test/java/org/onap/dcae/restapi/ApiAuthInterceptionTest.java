@@ -21,8 +21,7 @@
 
 package org.onap.dcae.restapi;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -30,22 +29,22 @@ import io.vavr.collection.HashMap;
 import io.vavr.collection.Map;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.onap.dcae.ApplicationSettings;
+import org.onap.dcae.common.AuthMethodType;
 import org.slf4j.Logger;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
 
 @RunWith(MockitoJUnitRunner.Silent.class)
 public class ApiAuthInterceptionTest {
@@ -63,7 +62,7 @@ public class ApiAuthInterceptionTest {
     private HttpServletResponse response;
 
     @Mock
-    private Object obj;
+    private FilterChain obj;
 
     @Mock
     private PrintWriter writer;
@@ -88,74 +87,71 @@ public class ApiAuthInterceptionTest {
     }
 
     @Test
-    public void shouldSucceedWhenAuthorizationIsDisabled() throws IOException {
+    public void shouldSucceedWhenAuthorizationIsDisabled() throws IOException, ServletException {
         // given
         final HttpServletRequest request = createEmptyRequest();
 
-        when(settings.authorizationEnabled()).thenReturn(false);
+        when(settings.authMethod()).thenReturn(AuthMethodType.NO_AUTH.value());
 
         // when
-        final boolean isAuthorized = sut.preHandle(request, response, obj);
+        sut.doFilter(request, response, obj);
 
         // then
-        assertTrue(isAuthorized);
+        verify(obj, atLeastOnce()).doFilter(request, response);
     }
 
     @Test
-    public void shouldFailDueToEmptyBasicAuthorizationHeader() throws IOException {
+    public void shouldFailDueToEmptyBasicAuthorizationHeader() throws IOException, ServletException {
         // given
         final HttpServletRequest request = createEmptyRequest();
 
-        when(settings.authorizationEnabled()).thenReturn(true);
+        when(settings.authMethod()).thenReturn(AuthMethodType.BASIC_AUTH.value());
         when(response.getWriter()).thenReturn(writer);
 
         // when
-        final boolean isAuthorized = sut.preHandle(request, response, obj);
-
+        sut.doFilter(request, response, obj);
 
         // then
-        assertFalse(isAuthorized);
-
-        verify(response).setStatus(HttpStatus.BAD_REQUEST.value());
+        verify(response).setStatus(HttpStatus.UNAUTHORIZED.value());
         verify(writer).write(ApiException.UNAUTHORIZED_USER.toJSON().toString());
     }
 
     @Test
-    public void shouldFailDueToBasicAuthenticationUserMissingFromSettings() throws IOException {
+    public void shouldFailDueToBasicAuthenticationUserMissingFromSettings()
+            throws IOException, ServletException {
         // given
         final HttpServletRequest request = createRequestWithAuthorizationHeader();
 
-        when(settings.authorizationEnabled()).thenReturn(true);
+        when(settings.authMethod()).thenReturn(AuthMethodType.BASIC_AUTH.value());
         when(response.getWriter()).thenReturn(writer);
 
         // when
-        final boolean isAuthorized = sut.preHandle(request, response, obj);
+        sut.doFilter(request, response, obj);
 
         // then
-        assertFalse(isAuthorized);
-
-        verify(response).setStatus(HttpStatus.BAD_REQUEST.value());
+        verify(response).setStatus(HttpStatus.UNAUTHORIZED.value());
         verify(writer).write(ApiException.UNAUTHORIZED_USER.toJSON().toString());
     }
 
     @Test
-    public void shouldSucceed() throws IOException {
+    public void shouldSucceed() throws IOException, ServletException {
         // given
         final HttpServletRequest request = createRequestWithAuthorizationHeader();
-        when(settings.authorizationEnabled()).thenReturn(true);
+        when(settings.authMethod()).thenReturn(AuthMethodType.BASIC_AUTH.value());
         when(settings.validAuthorizationCredentials()).thenReturn(
-            HashMap.of(USERNAME, "$2a$10$BsZkEynNm/93wbAeeZuxJeu6IHRyQl4XReqDg2BtYOFDhUsz20.3G"));
+                HashMap.of(USERNAME, "$2a$10$BsZkEynNm/93wbAeeZuxJeu6IHRyQl4XReqDg2BtYOFDhUsz20.3G"));
         when(response.getWriter()).thenReturn(writer);
 
         // when
-        final boolean isAuthorized = sut.preHandle(request, response, obj);
+        sut.doFilter(request, response, obj);
 
         // then
-        assertTrue(isAuthorized);
+        verify(obj, atLeastOnce()).doFilter(request, response);
     }
 
     @Test
-    public void shouldFailDueToInvalidBasicAuthorizationHeaderValue() throws IOException {
+    public void shouldFailDueToInvalidBasicAuthorizationHeaderValue()
+            throws IOException, ServletException {
         // given
         final HttpServletRequest request =
                 MockMvcRequestBuilders
@@ -163,17 +159,15 @@ public class ApiAuthInterceptionTest {
                         .header(HttpHeaders.AUTHORIZATION, "FooBar")
                         .buildRequest(null);
 
-        when(settings.authorizationEnabled()).thenReturn(true);
+        when(settings.authMethod()).thenReturn(AuthMethodType.BASIC_AUTH.value());
         when(settings.validAuthorizationCredentials()).thenReturn(CREDENTIALS);
         when(response.getWriter()).thenReturn(writer);
 
         // when
-        final boolean isAuthorized = sut.preHandle(request, response, obj);
+        sut.doFilter(request, response, obj);
 
-        // then
-        assertFalse(isAuthorized);
-
-        verify(response).setStatus(HttpStatus.BAD_REQUEST.value());
+        //then
+        verify(response).setStatus(HttpStatus.UNAUTHORIZED.value());
         verify(writer).write(ApiException.UNAUTHORIZED_USER.toJSON().toString());
     }
 }

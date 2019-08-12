@@ -20,7 +20,11 @@
 
 package org.onap.dcae.common;
 
-import com.sun.jersey.api.client.*;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientHandlerException;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.UniformInterfaceException;
+import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
@@ -30,11 +34,23 @@ import com.sun.jersey.client.urlconnection.HTTPSProperties;
 import com.sun.jersey.oauth.client.OAuthClientFilter;
 import com.sun.jersey.oauth.signature.OAuthParameters;
 import com.sun.jersey.oauth.signature.OAuthSecrets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.net.ssl.*;
+
 import javax.ws.rs.core.EntityTag;
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.FileInputStream;
@@ -44,7 +60,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyStore;
 import java.security.cert.X509Certificate;
-import java.util.*;
+
 
 import static org.onap.dcae.common.RestapiCallNodeUtil.getParameters;
 import static org.onap.dcae.common.RestapiCallNodeUtil.parseParam;
@@ -53,41 +69,41 @@ public class RestapiCallNode {
     private static final Logger log = LoggerFactory.getLogger(RestapiCallNode.class);
 
     public void sendRequest(Map<String, String> paramMap, RestConfContext ctx, Integer retryCount) throws Exception {
-        HttpResponse r = new HttpResponse();
+        HttpResponse httpResponse = new HttpResponse();
         try {
-            Parameters p = getParameters(paramMap);
-            String pp = p.responsePrefix != null ? p.responsePrefix + '.' : "";
+            Parameters parameters = getParameters(paramMap);
+            String pp = parameters.responsePrefix != null ? parameters.responsePrefix + '.' : "";
             String req = null;
-            if (p.templateFileName != null) {
-                log.info("p.templateFileName " + p.templateFileName);
-                String reqTemplate = readFile(p.templateFileName);
-                req = buildXmlJsonRequest(ctx, reqTemplate, p.format);
-            } else if (p.requestBody != null) {
-                req = p.requestBody;
+            if (parameters.templateFileName != null) {
+                log.info("parameters.templateFileName " + parameters.templateFileName);
+                String reqTemplate = readFile(parameters.templateFileName);
+                req = buildXmlJsonRequest(ctx, reqTemplate, parameters.format);
+            } else if (parameters.requestBody != null) {
+                req = parameters.requestBody;
             }
 
-            r = sendHttpRequest(req, p);
-            setResponseStatus(ctx, p.responsePrefix, r);
+            httpResponse = sendHttpRequest(req, parameters);
+            setResponseStatus(ctx, parameters.responsePrefix, httpResponse);
 
-            if (p.dumpHeaders && r.headers != null) {
-                for (Map.Entry<String, List<String>> a : r.headers.entrySet()) {
+            if (parameters.dumpHeaders && httpResponse.headers != null) {
+                for (Map.Entry<String, List<String>> a : httpResponse.headers.entrySet()) {
                     ctx.setAttribute(pp + "header." + a.getKey(), StringUtils.join(a.getValue(), ","));
                 }
             }
 
-            if (p.returnRequestPayload && req != null) {
+            if (parameters.returnRequestPayload && req != null) {
                 ctx.setAttribute(pp + "httpRequest", req);
             }
 
-            if (r.body != null && r.body.trim().length() > 0) {
-                ctx.setAttribute(pp + "httpResponse", r.body);
+            if (httpResponse.body != null && httpResponse.body.trim().length() > 0) {
+                ctx.setAttribute(pp + "httpResponse", httpResponse.body);
 
-                if (p.convertResponse) {
+                if (parameters.convertResponse) {
                     Map<String, String> mm = null;
-                    if (p.format == Format.XML) {
-                        mm = XmlParser.convertToProperties(r.body, p.listNameList);
-                    } else if (p.format == Format.JSON) {
-                        mm = JsonParser.convertToProperties(r.body);
+                    if (parameters.format == Format.XML) {
+                        mm = XmlParser.convertToProperties(httpResponse.body, parameters.listNameList);
+                    } else if (parameters.format == Format.JSON) {
+                        mm = JsonParser.convertToProperties(httpResponse.body);
                     }
 
                     if (mm != null) {
@@ -107,7 +123,7 @@ public class RestapiCallNode {
             log.error("Error sending the request: " + e.getMessage(), e);
             String prefix = parseParam(paramMap, "responsePrefix", false, null);
             if (!shouldRetry || (retryCount == null) || (retryCount == 0)) {
-                setFailureResponseStatus(ctx, prefix, e.getMessage(), r);
+                setFailureResponseStatus(ctx, prefix, e.getMessage(), httpResponse);
             } else {
                 try {
                     retryCount = retryCount - 1;
@@ -118,13 +134,13 @@ public class RestapiCallNode {
                     String retryErrorMessage =
                             "Retry attempt has failed. No further retry shall be attempted, calling " +
                                     "setFailureResponseStatus.";
-                    setFailureResponseStatus(ctx, prefix, retryErrorMessage, r);
+                    setFailureResponseStatus(ctx, prefix, retryErrorMessage, httpResponse);
                 }
             }
         }
 
-        if (r != null && r.code >= 300) {
-            throw new Exception(String.valueOf(r.code) + ": " + r.message);
+        if (httpResponse != null && httpResponse.code >= 300) {
+            throw new Exception(String.valueOf(httpResponse.code) + ": " + httpResponse.message);
         }
     }
 

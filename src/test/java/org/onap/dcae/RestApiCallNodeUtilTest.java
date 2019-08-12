@@ -20,20 +20,17 @@
 
 package org.onap.dcae;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import org.onap.dcae.common.*;
 
-
-import java.util.HashMap;
-import java.util.Map;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import java.util.*;
+import java.util.Map;
 
-import org.junit.Test;
-import org.onap.dcae.common.AuthType;
-import org.onap.dcae.common.Constants;
-import org.onap.dcae.common.Parameters;
-import org.onap.dcae.common.RestapiCallNodeUtil;
-
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Created by koblosz on 07.06.18.
@@ -72,14 +69,12 @@ public class RestApiCallNodeUtilTest {
         String trustPassword = "admin";
         paraMap.put(Constants.KSETTING_TRUST_STORE_PASSWORD, trustPassword);
         paraMap.put(Constants.KSETTING_KEY_STORE_FILENAME, null);
-        String keyPassword = "admin";
-        paraMap.put(Constants.KSETTING_KEY_STORE_PASSWD, keyPassword);
+        String KeyPassword = "admin";
+        paraMap.put(Constants.KSETTING_KEY_STORE_PASSWD, KeyPassword);
         try {
-            Parameters parameters = RestapiCallNodeUtil.getParameters(paraMap);
-            assertEquals(parameters.contentType, "application/json");
-        } catch (Exception e) {
-            System.out.println("Exception " + e);
-        }
+            Parameters p = RestapiCallNodeUtil.getParameters(paraMap);
+            assertEquals(p.contentType, "application/json");
+        } catch (Exception e) {}
 
     }
 
@@ -87,11 +82,7 @@ public class RestApiCallNodeUtilTest {
     public void parseComplexParam() {
         Map<String, String> paraMap = new HashMap<>();
         paraMap.put(Constants.KDEFAULT_TEMP_FILENAME, null);
-        paraMap.put(Constants.KSETTING_REST_API_URL,
-                "https://sonar.onap.org/component_measures?id=org.onap.dcaegen2.collectors."
-                        + "restconf%3Arestconfcollector&metric=coverage&selected=org.onap.dcaegen2.collectors"
-                        + ".restconf%3Arestconfcollector%3Asrc%2Fmain%2Fjava%2Forg%2Fonap%2Fdcae%2Fcommon%2F"
-                        + "RestapiCallNodeUtil.java");
+        paraMap.put(Constants.KSETTING_REST_API_URL, "https://sonar.onap.org/component_measures?id=org.onap.dcaegen2.collectors.restconf%3Arestconfcollector&metric=coverage&selected=org.onap.dcaegen2.collectors.restconf%3Arestconfcollector%3Asrc%2Fmain%2Fjava%2Forg%2Fonap%2Fdcae%2Fcommon%2FRestapiCallNodeUtil.java");
         paraMap.put(Constants.KSETTING_HTTP_METHOD, "post");
         paraMap.put(Constants.KSETTING_RESP_PREFIX, "responsePrefix");
         paraMap.put(Constants.KSETTING_SKIP_SENDING, "false");
@@ -118,25 +109,21 @@ public class RestApiCallNodeUtilTest {
         String trustPassword = "admin";
         paraMap.put(Constants.KSETTING_TRUST_STORE_PASSWORD, trustPassword);
         paraMap.put(Constants.KSETTING_KEY_STORE_FILENAME, null);
-        String keyPassword = "admin";
-        paraMap.put(Constants.KSETTING_KEY_STORE_PASSWD, keyPassword);
+        String KeyPassword = "admin";
+        paraMap.put(Constants.KSETTING_KEY_STORE_PASSWD, KeyPassword);
         try {
-            Parameters parameters = RestapiCallNodeUtil.getParameters(paraMap);
-            assertEquals(parameters.contentType, "application/json");
-        } catch (Exception e) {
-            System.out.println("Exception " + e);
-        }
+            Parameters p = RestapiCallNodeUtil.getParameters(paraMap);
+            assertEquals(p.contentType, "application/json");
+        } catch (Exception e) {}
     }
 
     @Test
     public void parseinValidUrl() {
         Map<String, String> paraMap = new HashMap<>();
-        paraMap.put(Constants.KSETTING_REST_API_URL, "$$$");
+        paraMap.put(Constants.KSETTING_REST_API_URL, "");
         try {
-            Parameters parameters = RestapiCallNodeUtil.getParameters(paraMap);
-        } catch (Exception e) {
-            System.out.println("Exception " + e);
-        }
+            Parameters p = RestapiCallNodeUtil.getParameters(paraMap);
+        } catch (Exception e) {}
     }
 
     @Test
@@ -171,53 +158,47 @@ public class RestApiCallNodeUtilTest {
         String trustPassword = "admin";
         paraMap.put(Constants.KSETTING_TRUST_STORE_PASSWORD, trustPassword);
         paraMap.put(Constants.KSETTING_KEY_STORE_FILENAME, null);
-        String keyPassword = "admin";
-        paraMap.put(Constants.KSETTING_KEY_STORE_PASSWD, keyPassword);
+        String KeyPassword = "admin";
+        paraMap.put(Constants.KSETTING_KEY_STORE_PASSWD, KeyPassword);
 
 
         Client client = ClientBuilder.newBuilder().build();
         try {
-            Parameters parameters = RestapiCallNodeUtil.getParameters(paraMap);
-            parameters.restapiUser = "restapiUser";
-            parameters.restapiPassword = "restapiPassword";
-            RestapiCallNodeUtil.addAuthType(client, parameters);
+            Parameters p = RestapiCallNodeUtil.getParameters(paraMap);
+            p.restapiUser = "restapiUser";
+            p.restapiPassword = "restapiPassword";
+            RestapiCallNodeUtil.addAuthType(client, p);
 
-            parameters.restapiUser = null;
-            parameters.restapiPassword = null;
-            parameters.oAuthConsumerKey = "restapiUser";
-            parameters.oAuthSignatureMethod = "restapiPassword";
-            parameters.oAuthConsumerSecret = "someval";
-            RestapiCallNodeUtil.addAuthType(client, parameters);
+            p.restapiUser = null;
+            p.restapiPassword = null;
+            p.oAuthConsumerKey = "restapiUser";
+            p.oAuthSignatureMethod = "restapiPassword";
+            p.oAuthConsumerSecret = "someval";
+            RestapiCallNodeUtil.addAuthType(client, p);
 
-            parameters.authtype = AuthType.DIGEST;
-            parameters.restapiUser = "restapiUser";
-            parameters.restapiPassword = "restapiPassword";
-            RestapiCallNodeUtil.addAuthType(client, parameters);
-        } catch (Exception e) {
-            System.out.println("Exception " + e);
-        }
+            p.authtype = AuthType.DIGEST;
+            p.restapiUser = "restapiUser";
+            p.restapiPassword = "restapiPassword";
+            RestapiCallNodeUtil.addAuthType(client, p);
+        } catch (Exception e) {}
 
         try {
-            Parameters parameters = RestapiCallNodeUtil.getParameters(paraMap);
-            parameters.authtype = AuthType.BASIC;
-            parameters.restapiUser = "restapiUser";
-            parameters.restapiPassword = "restapiPassword";
-            RestapiCallNodeUtil.addAuthType(client, parameters);
+            Parameters p = RestapiCallNodeUtil.getParameters(paraMap);
+            p.authtype = AuthType.BASIC;
+            p.restapiUser = "restapiUser";
+            p.restapiPassword = "restapiPassword";
+            RestapiCallNodeUtil.addAuthType(client, p);
 
-        } catch (Exception e) {
-            System.out.println("Exception " + e);
-        }
+        } catch (Exception e) {}
 
         try {
-            Parameters parameters = RestapiCallNodeUtil.getParameters(paraMap);
-            parameters.authtype = AuthType.OAUTH;
-            parameters.oAuthConsumerKey = "restapiUser";
-            parameters.oAuthSignatureMethod = "restapiPassword";
-            parameters.oAuthConsumerSecret = "someval";
-            RestapiCallNodeUtil.addAuthType(client, parameters);
+            Parameters p = RestapiCallNodeUtil.getParameters(paraMap);
+            p.authtype = AuthType.OAUTH;
+            p.oAuthConsumerKey = "restapiUser";
+            p.oAuthSignatureMethod = "restapiPassword";
+            p.oAuthConsumerSecret = "someval";
+            RestapiCallNodeUtil.addAuthType(client, p);
 
-        } catch (Exception e) {
-            System.out.println("Exception " + e);
-        }
+        } catch (Exception e) {}
     }
 }

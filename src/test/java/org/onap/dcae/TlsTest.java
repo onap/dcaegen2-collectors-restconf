@@ -22,18 +22,18 @@
 
 package org.onap.dcae;
 
+import io.vavr.collection.HashMap;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.onap.dcae.common.AuthMethodType;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpStatus;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 import static org.onap.dcae.TlsTest.HttpsConfiguration.PASSWORD;
 import static org.onap.dcae.TlsTest.HttpsConfiguration.USERNAME;
-
-import io.vavr.collection.HashMap;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpStatus;
 
 public class TlsTest extends TlsTestBase {
 
@@ -69,34 +69,40 @@ public class TlsTest extends TlsTestBase {
     }
 
     @Nested
-    @Import(HttpsConfigurationWithTlsAuthentication.class)
-    class HttpsWithTlsAuthenticationTest extends TestClassBase {
+    @Import(HttpsConfigurationWithTLSAuthentication.class)
+    class HttpsWithTLSAuthenticationTest extends TestClassBase {
 
         @Test
         public void shouldHttpsRequestWithoutCertificateFail() {
             assertThrows(Exception.class, this::makeHttpsRequest);
         }
+
+        @Test
+        public void shouldHttpsRequestWithCertificateSucceed() {
+            assertEquals(HttpStatus.OK, makeHttpsRequestWithClientCert().getStatusCode());
+        }
     }
 
     @Nested
-    @Import(HttpsConfigurationWithTlsAuthenticationAndBasicAuth.class)
-    class HttpsWithTlsAuthenticationAndBasicAuthTest extends TestClassBase {
+    @Import(HttpsConfigurationWithTLSAuthenticationAndBasicAuth.class)
+    class HttpsWithTLSAuthenticationAndBasicAuthTest extends TestClassBase {
 
         @Test
-        public void shouldHttpsRequestWithoutBasicAuthFail() {
-            assertThrows(Exception.class, this::makeHttpsRequestWithClientCert);
+        public void shouldHttpsRequestWithoutBasicAuthSucceed() {
+            assertEquals(HttpStatus.OK, makeHttpsRequestWithClientCert().getStatusCode());
         }
 
         @Test
         public void shouldHttpsRequestWithBasicAuthSucceed() {
-            assertEquals(HttpStatus.OK,
-                    makeHttpsRequestWithClientCertAndBasicAuth(USERNAME, PASSWORD).getStatusCode());
+            assertEquals(HttpStatus.OK, makeHttpsRequestWithClientCertAndBasicAuth(USERNAME, PASSWORD).getStatusCode());
         }
     }
 
+    // ApplicationSettings configurations
     static class HttpConfiguration extends TlsTestBase.ConfigurationBase {
         @Override
         protected void configureSettings(ApplicationSettings settings) {
+            when(settings.authMethod()).thenReturn(AuthMethodType.NO_AUTH.value());
         }
     }
 
@@ -108,31 +114,27 @@ public class TlsTest extends TlsTestBase {
         protected void configureSettings(ApplicationSettings settings) {
             when(settings.keystoreFileLocation()).thenReturn(KEYSTORE.toString());
             when(settings.keystorePasswordFileLocation()).thenReturn(KEYSTORE_PASSWORD_FILE.toString());
-            when(settings.rccKeystoreFileLocation()).thenReturn(RCC_KEYSTORE.toString());
-            when(settings.rccKeystorePasswordFileLocation()).thenReturn(RCC_KEYSTORE_PASSWORD_FILE.toString());
-            when(settings.authorizationEnabled()).thenReturn(true);
-            when(settings.validAuthorizationCredentials()).thenReturn(HashMap.of(USERNAME,
-                    "$2a$10$51tDgG2VNLde5E173Ay/YO.Fq.aD.LR2Rp8pY3QAKriOSPswvGviy"));
+            when(settings.authMethod()).thenReturn(AuthMethodType.BASIC_AUTH.value());
+            when(settings.validAuthorizationCredentials()).thenReturn(HashMap.of(USERNAME, "$2a$10$51tDgG2VNLde5E173Ay/YO.Fq.aD.LR2Rp8pY3QAKriOSPswvGviy"));
         }
     }
 
-    static class HttpsConfigurationWithTlsAuthentication extends HttpsConfiguration {
+    static class HttpsConfigurationWithTLSAuthentication extends HttpsConfiguration {
         @Override
         protected void configureSettings(ApplicationSettings settings) {
             super.configureSettings(settings);
-            when(settings.authorizationEnabled()).thenReturn(false);
-            when(settings.clientTlsAuthenticationEnabled()).thenReturn(true);
+            when(settings.authMethod()).thenReturn(AuthMethodType.CERT_ONLY.value());
             when(settings.truststoreFileLocation()).thenReturn(TRUSTSTORE.toString());
-            when(settings.authorizationEnabled()).thenReturn(true);
             when(settings.truststorePasswordFileLocation()).thenReturn(TRUSTSTORE_PASSWORD_FILE.toString());
+            when(settings.certSubjectMatcher()).thenReturn(CERT_SUBJECT_MATCHER.toString());
         }
     }
 
-    static class HttpsConfigurationWithTlsAuthenticationAndBasicAuth extends HttpsConfigurationWithTlsAuthentication {
+    static class HttpsConfigurationWithTLSAuthenticationAndBasicAuth extends HttpsConfigurationWithTLSAuthentication {
         @Override
         protected void configureSettings(ApplicationSettings settings) {
             super.configureSettings(settings);
-            when(settings.authorizationEnabled()).thenReturn(true);
+            when(settings.authMethod()).thenReturn(AuthMethodType.CERT_BASIC_AUTH.value());
         }
     }
 }

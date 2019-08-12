@@ -78,16 +78,14 @@ node_templates:
             tomcat.maxthreads: "200"
             collector.rcc.service.port: "8080"
             collector.rcc.service.secure.port: "8687"
-            collector.rcc.keystore.file.location: "/opt/app/restconfcollector/etc/keystore"
-            collector.rcc.keystore.passwordfile: "/opt/app/restconfcollector/etc/rcc_passwordfile"
-            collector.rcc.keystore.alias: "dynamically generated"
-            collector.rcc.truststore.file.location: "/opt/app/restconfcollector/etc/truststore.onap.client.jks"
+            collector.keystore.alias: "dynamically generated"
+            collector.rcc.truststore.file.location: "/opt/app/restconfcollector/etc/truststore"
             collector.rcc.truststore.passwordfile: "/opt/app/restconfcollector/etc/trustpasswordfile"
             collector.keystore.file.location: "/opt/app/restconfcollector/etc/sdnc.p12"
             collector.keystore.passwordfile: "/opt/app/restconfcollector/etc/passwordfile"
             collector.header.authflag: "0"
-            collector.header.authlist: "sample1,c2FtcGxlMQ=="
-            collector.rcc.service.secure.clientauth: "0"
+            collector.header.authlist: "sample1,$2a$10$0buh.2WeYwN868YMwnNNEuNEAMNYVU9.FSMJGyIKV3dGET/7oGOi6"
+            collector.service.secure.clientauth: "0"
             streams_publishes:
                         device-registration:
                           dmaap_info:

@@ -12,8 +12,8 @@
   "vendorName": "Huawei",
   "additionalFields" : {
     "attachment-point": "",
-    "svlan": "100",
-    "cvlan": "10",
-    "remote-id": "AC9.0234.0337"
+    "svlan": "",
+    "cvlan": "",
+    "remote-id": ""
   }
 }

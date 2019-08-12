@@ -34,6 +34,7 @@ import org.onap.dcae.controller.AccessController;
 import org.onap.dcae.controller.ConfigLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
@@ -64,6 +65,9 @@ public class RestConfCollector {
     private static ScheduledThreadPoolExecutor scheduledThExController;
     private static EventPublisher eventPublisher;
     private static EventProcessor eventProcessor;
+
+    private static final Logger errorLog = LoggerFactory.getLogger("org.onap.dcae.common.error");
+
 
     /* List of Controllers */
     private static java.util.Map<String, AccessController> controllerStore = new ConcurrentHashMap<>();
@@ -121,6 +125,12 @@ public class RestConfCollector {
     @Bean
     public LinkedBlockingQueue<EventData> inputQueue() {
         return fProcessingInputQueue;
+    }
+
+    @Bean
+    @Qualifier("errorLog")
+    public Logger errorLogger() {
+        return errorLog;
     }
 
     public static java.util.Map<String, String[]> parseStreamIdToStreamHashMapping(String streamId) {
@@ -197,7 +207,7 @@ public class RestConfCollector {
     private static void createExecutors() {
         eventPublisher = EventPublisher.createPublisher(oplog, getDmapConfig());
         eventProcessor = new EventProcessor(eventPublisher,
-                parseStreamIdToStreamHashMapping(properties.dMaaPStreamsMapping()));
+                parseStreamIdToStreamHashMapping(properties.dMaapStreamsMapping()));
 
         executor = Executors.newFixedThreadPool(MAX_THREADS);
         for (int i = 0; i < MAX_THREADS; ++i) {

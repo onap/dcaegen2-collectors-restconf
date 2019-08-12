@@ -41,15 +41,15 @@ public class DataChangeEventListener implements EventListener {
     @Override
     public void onEvent(InboundEvent event) {
         try {
-            String s = event.readData();
-            jsonType type = isJSONValid(s);
+            String data = event.readData();
+            jsonType type = isJSONValid(data);
             if (type == jsonType.OBJECT) {
-                JSONObject jsonObj = new JSONObject(s);
+                JSONObject jsonObj = new JSONObject(data);
                 EventData ev = new EventData(this.conn, jsonObj);
                 log.info("SSE Event in json " + jsonObj.toString());
                 RestConfCollector.handleEvents(ev);
             } else if (type == jsonType.ARRAY) {
-                JSONArray jsonArr = new JSONArray(s);
+                JSONArray jsonArr = new JSONArray(data);
                 for (int j = 0; j < jsonArr.length(); j++) {
                     JSONObject jsonObj = jsonArr.getJSONObject(j);
                     EventData ev = new EventData(this.conn, jsonObj);
