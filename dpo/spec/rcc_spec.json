@@ -84,23 +84,7 @@
           "designer_editable": true
         },
         {
-          "name": "collector.rcc.keystore.file.location",
-          "value": "/opt/app/RCCollector/dcae-certificate/keystore.jks",
-          "description": "fs location of keystore file in vm",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "collector.rcc.keystore.passwordfile",
-          "value": "/opt/app/RCCollector/dcae-certificate/.password",
-          "description": "location of keystore password file in vm",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "collector.rcc.keystore.alias",
+          "name": "collector.keystore.alias",
           "value": "dynamically generated",
           "description": "alias to access the keystore; collector will identify this based on keystore and password file",
           "sourced_at_deployment": false,

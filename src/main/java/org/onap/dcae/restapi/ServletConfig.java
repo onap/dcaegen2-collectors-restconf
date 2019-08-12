@@ -22,8 +22,16 @@
 
 package org.onap.dcae.restapi;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.onap.dcae.ApplicationException;
 import org.onap.dcae.ApplicationSettings;
+import org.onap.dcae.common.AuthMethod;
+import org.onap.dcae.common.AuthMethodType;
+import org.onap.dcae.common.BasicAuth;
+import org.onap.dcae.common.CertAuth;
+import org.onap.dcae.common.CertBasicAuth;
+import org.onap.dcae.common.NoAuth;
 import org.onap.dcae.common.SSLContextCreator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,60 +57,23 @@ public class ServletConfig implements WebServerFactoryCustomizer<ConfigurableSer
 
     @Override
     public void customize(ConfigurableServletWebServerFactory container) {
-        final boolean hasClientTlsAuthentication = properties.clientTlsAuthenticationEnabled();
-        log.info("WebServerFactoryCustomizer initializing........");
-        if (hasClientTlsAuthentication || properties.authorizationEnabled()) {
-            container.setSsl(hasClientTlsAuthentication ? httpsContextWithTlsAuthentication() : simpleHttpsContext());
-            container.setPort(properties.httpsPort());
-        } else {
-            container.setPort(properties.httpPort());
-        }
+        provideAuthConfigurations(container).getOrDefault(properties.authMethod(),
+                notSupportedOperation()).configure();
     }
 
-    private SSLContextCreator simpleHttpsContextBuilder() {
-        log.info("Enabling SSL");
-
-        final Path keyStore = toAbsolutePath(properties.rccKeystoreFileLocation());
-        log.info("Using keyStore path: " + keyStore);
-
-        final Path keyStorePasswordLocation = toAbsolutePath(properties.rccKeystorePasswordFileLocation());
-        final String keyStorePassword = getKeyStorePassword(keyStorePasswordLocation);
-        log.info("Using keyStore password from: " + keyStorePasswordLocation);
-
-        final String alias = properties.keystoreAlias();
-
-        return SSLContextCreator.create(keyStore, alias, keyStorePassword);
+    private Map<String, AuthMethod> provideAuthConfigurations(ConfigurableServletWebServerFactory container) {
+        Map<String, AuthMethod> authMethods = new HashMap<>();
+        authMethods.put(AuthMethodType.CERT_ONLY.value(), new CertAuth(container, properties));
+        authMethods.put(AuthMethodType.BASIC_AUTH.value(), new BasicAuth(container, properties));
+        authMethods.put(AuthMethodType.CERT_BASIC_AUTH.value(), new CertBasicAuth(container, properties));
+        authMethods.put(AuthMethodType.NO_AUTH.value(), new NoAuth(container, properties));
+        return authMethods;
     }
 
-    private Ssl simpleHttpsContext() {
-        return simpleHttpsContextBuilder().build();
-    }
-
-    private Ssl httpsContextWithTlsAuthentication() {
-        final SSLContextCreator sslContextCreator = simpleHttpsContextBuilder();
-
-        log.info("Enabling TLS client authorization");
-
-        final Path trustStore = toAbsolutePath(properties.truststoreFileLocation());
-        log.info("Using trustStore path: " + trustStore);
-
-        final Path trustPasswordFileLocation = toAbsolutePath(properties.truststorePasswordFileLocation());
-        final String trustStorePassword = getKeyStorePassword(trustPasswordFileLocation);
-        log.info("Using trustStore password from: " + trustPasswordFileLocation);
-
-        return sslContextCreator.withTlsClientAuthentication(trustStore, trustStorePassword).build();
-    }
-
-    private Path toAbsolutePath(final String path) {
-        return Paths.get(path).toAbsolutePath();
-    }
-
-    private String getKeyStorePassword(final Path location) {
-        try {
-            return new String(readAllBytes(location));
-        } catch (IOException e) {
-            log.error("Could not read keystore password from: '" + location + "'.", e);
-            throw new ApplicationException(e);
-        }
+    private AuthMethod notSupportedOperation() {
+        return () -> {
+            throw new ApplicationException(
+                    "Provided auth method not allowed: " + properties.authMethod());
+        };
     }
 }

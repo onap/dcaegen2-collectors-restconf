@@ -19,18 +19,7 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-
 package org.onap.dcae;
-
-import static org.onap.dcae.TestingUtilities.configureKeyStore;
-import static org.onap.dcae.TestingUtilities.createRestTemplateWithSsl;
-import static org.onap.dcae.TestingUtilities.readFile;
-import static org.onap.dcae.TestingUtilities.rethrow;
-import static org.onap.dcae.TestingUtilities.sslBuilderWithTrustStore;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.concurrent.LinkedBlockingQueue;
 
 import org.json.JSONObject;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -47,23 +36,23 @@ import org.springframework.http.client.support.BasicAuthenticationInterceptor;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.client.RestTemplate;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.concurrent.LinkedBlockingQueue;
 
-
-
+import static org.onap.dcae.TestingUtilities.*;
 
 @Configuration
 @ExtendWith(SpringExtension.class)
 public class TlsTestBase {
-    protected static final String KEYSTORE_ALIAS = "tomcat";
     protected static final Path RESOURCES = Paths.get("src", "test", "resources");
     protected static final Path KEYSTORE = Paths.get(RESOURCES.toString(), "keystore");
     protected static final Path KEYSTORE_PASSWORD_FILE = Paths.get(RESOURCES.toString(), "passwordfile");
     protected static final Path TRUSTSTORE = Paths.get(RESOURCES.toString(), "truststore");
     protected static final Path TRUSTSTORE_PASSWORD_FILE = Paths.get(RESOURCES.toString(), "trustpasswordfile");
-    protected static final Path RCC_KEYSTORE_PASSWORD_FILE = Paths.get(RESOURCES.toString(), "passwordfile");
-    protected static final Path RCC_KEYSTORE = Paths.get(RESOURCES.toString(), "keystore");
+    protected static final Path CERT_SUBJECT_MATCHER = Paths.get(RESOURCES.toString(), "certSubjectMatcher.properties");
 
-    protected abstract static class ConfigurationBase {
+    protected static abstract class ConfigurationBase {
         protected final ApplicationSettings settings = Mockito.mock(ApplicationSettings.class);
 
         @Bean
@@ -78,6 +67,7 @@ public class TlsTestBase {
 
     @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
     protected abstract class TestClassBase {
+
         @MockBean
         @Qualifier("inputQueue")
         protected LinkedBlockingQueue<JSONObject> queue;
@@ -89,11 +79,11 @@ public class TlsTestBase {
         private final String trustStorePassword;
 
         public TestClassBase() {
-            keyStorePassword = readFile(RCC_KEYSTORE_PASSWORD_FILE);
+            keyStorePassword = readFile(KEYSTORE_PASSWORD_FILE);
             trustStorePassword = readFile(TRUSTSTORE_PASSWORD_FILE);
         }
 
-        private String getUrl(final String protocol, final String uri) {
+        private String getURL(final String protocol, final String uri) {
             return protocol + "://localhost:" + port + uri;
         }
 
@@ -104,12 +94,12 @@ public class TlsTestBase {
             return template;
         }
 
-        public String createHttpUrl(String uri) {
-            return getUrl("http", uri);
+        public String createHttpURL(String uri) {
+            return getURL("http", uri);
         }
 
-        public String createHttpsUrl(String uri) {
-            return getUrl("https", uri);
+        public String createHttpsURL(String uri) {
+            return getURL("https", uri);
         }
 
         public RestTemplate createHttpRestTemplate() {
@@ -127,7 +117,7 @@ public class TlsTestBase {
             return rethrow(() ->
                     createRestTemplateWithSsl(
                             configureKeyStore(
-                                    sslBuilderWithTrustStore(RCC_KEYSTORE, keyStorePassword),
+                                    sslBuilderWithTrustStore(KEYSTORE, keyStorePassword),
                                     TRUSTSTORE,
                                     trustStorePassword
                             ).build())
@@ -135,29 +125,29 @@ public class TlsTestBase {
         }
 
         public ResponseEntity<String> makeHttpRequest() {
-            return createHttpRestTemplate().getForEntity(createHttpUrl("/"), String.class);
+            return createHttpRestTemplate().getForEntity(createHttpURL("/"), String.class);
         }
 
         public ResponseEntity<String> makeHttpsRequest() {
-            return createHttpsRestTemplate().getForEntity(createHttpsUrl("/"), String.class);
+            return createHttpsRestTemplate().getForEntity(createHttpsURL("/"), String.class);
         }
 
 
         public ResponseEntity<String> makeHttpsRequestWithBasicAuth(final String username, final String password) {
             return addBasicAuth(createHttpsRestTemplate(), username, password)
-                    .getForEntity(createHttpsUrl("/"), String.class);
+                    .getForEntity(createHttpsURL("/"), String.class);
 
         }
 
         public ResponseEntity<String> makeHttpsRequestWithClientCert() {
-            return createHttpsRestTemplateWithKeyStore().getForEntity(createHttpsUrl("/"), String.class);
+            return createHttpsRestTemplateWithKeyStore().getForEntity(createHttpsURL("/"), String.class);
         }
 
         public ResponseEntity<String> makeHttpsRequestWithClientCertAndBasicAuth(
                 final String username,
                 final String password) {
             return addBasicAuth(createHttpsRestTemplateWithKeyStore(), username, password)
-                    .getForEntity(createHttpsUrl("/"), String.class);
+                    .getForEntity(createHttpsURL("/"), String.class);
         }
     }
 }
