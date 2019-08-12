@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4c27829_812e7efe",
+        "filename": "dpo/tosca_models/policy.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 57
+      },
+      "writtenOn": "2019-08-12T17:15:12Z",
+      "side": 1,
+      "message": "By adding these fields here, you\u0027ve changed every DCAE microservice model that derivces from onap.policies.Monitoring. Vijay are you sure you want this done?",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 1
+      },
+      "revId": "666ae309a2b105478c4d92bf2dbae80a78f56583",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
