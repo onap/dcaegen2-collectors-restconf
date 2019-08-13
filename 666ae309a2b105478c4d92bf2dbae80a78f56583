@@ -46,6 +46,30 @@
       "revId": "666ae309a2b105478c4d92bf2dbae80a78f56583",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0846a69d_fcb16788",
+        "filename": "dpo/tosca_models/policy.yaml",
+        "patchSetId": 3
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1943
+      },
+      "writtenOn": "2019-08-13T11:14:45Z",
+      "side": 1,
+      "message": "It is created using tosca-lab policy_create.py script. It is for reference. I have upload new patch by modifying onap.policies.Monitoring same as consolidated policyTypes.yaml in sdc.",
+      "parentUuid": "cc2eb2f7_315ee3bd",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 1
+      },
+      "revId": "666ae309a2b105478c4d92bf2dbae80a78f56583",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
