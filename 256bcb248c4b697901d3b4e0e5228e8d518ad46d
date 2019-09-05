@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6825ee8_f1c6d6fd",
+        "filename": "src/main/java/org/onap/dcae/common/AuthMethodType.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-09-05T19:33:31Z",
+      "side": 1,
+      "message": "if this file is totally new, it sould not have copyrights from 2017 and 2018\n\nyou cannot claim copyright for 2020",
+      "revId": "256bcb248c4b697901d3b4e0e5228e8d518ad46d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d94f101_bc537978",
+        "filename": "src/main/java/org/onap/dcae/common/BasicAuth.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-09-05T19:33:31Z",
+      "side": 1,
+      "message": "if this file is totally new, it sould not have copyrights from 2017 and 2018\n\nyou cannot claim copyright for 2020",
+      "revId": "256bcb248c4b697901d3b4e0e5228e8d518ad46d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3483abf3_33241e1d",
+        "filename": "src/main/java/org/onap/dcae/common/CertAuth.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-09-05T19:33:31Z",
+      "side": 1,
+      "message": "if this file is totally new, it sould not have copyrights from 2017 and 2018\n\nyou cannot claim copyright for 2020",
+      "revId": "256bcb248c4b697901d3b4e0e5228e8d518ad46d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1039a17d_8f26d1d1",
+        "filename": "src/main/java/org/onap/dcae/common/CertBasicAuth.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-09-05T19:33:31Z",
+      "side": 1,
+      "message": "if this file is totally new, it sould not have copyrights from 2017 and 2018\n\nyou cannot claim copyright for 2020",
+      "revId": "256bcb248c4b697901d3b4e0e5228e8d518ad46d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c6b15f2_2fdacaa2",
+        "filename": "src/main/java/org/onap/dcae/common/NoAuth.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-09-05T19:33:31Z",
+      "side": 1,
+      "message": "if this file is totally new, it sould not have copyrights from 2017 and 2018\n\nyou cannot claim copyright for 2020",
+      "revId": "256bcb248c4b697901d3b4e0e5228e8d518ad46d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "97cb84af_b96ed1fe",
+        "filename": "src/main/java/org/onap/dcae/common/SslContextCreator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-09-05T19:33:31Z",
+      "side": 1,
+      "message": "if this file is totally new, it sould not have copyrights from 2017 and 2018\n\nyou cannot claim copyright for 2020",
+      "revId": "256bcb248c4b697901d3b4e0e5228e8d518ad46d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0caad0e2_80a804aa",
+        "filename": "src/main/java/org/onap/dcae/common/SubjectMatcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2019-09-05T19:33:31Z",
+      "side": 1,
+      "message": "if this file is totally new, it sould not have copyrights from 2017 and 2018\n\nyou cannot claim copyright for 2020",
+      "revId": "256bcb248c4b697901d3b4e0e5228e8d518ad46d",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    }
+  ]
+}
