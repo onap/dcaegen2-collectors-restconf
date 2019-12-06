@@ -1,0 +1,8 @@
+Verified+1: ONAP Jobbuilder <onap-jobbuilder@jenkins.onap.org>
+Code-Review+1: Swarup Nayak <swarup.nayak1@huawei.com>
+Code-Review+2: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-by: Vijay Venkatesh Kumar <vv770d@att.com>
+Submitted-at: Fri, 06 Dec 2019 13:54:38 +0000
+Reviewed-on: https://gerrit.onap.org/r/c/dcaegen2/collectors/restconf/+/99198
+Project: dcaegen2/collectors/restconf
+Branch: refs/heads/master
