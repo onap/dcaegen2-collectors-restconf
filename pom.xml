@@ -48,6 +48,9 @@ limitations under the License.
         <releases.path>content/repositories/releases/</releases.path>
         <site.path>content/sites/site/org/onap/dcaegen2/collectors/restconf/${project.artifactId}/${project.version}</site.path>
         <maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
+	<sonar.coverage.jacoco.xmlReportPaths>
+            ${project.reporting.outputDirectory}/jacoco-ut/jacoco.xml
+        </sonar.coverage.jacoco.xmlReportPaths>
     </properties>
     <build>
         <pluginManagement>
