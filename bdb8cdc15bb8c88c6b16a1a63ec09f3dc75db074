@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa069413_b7bdcd86",
+        "filename": "pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2020-07-21T23:52:42Z",
+      "side": 1,
+      "message": "use openjdk:11.0.6-jre-slim or onap/integration-java11:7.0.0 as base image (as noted on parent jira - DCAEGEN2-2223)",
+      "range": {
+        "startLine": 206,
+        "startChar": 39,
+        "endLine": 206,
+        "endChar": 50
+      },
+      "revId": "bdb8cdc15bb8c88c6b16a1a63ec09f3dc75db074",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
