@@ -27,14 +27,14 @@ limitations under the License.
     </parent>
     <groupId>org.onap.dcaegen2.collectors.restconf</groupId>
     <artifactId>restconfcollector</artifactId>
-    <version>1.2.1-SNAPSHOT</version>
+    <version>1.2.2-SNAPSHOT</version>
     <name>dcaegen2-collectors-restconf</name>
     <description>RestConfCollector</description>
     <properties>
         <!-- PROJECT SETTINGS -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>8</java.version>
+        <java.version>11</java.version>
         <docker.image.name>onap/org.onap.dcaegen2.collectors.restconfcollector</docker.image.name>
         <docker.user.name>restconf</docker.user.name>
         <docker.user.dir>/opt/app/restconfcollector</docker.user.dir>
@@ -203,7 +203,7 @@ limitations under the License.
                          <imageTag>${project.version}</imageTag>
                          <imageTag>latest</imageTag>
                     </imageTags>
-                    <baseImage>openjdk:8-jre-alpine</baseImage>
+                    <baseImage>onap/integration-java11:7.0.0</baseImage>
                     <env>
                         <HOSTALIASES>/etc/host.aliases</HOSTALIASES>
                     </env>
