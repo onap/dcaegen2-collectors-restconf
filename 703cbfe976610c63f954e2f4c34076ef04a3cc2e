@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d34cfb7_6f4e6345",
+        "filename": "swagger_restconfcollector_1.0.0.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2020-07-23T15:17:53Z",
+      "side": 1,
+      "message": "remove _1.0.0 from filename",
+      "revId": "703cbfe976610c63f954e2f4c34076ef04a3cc2e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93572079_b7ab4bd3",
+        "filename": "swagger_restconfcollector_1.0.0.yaml",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2020-07-23T15:17:53Z",
+      "side": 1,
+      "message": "remove _1.0.0 from filename",
+      "revId": "703cbfe976610c63f954e2f4c34076ef04a3cc2e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
