@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a08a99dc_20fb0746",
+        "filename": "pom.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2020-07-27T15:42:41Z",
+      "side": 1,
+      "message": "add 2020",
+      "range": {
+        "startLine": 4,
+        "startChar": 14,
+        "endLine": 4,
+        "endChar": 19
+      },
+      "revId": "82cc8ead6b2d25336f9b346d021e87983b2d9887",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
