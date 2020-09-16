@@ -36,7 +36,7 @@ limitations under the License.
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>11</java.version>
         <docker.image.name>onap/org.onap.dcaegen2.collectors.restconfcollector</docker.image.name>
-        <docker.user.name>restconf</docker.user.name>
+        <docker.user.name>restconfcollector</docker.user.name>
         <docker.user.dir>/opt/app/restconfcollector</docker.user.dir>
         <!-- TEST SETTINGS -->
         <surefire.redirectTestOutputToFile>true</surefire.redirectTestOutputToFile>
@@ -204,6 +204,7 @@ limitations under the License.
                          <imageTag>latest</imageTag>
                     </imageTags>
                     <baseImage>openjdk:11-jre-slim</baseImage>
+                    <user>${docker.user.name}</user>
                     <env>
                         <HOSTALIASES>/etc/host.aliases</HOSTALIASES>
                     </env>
@@ -215,7 +216,9 @@ limitations under the License.
                         </resource>
                     </resources>
                     <runs>
-                        <run>adduser -h ${docker.user.dir} -D ${docker.user.name}; chown -R ${docker.user.name}: ${docker.user.dir}; chmod +x ${docker.user.dir}/bin/*.sh</run>
+                        <run>useradd -r -U ${docker.user.name}</run>
+                        <run>chown -R ${docker.user.name}:${docker.user.name} ${docker.user.dir}</run>
+                        <run>chmod +x ${docker.user.dir}/bin/*.sh</run>
                     </runs>
                     <cmd>${docker.user.dir}/bin/docker_entry.sh</cmd>
                     <exposes>
