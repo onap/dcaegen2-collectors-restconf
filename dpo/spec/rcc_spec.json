@@ -1,6 +1,6 @@
 {
   "self": {
-    "version": "1.0.0",
+    "version": "1.2.2",
     "name": "dcae-restconfcollector",
     "description": "Collector for subscribing events/notification from external controller in rest format and publishing those events to Ves collector",
     "component_type": "docker"
@@ -8,7 +8,7 @@
   "streams": {
     "subscribes": [],
     "publishes": [{
-      "config_key": "rcc_handle_out",
+      "config_key": "device-registration",
       "format": "DCAE_RCC_OUTPUT",
       "version": "1.0.0",
       "type": "message router"
@@ -19,182 +19,234 @@
     "provides": []
   },
   "parameters": [
-        {
-          "name": "collector.rcc.appName",
-          "description": "DCAE RestConf Collector Application",
-          "value": "dcae-rcc",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "collector.rcc.appDescription",
-          "description": "DCAE RestConf Collector Application",
-          "value": "DCAE RestConf Collector Application",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "collector.rcc.dmaap.streamid",
-          "description": "Stream id",
-          "value": "notification=device-registration",
-          "sourced_at_deployment": true,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "collector.rcc.inputQueue.maxPending",
-          "description": "Number of max queue outstanding",
-          "value": "8096",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "collector.rcc.service.port",
-          "value": "-1",
-          "description": "standard http port collector will open for listening; this will be disabled when collector.header.authflag is set to 1",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "collector.rcc.service.secure.port",
-          "value": "-1",
-          "description": "standard https port collector will open for listening; this will be enabled when collector.header.authflag is set to 1",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "collector.header.authflag",
-          "value": "-1",
-          "description": "Should be set to 1 when open secure port",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "collector.header.authlist",
-          "value": "sample1,$2a$10$pgjaxDzSuc6XVFEeqvxQ5u90DKJnM/u7TJTcinAlFJVaavXMWf/Zi",
-          "description": "List of id and base 64 encoded password.Password value should be base64 encoded in config here",
-          "policy_editable": false,
-          "sourced_at_deployment": true,
-          "designer_editable": true
-        },
-        {
-          "name": "collector.rcc.keystore.file.location",
-          "value": "/opt/app/RCCollector/dcae-certificate/keystore.jks",
-          "description": "fs location of keystore file in vm",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "collector.rcc.keystore.passwordfile",
-          "value": "/opt/app/RCCollector/dcae-certificate/.password",
-          "description": "location of keystore password file in vm",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "collector.rcc.keystore.alias",
-          "value": "dynamically generated",
-          "description": "alias to access the keystore; collector will identify this based on keystore and password file",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "collector.rcc.truststore.file.location",
-          "value": "/opt/app/RCCollector/dcae-certificate/truststore.jks",
-          "description": "fs location of truststore file in vm",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "collector.rcc.truststore.passwordfile",
-          "value": "/opt/app/RCCollector/dcae-certificate/.trustpassword",
-          "description": "location of truststore password file in vm",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "tomcat.maxthreads",
-          "description": "Max threads",
-          "value": "200",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "rcc_policy",
-          "description": "RCC Policy JSON",
-          "value":"[{\"controller_name\":\"AccessM&C\",\"controller_restapiUrl\":\"192.167.1.3:8080\",\"controller_restapiUser\":\"access\",\"controller_restapiPassword\":\"Huawei@123\",\"controller_accessTokenUrl\":\"/rest/plat/smapp/v1/oauth/token\",\"controller_accessTokenFile\":\"./etc/access-token.json\",\"controller_accessTokenMethod\":\"put\",\"controller_subsMethod\":\"post\",\"controller_subscriptionUrl\":\"/restconf/v1/operations/huawei-nce-notification-action:establish-subscription\",\"controller_disableSsl\":\"true\",\"event_details\":[{\"event_name\":\"ONT_registration\",\"event_description\":\"ONTregistartionevent\",\"event_sseventUrlEmbed\":\"true\",\"event_sseventsField\":\"output.url\",\"event_sseventsUrl\":\"null\",\"event_subscriptionTemplate\":\"./etc/ont_registartion_subscription_template.json\",\"event_unSubscriptionTemplate\":\"./etc/ont_registartion_unsubscription_template.json\",\"event_ruleId\":\"12345678\", \"modifyData\": \"true\", \"modifyMethod\": \"modifyOntEvent\", \"userData\": \"remote_id=AC9.0234.0337;svlan=100;cvlan=10;\"}]}]",
-          "sourced_at_deployment": false,
-          "policy_editable": true,
-          "designer_editable": false
-        },
-        {
-          "name": "collector.keystore.file.location",
-          "value": "/opt/app/restconfcolletcor/etc/keystore",
-          "description": "fs location of keystore file in vm",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        },
-        {
-          "name": "collector.keystore.passwordfile",
-          "value": "/opt/app/restconfcolletcor/etc/rcc_passwordfile",
-          "description": "location of keystore password file in vm",
-          "sourced_at_deployment": false,
-          "policy_editable": false,
-          "designer_editable": false
-        }
+    {
+      "name": "dmaap_host",
+      "value": "message-router.onap.svc.cluster.local",
+      "description": "DmaaP host",
+      "sourced_at_deployment": true,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "dmaap_port",
+      "value": "3904",
+      "description": "Port for DmaaP",
+      "sourced_at_deployment": true,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "consul_host",
+      "value": "consul-server.onap.svc.cluster.local",
+      "description": "",
+      "sourced_at_deployment": true,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "consul_port",
+      "value": "8500",
+      "description": "",
+      "sourced_at_deployment": true,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "cbs_host",
+      "value": "config-binding-service.dcae.svc.cluster.local",
+      "description": "",
+      "sourced_at_deployment": true,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "cbs_port",
+      "value": "10000",
+      "description": "",
+      "sourced_at_deployment": true,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "external_port",
+      "value": "30416",
+      "description": "Kubernetes node port on which collector is exposed",
+      "sourced_at_deployment": true,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "notification_publish_url",
+      "value": "http://message-router.onap.svc.cluster.local:3904/events/unauthenticated.DCAE_RCC_OUTPUT",
+      "description": "",
+      "sourced_at_deployment": true,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "collector.rcc.appName",
+      "description": "DCAE RestConf Collector Application",
+      "value": "dcae-rcc",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "collector.rcc.appDescription",
+      "description": "DCAE RestConf Collector Application",
+      "value": "DCAE RestConf Collector Application",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "collector.rcc.dmaap.streamid",
+      "description": "Stream id",
+      "value": "notification=device-registration",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "collector.rcc.inputQueue.maxPending",
+      "description": "Number of max queue outstanding",
+      "value": "8096",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "collector.rcc.service.port",
+      "value": "8080",
+      "description": "standard http port collector will open for listening; this will be disabled when collector.header.authflag is set to 1",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "collector.rcc.service.secure.port",
+      "value": "8687",
+      "description": "standard https port collector will open for listening; this will be enabled when collector.header.authflag is set to 1",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "collector.header.authflag",
+      "value": "-1",
+      "description": "Should be set to 1 when open secure port",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "collector.header.authlist",
+      "value": "sample1,$2a$10$pgjaxDzSuc6XVFEeqvxQ5u90DKJnM/u7TJTcinAlFJVaavXMWf/Zi",
+      "description": "List of id and base 64 encoded password.Password value should be base64 encoded in config here",
+      "policy_editable": false,
+      "sourced_at_deployment": false,
+      "designer_editable": true
+    },
+    {
+      "name": "collector.rcc.keystore.file.location",
+      "value": "/opt/app/restconfcollector/etc/truststore.onap.client.jks",
+      "description": "fs location of keystore file in vm",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "collector.rcc.service.secure.clientauth",
+      "value": "0",
+      "description": "",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "collector.rcc.keystore.passwordfile",
+      "value": "/opt/app/restconfcollector/etc/rcc_passwordfile",
+      "description": "location of keystore password file in vm",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "collector.rcc.keystore.alias",
+      "value": "dynamically generated",
+      "description": "alias to access the keystore; collector will identify this based on keystore and password file",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "collector.rcc.truststore.file.location",
+      "value": "/opt/app/RCCollector/dcae-certificate/truststore.jks",
+      "description": "fs location of truststore file in vm",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "collector.rcc.truststore.passwordfile",
+      "value": "/opt/app/RCCollector/dcae-certificate/.trustpassword",
+      "description": "location of truststore password file in vm",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "tomcat.maxthreads",
+      "description": "Max threads",
+      "value": "200",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "rcc_policy",
+      "description": "RCC Policy JSON",
+      "value":"[{\"controller_name\":\"AccessM&C\",\"controller_restapiUrl\":\"192.167.1.3:8080\",\"controller_restapiUser\":\"access\",\"controller_restapiPassword\":\"Huawei@123\",\"controller_accessTokenUrl\":\"/rest/plat/smapp/v1/oauth/token\",\"controller_accessTokenFile\":\"./etc/access-token.json\",\"controller_accessTokenMethod\":\"put\",\"controller_subsMethod\":\"post\",\"controller_subscriptionUrl\":\"/restconf/v1/operations/huawei-nce-notification-action:establish-subscription\",\"controller_disableSsl\":\"true\",\"event_details\":[{\"event_name\":\"ONT_registration\",\"event_description\":\"ONTregistartionevent\",\"event_sseventUrlEmbed\":\"true\",\"event_sseventsField\":\"output.url\",\"event_sseventsUrl\":\"null\",\"event_subscriptionTemplate\":\"./etc/ont_registartion_subscription_template.json\",\"event_unSubscriptionTemplate\":\"./etc/ont_registartion_unsubscription_template.json\",\"event_ruleId\":\"12345678\", \"modifyData\": \"true\", \"modifyMethod\": \"modifyOntEvent\", \"userData\": \"remote_id=AC9.0234.0337;svlan=100;cvlan=10;\"}]}]",
+      "sourced_at_deployment": false,
+      "policy_editable": true,
+      "designer_editable": false
+    },
+    {
+      "name": "collector.keystore.file.location",
+      "value": "/opt/app/restconfcolletcor/etc/keystore",
+      "description": "fs location of keystore file in vm",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    },
+    {
+      "name": "collector.keystore.passwordfile",
+      "value": "/opt/app/restconfcolletcor/etc/rcc_passwordfile",
+      "description": "location of keystore password file in vm",
+      "sourced_at_deployment": false,
+      "policy_editable": false,
+      "designer_editable": false
+    }
   ],
 
   "auxilary": {
     "healthcheck": {
-      "type": "https",
+      "type": "http",
       "interval": "15s",
       "timeout": "1s",
       "endpoint": "/healthcheck"
     },
-    "volumes": [
-      {
-        "container": {
-          "bind": "/opt/app/dcae-certificate"
-        },
-        "host": {
-          "path": "/opt/app/restconfcollector/dcae-certificate"
-        }
-      },
-      {
-        "container": {
-          "bind": "/opt/app/restconfcollector/logs"
-        },
-        "host": {
-          "path": "/opt/logs/DCAE/restconfcollector/logs"
-        }
-      },
-      {
-        "container": {
-          "bind": "/opt/app/restconfcollector/etc"
-        },
-        "host": {
-          "path": "/opt/logs/restconfcollector/etc"
-        }
-      }
-    ]
+    "ports": [
+      "8080:30416"
+    ],
+    "log_info": {
+      "log_directory": "/opt/app/RCCollector/logs"
+    }
   },
   "artifacts": [
     {
       "type": "docker image",
-      "uri": "nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.restconfcollector"
+      "uri": "nexus3.onap.org:10001/onap/org.onap.dcaegen2.collectors.restconfcollector:latest"
     }
   ]
 }
