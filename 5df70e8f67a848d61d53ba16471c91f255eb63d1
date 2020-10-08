@@ -22,6 +22,30 @@
       "revId": "5df70e8f67a848d61d53ba16471c91f255eb63d1",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4bb2a8b_9071aad8",
+        "filename": "dpo/spec/rcc_spec.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 2807
+      },
+      "writtenOn": "2020-10-08T13:57:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4bc949c_ef665ba7",
+      "range": {
+        "startLine": 4,
+        "startChar": 13,
+        "endLine": 4,
+        "endChar": 21
+      },
+      "revId": "5df70e8f67a848d61d53ba16471c91f255eb63d1",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
