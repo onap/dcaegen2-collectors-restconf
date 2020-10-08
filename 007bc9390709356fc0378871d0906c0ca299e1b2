@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc66288e_1f597d3d",
+        "filename": "dpo/spec/rcc_spec.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2020-10-08T20:20:02Z",
+      "side": 1,
+      "message": "These are not application config hence not required to be identified in spec.\nAlso the env setting defined under https://git.onap.org/dcaegen2/platform/blueprints/tree/blueprints/k8s-restconf.yaml line#102-112 are likely not required (as these parameters are exposed by the K8s plugin by default)",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 6
+      },
+      "revId": "007bc9390709356fc0378871d0906c0ca299e1b2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594304ff_ae03d5dd",
+        "filename": "dpo/spec/rcc_spec.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2020-10-08T20:20:02Z",
+      "side": 1,
+      "message": "This is also not required. External port mapping is done based on  line #240 mapping (under ports)",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 5
+      },
+      "revId": "007bc9390709356fc0378871d0906c0ca299e1b2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
