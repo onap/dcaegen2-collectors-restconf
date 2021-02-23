@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd207e4a_f839c07c",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 3435
+      },
+      "writtenOn": "2021-02-23T11:49:25Z",
+      "side": 1,
+      "message": "consider to move version to \u003cproperties\u003e section (wherever you\u0027ve made changes)",
+      "revId": "9ce8d80332f79d22d2e15b41a4d60efd88dd5a7e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
