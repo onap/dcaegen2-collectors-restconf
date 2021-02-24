@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d70e5dc_8e83ef16",
+        "filename": ".gitreview",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 3435
+      },
+      "writtenOn": "2021-02-24T07:05:32Z",
+      "side": 1,
+      "message": "consider to add defaultbranch",
+      "revId": "aee8cef81913bd90b81e4f400751de3f62f33043",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
