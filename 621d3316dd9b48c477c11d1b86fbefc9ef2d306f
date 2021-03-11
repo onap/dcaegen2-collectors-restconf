@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "146f20c8_8cbcf1d0",
+        "filename": "src/main/java/org/onap/dcae/common/RestapiCallNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2021-03-11T17:11:15Z",
+      "side": 1,
+      "message": "add 2021 copyright date",
+      "revId": "621d3316dd9b48c477c11d1b86fbefc9ef2d306f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ba5c3b_f15c4953",
+        "filename": "src/main/java/org/onap/dcae/common/RestapiCallNode.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2021-03-11T17:11:15Z",
+      "side": 1,
+      "message": "split the line\nmove sc.init(...) to its own line",
+      "revId": "621d3316dd9b48c477c11d1b86fbefc9ef2d306f",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
