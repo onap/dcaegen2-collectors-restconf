@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * org.onap.dcaegen2.collectors.restconf
  * ================================================================================
- * Copyright (C) 2018-2019 Huawei. All rights reserved.
+ * Copyright (C) 2020-2021 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,6 +43,7 @@ import java.net.SocketException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyStore;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.*;
 
@@ -325,14 +326,21 @@ public class RestapiCallNode {
                 ssl = createSSLContext(p);
             }
             if (ssl != null) {
-                HostnameVerifier hostnameVerifier = (hostname, session) -> true;
-
+             //   HostnameVerifier hostnameVerifier = (hostname, session) -> true;
+                HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+                	@Override
+                	public boolean verify(String hostname,SSLSession session) {
+                		HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
+                		return hv.verify(hostname, session);
+                	}
+                };
+                
                 config.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES,
                         new HTTPSProperties(hostnameVerifier, ssl));
             }
         } else {
 
-            /* Create a trust manager that does not validate certificate chains */
+        	 /* Create a trust manager that does not validate certificate chains 
             TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
                 public java.security.cert.X509Certificate[] getAcceptedIssuers() {
                     return null;
@@ -344,20 +352,70 @@ public class RestapiCallNode {
             }
             };
 
-            /* Install the all-trusting trust manager */
+             Install the all-trusting trust manager 
             SSLContext sc = SSLContext.getInstance("SSL");
             sc.init(null, trustAllCerts, new java.security.SecureRandom());
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
 
-            /* Create all-trusting host name verifier */
+             Create all-trusting host name verifier 
             HostnameVerifier allHostsValid = new HostnameVerifier() {
                 public boolean verify(String hostname, SSLSession session) {
                     return true;
                 }
             };
 
-            /* Install the all-trusting host verifier*/
-            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+             Install the all-trusting host verifier
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);*/
+        	
+        	TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+        	
+        	//Using null here initialises the tmf with default trust store
+        	tmf.init((KeyStore)null);
+        	
+        	//Get hold of default trust manager
+        	X509TrustManager x509Tm = null;
+        	for(TrustManager tm: tmf.getTrustManagers())
+        	{
+        		if(tm instanceof X509TrustManager) {
+        			x509Tm = (X509TrustManager) tm;
+        			break;
+        		}
+        	}
+        	
+        	//Wrap it in your own class
+        	final X509TrustManager finalTm = x509Tm;
+        	X509TrustManager customTm = new X509TrustManager() {
+
+	@Override
+	public X509Certificate[] getAcceptedIssuers() {
+		return finalTm.getAcceptedIssuers();
+	}
+
+	@Override
+	public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+		finalTm.checkServerTrusted(chain, authType);
+
+	}
+
+	@Override
+	public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+		finalTm.checkClientTrusted(chain, authType);
+
+	}};
+
+	SSLContext sc = SSLContext.getInstance("TLS");
+	sc.init(null,new TrustManager[]{customTm},new java.security.SecureRandom());
+	HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+	HostnameVerifier hostnameverifier = new HostnameVerifier() {
+            	@Override
+                public boolean verify(String hostname, SSLSession session) {
+            		HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
+            		return hv.verify(hostname, session);
+            	
+            	}};
+
+            HttpsURLConnection.setDefaultHostnameVerifier(hostnameverifier);
         }
         logProperties(config.getProperties());
 
@@ -448,8 +506,16 @@ public class RestapiCallNode {
             System.setProperty("javax.net.ssl.trustStore", p.trustStoreFileName);
             System.setProperty("javax.net.ssl.trustStorePassword", p.trustStorePassword);
 
-            HttpsURLConnection.setDefaultHostnameVerifier((string, ssls) -> true);
-
+          //  HttpsURLConnection.setDefaultHostnameVerifier((string, ssls) -> true);
+            HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+            	@Override
+            	public boolean verify(String hostname,SSLSession session) {
+            		HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
+            		return hv.verify(hostname, session);
+            	}
+            };
+            HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
+            
             KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
             KeyStore ks = KeyStore.getInstance("PKCS12");
             char[] pwd = p.keyStorePassword.toCharArray();
