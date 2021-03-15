@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de31a4d7_840a158d",
+        "filename": "src/main/java/org/onap/dcae/common/RestapiCallNode.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2021-03-15T21:52:15Z",
+      "side": 1,
+      "message": "original contribution year should not be modified; this should remain 2018",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "cdc2e5f9471318c08612224ffa52627626e31b91",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff0ae8a_8ee1375e",
+        "filename": "src/main/java/org/onap/dcae/controller/PersistentEventConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2021-03-15T21:52:15Z",
+      "side": 1,
+      "message": "same as earlier comment",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "cdc2e5f9471318c08612224ffa52627626e31b91",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
