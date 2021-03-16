@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * org.onap.dcaegen2.collectors.restconf
  * ================================================================================
- * Copyright (C) 2018-2019 Huawei. All rights reserved.
+ * Copyright (C) 2018-2021 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,14 +31,19 @@ import org.onap.dcae.common.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.HttpHeaders;
 import java.security.KeyManagementException;
+import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -260,7 +265,7 @@ public class PersistentEventConnection implements Runnable {
 
         log.info("SSE received url " + event_sseventsUrl);
     }
-    private EventSource OpenSseConnection() {
+    private EventSource OpenSseConnection() throws Exception {
         Parameters p = null;
 
         try {
@@ -293,30 +298,77 @@ public class PersistentEventConnection implements Runnable {
                 userName + ":" + password).getBytes());
     }
 
-    private Client ignoreSslClient() {
-        SSLContext sslcontext = null;
+    private Client ignoreSslClient() throws Exception {
+		/*
+		 * SSLContext sslcontext = null;
+		 * 
+		 * try { sslcontext = SSLContext.getInstance("TLS"); sslcontext.init(null, new
+		 * TrustManager[]{new X509TrustManager() {
+		 * 
+		 * @Override public void checkClientTrusted(X509Certificate[] arg0, String arg1)
+		 * throws CertificateException { }
+		 * 
+		 * @Override public void checkServerTrusted(X509Certificate[] arg0, String arg1)
+		 * throws CertificateException { }
+		 * 
+		 * @Override public X509Certificate[] getAcceptedIssuers() { return new
+		 * X509Certificate[0]; } }}, new java.security.SecureRandom()); } catch
+		 * (NoSuchAlgorithmException | KeyManagementException e) { throw new
+		 * IllegalStateException(e); }
+		 * 
+		 * return
+		 * ClientBuilder.newBuilder().sslContext(sslcontext).hostnameVerifier((s1, s2)
+		 * -> true).build();
+		 */
+    	TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+    	
+    	//Using null here initialises the tmf with default trust store
+    	tmf.init((KeyStore)null);
+    	
+    	//Get hold of default trust manager
+    	X509TrustManager x509Tm = null;
+    	for(TrustManager tm: tmf.getTrustManagers())
+    	{
+    		if(tm instanceof X509TrustManager) {
+    			x509Tm = (X509TrustManager) tm;
+    			break;
+    		}
+    	}
+    	
+    	//Wrap it in your own class
+    	final X509TrustManager finalTm = x509Tm;
+    	X509TrustManager customTm = new X509TrustManager() {
 
-        try {
-            sslcontext = SSLContext.getInstance("TLS");
-            sslcontext.init(null, new TrustManager[]{new X509TrustManager() {
-                @Override
-                public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-                }
-
-                @Override
-                public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-                }
-
-                @Override
-                public X509Certificate[] getAcceptedIssuers() {
-                    return new X509Certificate[0];
-                }
-            }}, new java.security.SecureRandom());
-        } catch (NoSuchAlgorithmException | KeyManagementException e) {
-            throw new IllegalStateException(e);
+        @Override
+        public X509Certificate[] getAcceptedIssuers() {
+	         return finalTm.getAcceptedIssuers();
         }
 
-        return ClientBuilder.newBuilder().sslContext(sslcontext).hostnameVerifier((s1, s2) -> true).build();
+        @Override
+        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+	        finalTm.checkServerTrusted(chain, authType);
+
+         }
+
+        @Override
+        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+	        finalTm.checkClientTrusted(chain, authType);
+
+         }};
+
+        SSLContext sc = SSLContext.getInstance("TLS");
+        sc.init(null,new TrustManager[]{customTm},new java.security.SecureRandom());
+        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+        HostnameVerifier hostnameverifier = new HostnameVerifier() {
+        	@Override
+            public boolean verify(String hostname, SSLSession session) {
+        		HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
+        		return hv.verify(hostname, session);
+        	
+        	}};
+        	
+    	return ClientBuilder.newBuilder().sslContext(sc).hostnameVerifier(hostnameverifier).build();
     }
 
     public String getEventRuleId() {
