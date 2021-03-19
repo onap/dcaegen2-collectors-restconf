@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * org.onap.dcaegen2.collectors.restconf
  * ================================================================================
- * Copyright (C) 2018-2019 Huawei. All rights reserved.
+ * Copyright (C) 2018-2021 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -56,6 +57,8 @@ public class XmlParser {
         try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
+			saxParser.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            saxParser.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
             InputStream in = new ByteArrayInputStream(s.getBytes());
             saxParser.parse(in, handler);
         } catch (ParserConfigurationException | IOException | SAXException | NumberFormatException e) {
