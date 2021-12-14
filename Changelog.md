@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.6] - 2021/12/14
+         - [DCAEGEN2-3022] - Remediation for Log4Shell vulnerability
+
 ## [1.2.5] - 19/03/2021
 ### Fixed
 - [DCAEGEN2-2675](https://jira.onap.org/browse/DCAEGEN2-2675) - Disable access to external entities in XML parsing
