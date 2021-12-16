@@ -16,6 +16,24 @@
       "revId": "77e8a5597b93b55ba152890b7c8511495ee1af41",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fcdc9df_bc5ad20b",
+        "filename": "Changelog.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2021-12-16T14:42:58Z",
+      "side": 1,
+      "message": "created https://jira.onap.org/browse/DCAEGEN2-3023 to address this later",
+      "parentUuid": "651a605d_215b36a3",
+      "revId": "77e8a5597b93b55ba152890b7c8511495ee1af41",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
