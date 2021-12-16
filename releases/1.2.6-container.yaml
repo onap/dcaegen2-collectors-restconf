@@ -1,0 +1,9 @@
+distribution_type: 'container'
+container_release_tag: '1.2.6'
+project: 'dcaegen2/collectors/restconf'
+log_dir: 'dcaegen2-collectors-restconf-maven-docker-stage-master/871'
+ref: 77e8a5597b93b55ba152890b7c8511495ee1af41
+containers:
+    - name: 'org.onap.dcaegen2.collectors.restconfcollector'
+      version: '1.2.6-20211216T020443Z'
+
