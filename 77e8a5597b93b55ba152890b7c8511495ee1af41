@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "651a605d_215b36a3",
+        "filename": "Changelog.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2021-12-16T01:43:58Z",
+      "side": 1,
+      "message": "ambiguous dates, here and below",
+      "revId": "77e8a5597b93b55ba152890b7c8511495ee1af41",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
