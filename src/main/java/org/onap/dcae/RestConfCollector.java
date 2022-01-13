@@ -28,6 +28,7 @@ import org.onap.dcae.common.ControllerActivationState;
 import org.onap.dcae.common.EventData;
 import org.onap.dcae.common.EventProcessor;
 import org.onap.dcae.common.publishing.DMaaPConfigurationParser;
+import org.onap.dcae.common.publishing.DMaaPEventPublisher;
 import org.onap.dcae.common.publishing.EventPublisher;
 import org.onap.dcae.common.publishing.PublisherConfig;
 import org.onap.dcae.controller.AccessController;
@@ -39,10 +40,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.onap.dcae.configuration.ConfigurationHandler;
+import org.onap.dcae.configuration.ConfigUpdater;
+import org.onap.dcae.configuration.ConfigUpdaterFactory;
+import org.onap.dcae.configuration.cbs.CbsClientConfigurationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.concurrent.*;
@@ -51,6 +57,7 @@ import java.util.concurrent.*;
 public class RestConfCollector {
     private static final Logger oplog = LoggerFactory.getLogger("org.onap.dcae.common.output");
     private static final int MAX_THREADS = 20;
+    private static final int DEFAULT_CONFIGURATION_FETCH_PERIOD = 5;
     private static Logger log = LoggerFactory.getLogger(RestConfCollector.class);
     public static LinkedBlockingQueue<EventData> fProcessingInputQueue;
     private static ApplicationSettings properties;
@@ -64,6 +71,8 @@ public class RestConfCollector {
     private static ScheduledThreadPoolExecutor scheduledThExController;
     private static EventPublisher eventPublisher;
     private static EventProcessor eventProcessor;
+    private static ConfigUpdater configUpdater;
+    private static ApplicationConfigurationListener applicationConfigurationListener;
 
     /* List of Controllers */
     private static java.util.Map<String, AccessController> controllerStore = new ConcurrentHashMap<>();
@@ -76,13 +85,22 @@ public class RestConfCollector {
         scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
         scheduledThExController = new ScheduledThreadPoolExecutor(1);
         init();
+        applicationConfigurationListener = startListeningForApplicationConfigurationStoredInConsul();
         app.setAddCommandLineProperties(true);
         context = app.run();
         controllerConfig(properties);
-        configLoader.updateConfig();
         oplog.info("RestConfController running .....");
     }
 
+    private static ApplicationConfigurationListener startListeningForApplicationConfigurationStoredInConsul() {
+        ConfigurationHandler cbsHandler = new ConfigurationHandler(new CbsClientConfigurationProvider(), configUpdater);
+        ApplicationConfigurationListener applicationConfigProvider = new ApplicationConfigurationListener(Duration.ofMinutes(DEFAULT_CONFIGURATION_FETCH_PERIOD), cbsHandler);
+
+        ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
+        scheduledThreadPoolExecutor.execute(applicationConfigProvider);
+
+        return applicationConfigProvider;
+    }
 
     public static void restartApplication() {
         Thread thread = new Thread(() -> {
@@ -94,6 +112,10 @@ public class RestConfCollector {
             init();
             controllerConfig(properties);
             context = SpringApplication.run(RestConfCollector.class);
+
+            configUpdater.setPaths(properties.configurationFileLocation(),
+                    Paths.get(properties.dMaaPConfigurationFileLocation()));
+            applicationConfigurationListener.reload(Duration.ofMinutes(properties.configurationUpdateFrequency()));
         });
         thread.setDaemon(false);
         thread.start();
@@ -102,9 +124,11 @@ public class RestConfCollector {
 
     private static void init() {
         fProcessingInputQueue = new LinkedBlockingQueue<>(properties.maximumAllowedQueuedEvents());
-        createConfigLoader();
-        createSchedulePoolExecutor();
-        createExecutors();
+
+        configUpdater = ConfigUpdaterFactory.create(
+                properties.configurationFileLocation(),
+                Paths.get(properties.dMaaPConfigurationFileLocation()));
+        eventPublisher = new DMaaPEventPublisher(getDmapConfig());
     }
 
     private static Map<String, PublisherConfig> getDmapConfig() {
@@ -170,39 +194,8 @@ public class RestConfCollector {
         log.info("RestConfCollector.handleEvents:EVENTS has been published successfully!");
     }
 
-    private static void createConfigLoader() {
-        log.info("dMaaPConfigurationFileLocation " + properties.dMaaPConfigurationFileLocation() + " " + properties.configurationFileLocation());
-
-        configLoader = ConfigLoader.create(getEventPublisher()::reconfigure,
-                Paths.get(properties.dMaaPConfigurationFileLocation()),
-                properties.configurationFileLocation());
-    }
-
     private static EventPublisher getEventPublisher() {
         return EventPublisher.createPublisher(oplog, getDmapConfig());
-    }
-
-    private static void createSchedulePoolExecutor() {
-        scheduleFeatures = scheduledThreadPoolExecutor.scheduleAtFixedRate(configLoader::updateConfig,
-                10,
-                10,
-                TimeUnit.MINUTES);
-        ControllerActivationTask task = new ControllerActivationTask();
-        scheduleCtrlActivation = scheduledThExController.scheduleAtFixedRate(task,
-                10,
-                10,
-                TimeUnit.SECONDS);
-    }
-
-    private static void createExecutors() {
-        eventPublisher = EventPublisher.createPublisher(oplog, getDmapConfig());
-        eventProcessor = new EventProcessor(eventPublisher,
-                parseStreamIdToStreamHashMapping(properties.dMaaPStreamsMapping()));
-
-        executor = Executors.newFixedThreadPool(MAX_THREADS);
-        for (int i = 0; i < MAX_THREADS; ++i) {
-            executor.execute(eventProcessor);
-        }
     }
 
     private  static class ControllerActivationTask implements Runnable

@@ -51,6 +51,10 @@ public final class PublisherConfig {
         return destinations;
     }
 
+    String getHostAndPort(){
+        return destinations.get(0);
+    }
+
     String topic() {
         return topic;
     }

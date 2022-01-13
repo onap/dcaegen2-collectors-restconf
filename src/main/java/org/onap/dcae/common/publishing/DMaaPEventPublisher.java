@@ -36,16 +36,14 @@ import static org.onap.dcae.common.publishing.VavrUtils.f;
 /**
  * @author Pawel Szalapski (pawel.szalapski@nokia.com)
  */
-class DMaaPEventPublisher implements EventPublisher {
+public final class DMaaPEventPublisher implements EventPublisher {
     private static final int PENDING_MESSAGE_LOG_THRESHOLD = 100;
     private static final Logger log = LoggerFactory.getLogger(DMaaPEventPublisher.class);
     private final DMaaPPublishersCache publishersCache;
-    private final Logger outputLogger;
+    private final Logger outputLogger = LoggerFactory.getLogger("org.onap.dcae.common.output");;
 
-    DMaaPEventPublisher(DMaaPPublishersCache publishersCache,
-                        Logger outputLogger) {
-        this.publishersCache = publishersCache;
-        this.outputLogger = outputLogger;
+    public DMaaPEventPublisher(Map<String, PublisherConfig> publishersCache) {
+        this.publishersCache = new DMaaPPublishersCache(publishersCache);
     }
 
     @Override

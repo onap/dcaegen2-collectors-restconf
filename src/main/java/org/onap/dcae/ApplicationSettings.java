@@ -44,7 +44,7 @@ import java.util.Iterator;
 public class ApplicationSettings {
 
     private static final Logger log = LoggerFactory.getLogger(ApplicationSettings.class);
-
+    public static String responseCompatibility;
     private final String appInvocationDir;
     private final String configurationFileLocation;
     private final PropertiesConfiguration properties = new PropertiesConfiguration();
@@ -175,6 +175,9 @@ public class ApplicationSettings {
         return prependWithUserDirOnRelative(properties.getString("collector.eventinfo", "etc/ont_config.json"));
     }
 
+    public int configurationUpdateFrequency() {
+        return properties.getInt("collector.dynamic.config.update.frequency", 5);
+    }
 
     public String dMaaPStreamsMapping() {
         return properties.getString("collector.rcc.dmaap.streamid", null);
