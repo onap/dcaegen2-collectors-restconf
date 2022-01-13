@@ -203,77 +203,14 @@ limitations under the License.
                          <imageTag>${project.version}</imageTag>
                          <imageTag>latest</imageTag>
                     </imageTags>
-                    <baseImage>openjdk:11-jre-slim</baseImage>
-                    <user>${docker.user.name}</user>
-                    <env>
-                        <HOSTALIASES>/etc/host.aliases</HOSTALIASES>
-                    </env>
-                    <workdir>${docker.user.dir}</workdir>
+                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
                     <resources>
                         <resource>
                             <targetPath>.</targetPath>
                             <directory>${project.build.directory}/${project.artifactId}-${project.version}</directory>
                         </resource>
                     </resources>
-                    <runs>
-                        <run>useradd -r -U ${docker.user.name}</run>
-                        <run>chown -R ${docker.user.name}:${docker.user.name} ${docker.user.dir}</run>
-                        <run>chmod +x ${docker.user.dir}/bin/*.sh</run>
-                    </runs>
-                    <cmd>${docker.user.dir}/bin/docker_entry.sh</cmd>
-                    <exposes>
-                        <expose>8080</expose>
-                        <expose>8687</expose>
-                    </exposes>
-                    <user>${docker.user.name}</user>
                 </configuration>
-<!--
-                <executions>
-                    <execution>
-                        <id>build-image</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>tag-and-push-image-latest</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>tag</goal>
-                        </goals>
-                        <configuration>
-                            <image>${docker.image.name}:latest</image>
-                            <newName>${onap.nexus.dockerregistry.daily}/${docker.image.name}:latest</newName>
-                            <pushImage>true</pushImage>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>tag-and-push-image-with-version</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>tag</goal>
-                        </goals>
-                        <configuration>
-                            <image>${docker.image.name}:latest</image>
-                            <newName>${onap.nexus.dockerregistry.daily}/${docker.image.name}:${project.version}</newName>
-                            <pushImage>false</pushImage>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>tag-and-push-image-with-version-and-date</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>tag</goal>
-                        </goals>
-                        <configuration>
-                            <image>${docker.image.name}:latest</image>
-                            <newName>${onap.nexus.dockerregistry.daily}/${docker.image.name}:${project.version}-${maven.build.timestamp}Z</newName>
-                            <pushImage>false</pushImage>
-                        </configuration>
-                    </execution>
-                </executions>
--->
             </plugin>
         </plugins>
     </build>
