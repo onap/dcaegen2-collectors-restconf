@@ -3,7 +3,7 @@
  * org.onap.dcaegen2.restconfcollector
  * ================================================================================
  * Copyright (C) 2018 Nokia. All rights reserved.
- * Copyright (C) 2018-2019 Huawei. All rights reserved.
+ * Copyright (C) 2022 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,6 +49,10 @@ public final class PublisherConfig {
 
     List<String> destinations() {
         return destinations;
+    }
+
+    String getHostAndPort(){
+        return destinations.get(0);
     }
 
     String topic() {
