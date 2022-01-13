@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * org.onap.dcaegen2.restconfcollector
  * ================================================================================
- * Copyright (C) 2018 Nokia. All rights reserved.
+ * Copyright (C) 2018,2020 Nokia. All rights reserved.
  * Copyright (C) 2022-2023 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,22 +18,31 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-package org.onap.dcae.common.publishing;
+package org.onap.dcae.configuration;
 
-import io.vavr.collection.Map;
+import static org.onap.dcae.common.publishing.VavrUtils.enhanceError;
+
+import io.vavr.API;
+import io.vavr.collection.List;
+import io.vavr.control.Try;
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.StreamSupport;
 import org.json.JSONObject;
-import org.slf4j.Logger;
 
 /**
  * @author Pawel Szalapski (pawel.szalapski@nokia.com)
  */
-public interface EventPublisher {
+interface Conversions {
 
-    static EventPublisher createPublisher(Logger outputLogger, Map<String, PublisherConfig> dMaaPConfig) {
-        return new DMaaPEventPublisher(dMaaPConfig);
+    static Try<JSONObject> toJson(String strBody) {
+        return API.Try(() -> new JSONObject(strBody))
+            .mapFailure(enhanceError("Value '%s' is not a valid JSON document", strBody));
     }
 
-    void sendEvent(JSONObject event, String domain);
-
-    void reconfigure(Map<String, PublisherConfig> dMaaPConfig);
+    static <T> List<T> toList(Iterator<T> iterator) {
+        return List
+            .ofAll(StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED), false));
+    }
 }
