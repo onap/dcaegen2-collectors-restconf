@@ -16,6 +16,40 @@
       "revId": "e6ee23e0f21380b3e958f903b635c68fffc4e0a0",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "677ad11c_0b62327f",
+        "filename": "src/test/java/org/onap/dcae/ApplicationConfigurationListenerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-14T22:02:32Z",
+      "side": 1,
+      "message": "add a Huawei 2022 copyright\nSince this is a new file, remove the other copyright lines",
+      "revId": "e6ee23e0f21380b3e958f903b635c68fffc4e0a0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e74f89d2_1691d36b",
+        "filename": "src/test/java/org/onap/dcae/common/publishing/DMaaPEventPublisherTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-14T22:02:32Z",
+      "side": 1,
+      "message": "add a Huawei 2022 copyright",
+      "revId": "e6ee23e0f21380b3e958f903b635c68fffc4e0a0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
