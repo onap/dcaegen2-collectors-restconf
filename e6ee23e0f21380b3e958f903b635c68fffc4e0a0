@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "494ad0db_915a7c14",
+        "filename": "src/main/java/org/onap/dcae/ApplicationConfigurationListener.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-14T21:53:56Z",
+      "side": 1,
+      "message": "this isn\u0027t 2023\n\nCopyright (C) 2022 Huawei. All rights reserved.\n\nOther files should be fixed as well.",
+      "revId": "e6ee23e0f21380b3e958f903b635c68fffc4e0a0",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
