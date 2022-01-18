@@ -4,11 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+<<<<<<< HEAD   (7a85ea Switch RESTCONF Collector to Integration base image)
 ## [1.3.0] - 2022/01/13
          - [DCAEGEN2-2962] - Switch RESTCONF Collector to Integration base image
+=======
+## [1.2.7] - 2022/01/18
+         - [DCAEGEN2-3022] - Remediation for Log4Shell vulnerability (upgrade to 2.17.1)
+>>>>>>> CHANGE (ca1681 Remediation for Log4Shell vulnerability)
 
 ## [1.2.6] - 2021/12/14
-         - [DCAEGEN2-3022] - Remediation for Log4Shell vulnerability
+         - [DCAEGEN2-3022] - Remediation for Log4Shell vulnerability (upgrade to 2.16.0)
 
 ## [1.2.5] - 2021/03/19
          ### Fixed
