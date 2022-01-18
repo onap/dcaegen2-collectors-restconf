@@ -4,8 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.7] - 2022/01/18
+         - [DCAEGEN2-3022] - Remediation for Log4Shell vulnerability (upgrade to 2.17.1)
+
 ## [1.2.6] - 2021/12/14
-         - [DCAEGEN2-3022] - Remediation for Log4Shell vulnerability
+         - [DCAEGEN2-3022] - Remediation for Log4Shell vulnerability (upgrade to 2.16.0)
 
 ## [1.2.5] - 19/03/2021
 ### Fixed
