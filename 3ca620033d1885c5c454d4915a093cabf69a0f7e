@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "c88b9344_c06cad2a",
+        "filename": "pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-18T19:43:25Z",
+      "side": 1,
+      "message": "don\u0027t lose the 2019 copyright year for Huawei",
+      "revId": "3ca620033d1885c5c454d4915a093cabf69a0f7e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e9e5cbb_3abbbb85",
         "filename": "src/main/java/org/onap/dcae/ApplicationSettings.java",
         "patchSetId": 4
@@ -117,6 +134,23 @@
     },
     {
       "key": {
+        "uuid": "91df32d9_1ccc114c",
+        "filename": "src/main/java/org/onap/dcae/restapi/ApiException.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-18T19:43:25Z",
+      "side": 1,
+      "message": "don\u0027t lose the previous Huawei copyrights",
+      "revId": "3ca620033d1885c5c454d4915a093cabf69a0f7e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06fa1f02_2625073b",
         "filename": "src/test/java/org/onap/dcae/common/publishing/DMaaPEventPublisherTest.java",
         "patchSetId": 4
@@ -134,6 +168,40 @@
         "endLine": 6,
         "endChar": 22
       },
+      "revId": "3ca620033d1885c5c454d4915a093cabf69a0f7e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32bc6ea6_5c953804",
+        "filename": "src/test/java/org/onap/dcae/common/publishing/DMaaPEventPublisherTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-18T19:43:25Z",
+      "side": 1,
+      "message": "what should the test be if the these when and verify calls are removed?",
+      "revId": "3ca620033d1885c5c454d4915a093cabf69a0f7e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b512206_4d066fdb",
+        "filename": "src/test/java/org/onap/dcae/common/publishing/DMaaPEventPublisherTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-18T19:43:25Z",
+      "side": 1,
+      "message": "what should the test be if the these when and verify calls are removed?",
       "revId": "3ca620033d1885c5c454d4915a093cabf69a0f7e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
