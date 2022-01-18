@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "819c7da1_1106ca57",
+        "filename": "Changelog.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-01-18T18:00:12Z",
+      "side": 1,
+      "message": "should be added to either 1.3.0 (introduced under https://gerrit.onap.org/r/c/dcaegen2/collectors/restconf/+/126583) or 1.3.1 to track this enhancement separate",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "3ca620033d1885c5c454d4915a093cabf69a0f7e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e9e5cbb_3abbbb85",
+        "filename": "src/main/java/org/onap/dcae/ApplicationSettings.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-01-18T18:00:12Z",
+      "side": 1,
+      "message": "original year must be retained.. change to either 2018-2022 or 2018-2019, 2022",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "3ca620033d1885c5c454d4915a093cabf69a0f7e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c6d199e_8a2eb315",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/DMaaPEventPublisher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-01-18T18:00:12Z",
+      "side": 1,
+      "message": "same as earlier comment",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "3ca620033d1885c5c454d4915a093cabf69a0f7e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b7b0ba_d5d34e07",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/EventPublisher.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-01-18T18:00:12Z",
+      "side": 1,
+      "message": "same as earlier comment",
+      "range": {
+        "startLine": 6,
+        "startChar": 17,
+        "endLine": 6,
+        "endChar": 22
+      },
+      "revId": "3ca620033d1885c5c454d4915a093cabf69a0f7e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52220681_d36003be",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/PublisherConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-01-18T18:00:12Z",
+      "side": 1,
+      "message": "same comment as earlier",
+      "range": {
+        "startLine": 6,
+        "startChar": 17,
+        "endLine": 6,
+        "endChar": 22
+      },
+      "revId": "3ca620033d1885c5c454d4915a093cabf69a0f7e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06fa1f02_2625073b",
+        "filename": "src/test/java/org/onap/dcae/common/publishing/DMaaPEventPublisherTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-01-18T18:00:12Z",
+      "side": 1,
+      "message": "same comment as before",
+      "range": {
+        "startLine": 6,
+        "startChar": 17,
+        "endLine": 6,
+        "endChar": 22
+      },
+      "revId": "3ca620033d1885c5c454d4915a093cabf69a0f7e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
