@@ -22,6 +22,7 @@
 
 package org.onap.dcae.restapi;
 
+import org.springframework.boot.web.server.Ssl.ClientAuth;
 import org.onap.dcae.ApplicationException;
 import org.onap.dcae.ApplicationSettings;
 import org.onap.dcae.common.SSLContextCreator;
@@ -52,7 +53,7 @@ public class ServletConfig implements WebServerFactoryCustomizer<ConfigurableSer
         final boolean hasClientTlsAuthentication = properties.clientTlsAuthenticationEnabled();
         log.info("WebServerFactoryCustomizer initializing........");
         if (hasClientTlsAuthentication || properties.authorizationEnabled()) {
-            container.setSsl(hasClientTlsAuthentication ? httpsContextWithTlsAuthentication() : simpleHttpsContext());
+            container.setSsl(hasClientTlsAuthentication ? httpsContextWithTlsAuthentication(ClientAuth.WANT) : simpleHttpsContext());
             container.setPort(properties.httpsPort());
         } else {
             container.setPort(properties.httpPort());
@@ -78,7 +79,7 @@ public class ServletConfig implements WebServerFactoryCustomizer<ConfigurableSer
         return simpleHttpsContextBuilder().build();
     }
 
-    private Ssl httpsContextWithTlsAuthentication() {
+    private Ssl httpsContextWithTlsAuthentication(ClientAuth clientAuth) {
         final SSLContextCreator sslContextCreator = simpleHttpsContextBuilder();
 
         log.info("Enabling TLS client authorization");
@@ -90,7 +91,7 @@ public class ServletConfig implements WebServerFactoryCustomizer<ConfigurableSer
         final String trustStorePassword = getKeyStorePassword(trustPasswordFileLocation);
         log.info("Using trustStore password from: " + trustPasswordFileLocation);
 
-        return sslContextCreator.withTlsClientAuthentication(trustStore, trustStorePassword).build();
+        return sslContextCreator.withTlsClientAuthentication(trustStore, trustStorePassword, clientAuth).build();
     }
 
     private Path toAbsolutePath(final String path) {

@@ -4,7 +4,7 @@
  * ================================================================================
  * Copyright (C) 2017 AT&T Intellectual Property. All rights reserved.
  * Copyright (C) 2018 Nokia. All rights reserved.
- * Copyright (C) 2018-2019 Huawei. All rights reserved.
+ * Copyright (C) 2018-2022 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import io.vavr.collection.List;
 import io.vavr.collection.Map;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.onap.dcae.common.configuration.AuthMethodType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +45,7 @@ import java.util.Iterator;
 public class ApplicationSettings {
 
     private static final Logger log = LoggerFactory.getLogger(ApplicationSettings.class);
-
+    public static String responseCompatibility;
     private final String appInvocationDir;
     private final String configurationFileLocation;
     private final PropertiesConfiguration properties = new PropertiesConfiguration();
@@ -115,6 +116,13 @@ public class ApplicationSettings {
         return properties.getInt("collector.rcc.service.secure.port", 8687);
     }
 
+    public String authMethod(){
+        return properties.getString("auth.method", AuthMethodType.NO_AUTH.value());
+    }
+
+    public String certSubjectMatcher(){
+        return prependWithUserDirOnRelative(properties.getString("collector.cert.subject.matcher", "etc/certSubjectMatcher.properties"));
+    }
 
     public boolean httpsEnabled() {
         return httpsPort() > 0;
@@ -126,6 +134,22 @@ public class ApplicationSettings {
 
     public String rccKeystoreFileLocation() {
         return prependWithUserDirOnRelative(properties.getString("collector.keystore.file.location", "etc/keystore"));
+    }
+
+    public String getExternalSchemaMappingFileLocation() {
+        return properties.getString("collector.externalSchema.mappingFileLocation", "./etc/externalRepo/schema-map.json");
+    }
+
+    public String getExternalSchemaSchemaRefPath() {
+        return properties.getString("event.externalSchema.schemaRefPath", "/event/stndDefinedFields/schemaReference");
+    }
+
+    public String getExternalSchemaStndDefinedDataPath() {
+        return properties.getString("event.externalSchema.stndDefinedDataPath", "/event/stndDefinedFields/data");
+    }
+
+    public String getExternalSchemaSchemasLocation() {
+        return properties.getString("collector.externalSchema.schemasLocation", "./etc/externalRepo");
     }
 
     public String keystorePasswordFileLocation() {
@@ -175,6 +199,9 @@ public class ApplicationSettings {
         return prependWithUserDirOnRelative(properties.getString("collector.eventinfo", "etc/ont_config.json"));
     }
 
+    public int configurationUpdateFrequency() {
+        return properties.getInt("collector.dynamic.config.update.frequency", 5);
+    }
 
     public String dMaaPStreamsMapping() {
         return properties.getString("collector.rcc.dmaap.streamid", null);

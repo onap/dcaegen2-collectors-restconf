@@ -4,7 +4,7 @@
  * ================================================================================
  * Copyright (C) 2018 Nokia. All rights reserved.
  * Copyright (C) 2018 AT&T Intellectual Property. All rights reserved.
- * Copyright (C) 2018-2019 Huawei. All rights reserved.
+ * Copyright (C) 2018-2022 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,7 @@ public class TlsTestBase {
     protected static final Path TRUSTSTORE_PASSWORD_FILE = Paths.get(RESOURCES.toString(), "trustpasswordfile");
     protected static final Path RCC_KEYSTORE_PASSWORD_FILE = Paths.get(RESOURCES.toString(), "passwordfile");
     protected static final Path RCC_KEYSTORE = Paths.get(RESOURCES.toString(), "keystore");
+    protected static final Path CERT_SUBJECT_MATCHER = Paths.get(RESOURCES.toString(), "certSubjectMatcher");
 
     protected abstract static class ConfigurationBase {
         protected final ApplicationSettings settings = Mockito.mock(ApplicationSettings.class);

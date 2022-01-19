@@ -1,9 +1,8 @@
-/*-
+/*
  * ============LICENSE_START=======================================================
  * org.onap.dcaegen2.restconfcollector
  * ================================================================================
- * Copyright (C) 2018 Nokia. All rights reserved.
- * Copyright (C) 2018-2022 Huawei. All rights reserved.
+ * Copyright (C) 2022 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,22 +17,20 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-package org.onap.dcae.common.publishing;
 
-import io.vavr.collection.Map;
-import org.json.JSONObject;
-import org.slf4j.Logger;
+package org.onap.dcae.common.configuration;
 
-/**
- * @author Pawel Szalapski (pawel.szalapski@nokia.com)
- */
-public interface EventPublisher {
+public enum AuthMethodType {
 
-    static EventPublisher createPublisher(Logger outputLogger, Map<String, PublisherConfig> dMaaPConfig) {
-        return new DMaaPEventPublisher(dMaaPConfig);
-    }
+  NO_AUTH("noAuth"),CERT_BASIC_AUTH("certBasicAuth");
 
-    void sendEvent(JSONObject event, String domain);
+  private final String value;
 
-    void reconfigure(Map<String, PublisherConfig> dMaaPConfig);
+  AuthMethodType(String value) {
+    this.value = value;
+  }
+
+  public String value() {
+    return value;
+  }
 }
