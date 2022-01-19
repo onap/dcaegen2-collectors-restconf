@@ -4,7 +4,7 @@
  * ================================================================================
  * Copyright (C) 2017 AT&T Intellectual Property. All rights reserved.
  * Copyright (C) 2018 Nokia. All rights reserved.
- * Copyright (C) 2018-2019 Huawei. All rights reserved.
+ * Copyright (C) 2018-2022 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,16 +36,14 @@ import static org.onap.dcae.common.publishing.VavrUtils.f;
 /**
  * @author Pawel Szalapski (pawel.szalapski@nokia.com)
  */
-class DMaaPEventPublisher implements EventPublisher {
+public final class DMaaPEventPublisher implements EventPublisher {
     private static final int PENDING_MESSAGE_LOG_THRESHOLD = 100;
     private static final Logger log = LoggerFactory.getLogger(DMaaPEventPublisher.class);
     private final DMaaPPublishersCache publishersCache;
-    private final Logger outputLogger;
+    private final Logger outputLogger = LoggerFactory.getLogger("org.onap.dcae.common.output");;
 
-    DMaaPEventPublisher(DMaaPPublishersCache publishersCache,
-                        Logger outputLogger) {
-        this.publishersCache = publishersCache;
-        this.outputLogger = outputLogger;
+    public DMaaPEventPublisher(Map<String, PublisherConfig> publishersCache) {
+        this.publishersCache = new DMaaPPublishersCache(publishersCache);
     }
 
     @Override

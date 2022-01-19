@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.1] - 2022/01/19
+         - [DCAEGEN2-2857] - RESTConf - Switch CBS client library to 1.8.7 or higher
+
 ## [1.3.0] - 2022/01/13
          - [DCAEGEN2-2962] - Switch RESTCONF Collector to Integration base image
 
