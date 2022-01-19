@@ -2,8 +2,7 @@
  * ============LICENSE_START=======================================================
  * org.onap.dcaegen2.restconfcollector
  * ================================================================================
- * Copyright (C) 2018 Nokia. All rights reserved.
- * Copyright (C) 2018-2022 Huawei. All rights reserved.
+ * Copyright (C) 2022 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,22 +17,29 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-package org.onap.dcae.common.publishing;
+package org.onap.dcae.configuration;
 
-import io.vavr.collection.Map;
-import org.json.JSONObject;
-import org.slf4j.Logger;
+import java.nio.file.Path;
+
+import org.onap.dcae.RestConfCollector;
 
 /**
- * @author Pawel Szalapski (pawel.szalapski@nokia.com)
+ * ConfigUpdaterFactory is responsible for receiving configuration from config file or Consul (if config file doesn't exist).
  */
-public interface EventPublisher {
+public class ConfigUpdaterFactory {
 
-    static EventPublisher createPublisher(Logger outputLogger, Map<String, PublisherConfig> dMaaPConfig) {
-        return new DMaaPEventPublisher(dMaaPConfig);
+    private ConfigUpdaterFactory() {
     }
 
-    void sendEvent(JSONObject event, String domain);
-
-    void reconfigure(Map<String, PublisherConfig> dMaaPConfig);
+    /**
+     * create configuration updater based on property file and dmaap configuration files
+     * @param propertiesFile application property file
+     * @param dmaapConfigFile dmaap configuration file
+     */
+    public static ConfigUpdater create(Path propertiesFile, Path dmaapConfigFile) {
+        ConfigFilesFacade configFilesFacade = new ConfigFilesFacade(propertiesFile, dmaapConfigFile);
+        return new ConfigUpdater(
+            configFilesFacade,
+                RestConfCollector::restartApplication);
+    }
 }
