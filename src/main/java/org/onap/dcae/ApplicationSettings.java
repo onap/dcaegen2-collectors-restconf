@@ -4,7 +4,7 @@
  * ================================================================================
  * Copyright (C) 2017 AT&T Intellectual Property. All rights reserved.
  * Copyright (C) 2018 Nokia. All rights reserved.
- * Copyright (C) 2018-2019 Huawei. All rights reserved.
+ * Copyright (C) 2018-2022 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ import java.util.Iterator;
 public class ApplicationSettings {
 
     private static final Logger log = LoggerFactory.getLogger(ApplicationSettings.class);
-
+    public static String responseCompatibility;
     private final String appInvocationDir;
     private final String configurationFileLocation;
     private final PropertiesConfiguration properties = new PropertiesConfiguration();
@@ -175,6 +175,9 @@ public class ApplicationSettings {
         return prependWithUserDirOnRelative(properties.getString("collector.eventinfo", "etc/ont_config.json"));
     }
 
+    public int configurationUpdateFrequency() {
+        return properties.getInt("collector.dynamic.config.update.frequency", 5);
+    }
 
     public String dMaaPStreamsMapping() {
         return properties.getString("collector.rcc.dmaap.streamid", null);
