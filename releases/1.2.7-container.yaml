@@ -1,0 +1,9 @@
+distribution_type: 'container'
+container_release_tag: '1.2.7'
+project: 'dcaegen2/collectors/restconf'
+log_dir: 'dcaegen2-collectors-restconf-maven-docker-stage-istanbul/107'
+ref: ca168146e760801c7fc2f810cc05a7a092b74bdf
+containers:
+    - name: 'org.onap.dcaegen2.collectors.restconfcollector'
+      version: '1.2.7-20220119T205652Z'
+
