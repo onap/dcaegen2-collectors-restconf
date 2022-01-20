@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74ac7646_ecfffead",
+        "filename": "pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-20T00:54:12Z",
+      "side": 1,
+      "message": "there should be a line above here that has LICENSE_START in it, similar to the LICENSE_END line below",
+      "revId": "6a10888fc7305b7be7c0fca8c0bdf10115e291ea",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20252f47_f66a6833",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/PublisherConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-20T00:54:12Z",
+      "side": 1,
+      "message": "could get IndexOutOfBoundsException if the List\u003cString\u003e is empty",
+      "revId": "6a10888fc7305b7be7c0fca8c0bdf10115e291ea",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7301511_b7c8f142",
+        "filename": "src/test/java/org/onap/dcae/common/publishing/DMaaPEventPublisherTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-20T00:54:12Z",
+      "side": 1,
+      "message": "if there is no verify() step, why keep the test?",
+      "revId": "6a10888fc7305b7be7c0fca8c0bdf10115e291ea",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8abed0_f8b8675c",
+        "filename": "src/test/java/org/onap/dcae/common/publishing/DMaaPEventPublisherTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-20T00:54:12Z",
+      "side": 1,
+      "message": "if there is no verify() step, why keep the test?",
+      "revId": "6a10888fc7305b7be7c0fca8c0bdf10115e291ea",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "744dc9b2_d359eabf",
+        "filename": "src/test/java/org/onap/dcae/common/publishing/DMaaPEventPublisherTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-01-20T00:54:12Z",
+      "side": 1,
+      "message": "no newline at the end of the file. Check your IDE settings.",
+      "revId": "6a10888fc7305b7be7c0fca8c0bdf10115e291ea",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
