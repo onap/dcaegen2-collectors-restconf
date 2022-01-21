@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1756cb5c_8d764353",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/PublisherConfig.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 6073
+      },
+      "writtenOn": "2022-01-21T09:59:36Z",
+      "side": 1,
+      "message": "List will not be empty. Handled all the places.",
+      "parentUuid": "20252f47_f66a6833",
+      "revId": "6a10888fc7305b7be7c0fca8c0bdf10115e291ea",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7301511_b7c8f142",
         "filename": "src/test/java/org/onap/dcae/common/publishing/DMaaPEventPublisherTest.java",
         "patchSetId": 3
