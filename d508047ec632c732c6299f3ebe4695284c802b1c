@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "912b2f16_815153bb",
+        "filename": "pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "while you have this file open, can you fix these tabs?",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5635911_33ab8a3f",
         "filename": "src/main/java/org/onap/dcae/ApplicationSettings.java",
         "patchSetId": 12
@@ -19,6 +36,312 @@
         "endLine": 153,
         "endChar": 5
       },
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cee15dfc_494692f0",
+        "filename": "src/main/java/org/onap/dcae/common/SSLContextCreator.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "check your IDE settings. There\u0027s no NL at the end of the file.",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7fc13a2_d8af95d3",
+        "filename": "src/main/java/org/onap/dcae/common/configuration/AuthMethod.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "new code files need javadocs for module and public methods",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376aa219_61840a5c",
+        "filename": "src/main/java/org/onap/dcae/common/configuration/AuthMethodType.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "new code files need javadocs for module and public methods",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f990cbf6_b7a69a6b",
+        "filename": "src/main/java/org/onap/dcae/common/configuration/CertBasicAuth.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "new code needs javadoc on module and public methods",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c4ddf4_01444696",
+        "filename": "src/main/java/org/onap/dcae/common/configuration/CertBasicAuth.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "check your IDE settings. There\u0027s no NL at the end of the file.",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564fc5e7_e596102d",
+        "filename": "src/main/java/org/onap/dcae/common/configuration/NoAuth.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "new code files need javadocs for module and public methods",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5ca285_16aa1888",
+        "filename": "src/main/java/org/onap/dcae/common/configuration/SslContextCreator.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "new code needs javadoc on module and public methods",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "155658a1_fd880f08",
+        "filename": "src/main/java/org/onap/dcae/common/configuration/SubjectMatcher.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "new code files need javadocs for module and public methods",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce00730a_60b083d7",
+        "filename": "src/main/java/org/onap/dcae/common/configuration/TomcatHttpConfig.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "new code files need javadocs for module and public methods",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3cef67_f745b29c",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/DmaapRequestConfiguration.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "new code files need javadocs for module and public methods",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287f6fec_6f6b417f",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/MessageRouterHttpStatusMapper.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "new code files need javadocs for module and public methods",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0facfa4_61f5c06f",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/Publisher.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "new code files need javadocs for module and public methods",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed4cde8_5e4b76d9",
+        "filename": "src/main/java/org/onap/dcae/configuration/ConfigParsing.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "new code files need javadocs for module and public methods",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41332be4_8084a1a2",
+        "filename": "src/main/java/org/onap/dcae/configuration/ConfigUpdater.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "new code files need javadocs for module and public methods",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "548ca789_21f5e23f",
+        "filename": "src/main/java/org/onap/dcae/configuration/ConfigUpdaterFactory.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "new code files need javadocs for module and public methods",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54540146_ce3e1b76",
+        "filename": "src/main/java/org/onap/dcae/configuration/Conversions.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "new code files need javadocs for module and public methods",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e5672eb_0ea72761",
+        "filename": "src/main/java/org/onap/dcae/restapi/ApiAuthInterceptor.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "add copyright for 2022",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55d6634_888f377e",
+        "filename": "src/main/java/org/onap/dcae/restapi/ServletConfig.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-18T14:06:12Z",
+      "side": 1,
+      "message": "add Copyright for 2022",
       "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
