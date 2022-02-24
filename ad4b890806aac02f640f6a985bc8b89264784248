@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afe4fbc7_271eb15b",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-24T01:17:03Z",
+      "side": 1,
+      "message": "while you have the file cracked open, can you fix the tabs, on this line and much later in the file",
+      "revId": "ad4b890806aac02f640f6a985bc8b89264784248",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
