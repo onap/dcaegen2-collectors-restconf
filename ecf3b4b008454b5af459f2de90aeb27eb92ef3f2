@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5895a219_ea96e597",
+        "filename": "pom.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-24T01:32:23Z",
+      "side": 1,
+      "message": "while you have this file open, please fix the tab characters, on this line and later in the file",
+      "revId": "ecf3b4b008454b5af459f2de90aeb27eb92ef3f2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f962a9ba_b3982698",
+        "filename": "src/main/java/org/onap/dcae/ApplicationConfigurationListener.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-24T01:32:23Z",
+      "side": 1,
+      "message": "new files should have javadoc on all public methods",
+      "revId": "ecf3b4b008454b5af459f2de90aeb27eb92ef3f2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f86c0f3_902f3f4e",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/DmaapRequestConfiguration.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-24T01:32:23Z",
+      "side": 1,
+      "message": "new files should have javadoc on the class and public methods",
+      "revId": "ecf3b4b008454b5af459f2de90aeb27eb92ef3f2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133514ea_73bfa2f9",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/MessageRouterHttpStatusMapper.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-24T01:32:23Z",
+      "side": 1,
+      "message": "new files should have javadoc on the class and public methods",
+      "revId": "ecf3b4b008454b5af459f2de90aeb27eb92ef3f2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496c14db_486a477c",
+        "filename": "src/main/java/org/onap/dcae/common/publishing/Publisher.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-24T01:32:23Z",
+      "side": 1,
+      "message": "new files should have javadoc on the class and public methods",
+      "revId": "ecf3b4b008454b5af459f2de90aeb27eb92ef3f2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd13f4cd_ff834b8f",
+        "filename": "src/main/java/org/onap/dcae/configuration/ConfigFilesFacade.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-24T01:32:23Z",
+      "side": 1,
+      "message": "new files should have javadoc on the public methods",
+      "revId": "ecf3b4b008454b5af459f2de90aeb27eb92ef3f2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b585bed_dfdd49d3",
+        "filename": "src/main/java/org/onap/dcae/configuration/ConfigParsing.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-24T01:32:23Z",
+      "side": 1,
+      "message": "new files should have javadoc on the class and public methods",
+      "revId": "ecf3b4b008454b5af459f2de90aeb27eb92ef3f2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44c95e1f_aaee2e06",
+        "filename": "src/main/java/org/onap/dcae/configuration/ConfigUpdater.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-24T01:32:23Z",
+      "side": 1,
+      "message": "new files should have javadoc on the class and public methods",
+      "revId": "ecf3b4b008454b5af459f2de90aeb27eb92ef3f2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1dc513_eb78316e",
+        "filename": "src/main/java/org/onap/dcae/configuration/ConfigUpdaterFactory.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-24T01:32:23Z",
+      "side": 1,
+      "message": "new files should have javadoc on the class and public methods",
+      "revId": "ecf3b4b008454b5af459f2de90aeb27eb92ef3f2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "509a4b7a_48afa5e2",
+        "filename": "src/main/java/org/onap/dcae/configuration/ConfigurationHandler.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-24T01:32:23Z",
+      "side": 1,
+      "message": "new files should have javadoc on the public methods",
+      "revId": "ecf3b4b008454b5af459f2de90aeb27eb92ef3f2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12da677a_3925f406",
+        "filename": "src/main/java/org/onap/dcae/configuration/Conversions.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-02-24T01:32:23Z",
+      "side": 1,
+      "message": "new files should have javadoc on the public methods",
+      "revId": "ecf3b4b008454b5af459f2de90aeb27eb92ef3f2",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
