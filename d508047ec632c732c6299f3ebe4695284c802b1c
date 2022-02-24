@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "abacecb7_674dce9a",
+        "filename": "pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-02-24T19:59:42Z",
+      "side": 1,
+      "message": "This is addressed under 127265; suggest proceeding to merge if no other issues noted",
+      "parentUuid": "058408c7_989d5373",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5635911_33ab8a3f",
         "filename": "src/main/java/org/onap/dcae/ApplicationSettings.java",
         "patchSetId": 12
