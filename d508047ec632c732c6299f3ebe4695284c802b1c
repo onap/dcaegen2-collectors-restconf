@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "83eab0db_74f5c8b0",
+        "filename": "pom.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 6073
+      },
+      "writtenOn": "2022-02-25T03:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abacecb7_674dce9a",
+      "revId": "d508047ec632c732c6299f3ebe4695284c802b1c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5635911_33ab8a3f",
         "filename": "src/main/java/org/onap/dcae/ApplicationSettings.java",
         "patchSetId": 12
