@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c46092_c30c07c7",
+        "filename": "src/test/java/org/onap/dcae/ApplicationSettingsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-05-17T19:37:53Z",
+      "side": 1,
+      "message": "please check your IDE settings. No NL at the end of the file.",
+      "revId": "7628ed06a8bd58d969e1a27f7eeffdb2719f0e5c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
