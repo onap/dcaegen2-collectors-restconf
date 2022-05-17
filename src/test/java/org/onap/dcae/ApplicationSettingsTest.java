@@ -4,7 +4,7 @@
  * ================================================================================
  * Copyright (C) 2018 Nokia. All rights reserved.
  * Copyright (C) 2018 AT&T Intellectual Property. All rights reserved.
- * Copyright (C) 2018-2019 Huawei. All rights reserved.
+ * Copyright (C) 2022 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -113,6 +113,27 @@ public class ApplicationSettingsTest {
 
         // then
         assertEquals(8090, applicationPort);
+    }
+
+    @Test
+    public void shouldLoadPropertiesFromFile() throws IOException {
+        // given
+        String[] cliArguments = {"-section.subSection1", "abc"};
+        File tempConfFile = File.createTempFile("doesNotMatter", "doesNotMatter");
+        Files.write(tempConfFile.toPath(), singletonList("section.subSection1=zxc"));
+        tempConfFile.deleteOnExit();
+
+        // when
+        ApplicationSettings configurationAccessor = new ApplicationSettings(cliArguments, CLIUtils::processCmdLine);
+        String actuallyOverridenByCliParam = configurationAccessor.getStringDirectly("section.subSection1");
+
+        // then
+        assertEquals("abc", actuallyOverridenByCliParam);
+
+        configurationAccessor.loadPropertiesFromFile();
+
+        boolean auth = configurationAccessor.clientTlsAuthenticationEnabled();
+        assertEquals(auth, false);
     }
 
     @Test
@@ -306,6 +327,20 @@ public class ApplicationSettingsTest {
     }
 
     @Test
+    public void shouldConfigurationFileLocation() throws IOException {
+
+        try {
+            String[] cliArguments = {"-param1", "param1value", "-param2", "param2value"};
+            // when
+            ApplicationSettings configurationAccessor = new ApplicationSettings(cliArguments, CLIUtils::processCmdLine);
+            Path path = configurationAccessor.configurationFileLocation();
+            assertTrue(path.endsWith("collector.properties"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void shouldrccKeystorePathExistDefault() throws IOException {
         // when
         String path = fromTemporaryConfiguration().rccKeystoreFileLocation();
@@ -366,6 +401,56 @@ public class ApplicationSettingsTest {
 
         // then
         assertEquals(stream, null);
+    }
+
+    @Test
+    public void shouldGetStringDirectly() {
+        // given
+        String[] cliArguments = {"-param1", "param1value"};
+
+        // when
+        ApplicationSettings configurationAccessor = new ApplicationSettings(cliArguments, CLIUtils::processCmdLine);
+        String param1value = configurationAccessor.getStringDirectly("param1");
+
+        // then
+        assertEquals("param1value", param1value);
+    }
+
+    @Test
+    public void shouldAddOrUpdate() {
+        // given
+        String[] cliArguments = {"-param1", "param1value"};
+
+        // when
+        ApplicationSettings configurationAccessor = new ApplicationSettings(cliArguments, CLIUtils::processCmdLine);
+        configurationAccessor.addOrUpdate("collector.rcc.test", null);
+        configurationAccessor.addOrUpdate("collector.rcc.test", "1");
+    }
+
+    @Test
+    public void shouldControllerConfigFileLocation() throws IOException {
+        // given
+        String[] cliArguments = {"-param1", "param1value"};
+
+        // when
+        ApplicationSettings configurationAccessor = new ApplicationSettings(cliArguments, CLIUtils::processCmdLine);
+        String param1value = configurationAccessor.controllerConfigFileLocation();
+
+        // then
+        assertTrue(param1value.endsWith("ont_config.json"));
+    }
+
+    @Test
+    public void shouldConfigurationUpdateFrequency() throws IOException {
+        // given
+        String[] cliArguments = {"-param1", "param1value"};
+
+        // when
+        ApplicationSettings configurationAccessor = new ApplicationSettings(cliArguments, CLIUtils::processCmdLine);
+        int param1value = configurationAccessor.configurationUpdateFrequency();
+
+        // then
+        assertEquals(5, param1value);
     }
 
     private static ApplicationSettings fromTemporaryConfiguration(String... fileLines)
