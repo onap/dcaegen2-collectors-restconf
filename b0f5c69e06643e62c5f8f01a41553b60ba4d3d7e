@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da0baee4_6f212025",
+        "filename": "src/test/java/org/onap/dcae/ApplicationSettingsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-05-20T19:28:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e85cd15_6f1ff5c9",
+      "revId": "b0f5c69e06643e62c5f8f01a41553b60ba4d3d7e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13f516dc_a2b8fe7f",
         "filename": "src/test/java/org/onap/dcae/common/publishing/DmaapRequestConfigurationTest.java",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "b0f5c69e06643e62c5f8f01a41553b60ba4d3d7e",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e84096de_47311cbb",
+        "filename": "src/test/java/org/onap/dcae/common/publishing/DmaapRequestConfigurationTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-05-20T19:28:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13f516dc_a2b8fe7f",
+      "revId": "b0f5c69e06643e62c5f8f01a41553b60ba4d3d7e",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
