@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * org.onap.dcaegen2.restconfcollector
  * ================================================================================
- * Copyright (C) 2018-2019 Huawei. All rights reserved.
+ * Copyright (C) 2018-2022 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,16 +55,95 @@ public class XmlJsonUtilTest {
         }
     }
 
+
+    @Test
+    public void getJsonTest() {
+        String var = "'result'";
+        Map<String, String> mm = new HashMap<>();
+
+
+        mm.put("result.time", "2018 12:04");
+        mm.put("result.status", "200");
+        mm.put("result.output", "xml2json");
+        mm.put("result.[", "start");
+        mm.put("result.]", "end");
+        mm.put("result.list", "<LIST>\n"
+                + "          <LITERAL VALUE=\"\"/>\n"
+                + "        </LIST>");
+
+        try {
+            String str = XmlJsonUtil.getXml(mm, var);
+            assertEquals(str.startsWith("<"), true);
+            String str2 = XmlJsonUtil.getJson(mm, var);
+            assertEquals(str2.startsWith("{"), true);
+        } catch (Exception e) {
+            System.out.println("Exception " + e);
+        }
+    }
+
+    @Test
+    public void getCreateStructureWithLengthTest() {
+        String var = "\"result_length";
+        Map<String, String> mm = new HashMap<>();
+
+
+        mm.put("result.time", "2018 12:04");
+        mm.put("result.status", "200");
+        mm.put("result.output", "xml2json");
+        mm.put("result.[", "start");
+        mm.put("result.]", "end");
+        mm.put("result.list", "<LIST>\n"
+                + "          <LITERAL VALUE=\"\"/>\n"
+                + "        </LIST>");
+
+        try {
+            String str = XmlJsonUtil.getXml(mm, var);
+            assertEquals(str.startsWith("<"), true);
+            String str2 = XmlJsonUtil.getJson(mm, var);
+            assertEquals(str2.startsWith("{"), true);
+        } catch (Exception e) {
+            System.out.println("Exception " + e);
+        }
+    }
+
+    @Test
+    public void getXmlTest() {
+        String var = "'result'";
+        Map<String, String> mm = new HashMap<>();
+
+
+        mm.put("result.time", "2018 12:04");
+        mm.put("result.status", "200");
+        mm.put("result.output", "xml2json");
+        mm.put("result.[", "start");
+        mm.put("result.]", "end");
+        mm.put("result.list", "<LIST>\n"
+                + "          <LITERAL VALUE=\"\"/>\n"
+                + "        </LIST>");
+
+        try {
+            String str = XmlJsonUtil.getXml(mm, var);
+            assertEquals(str.startsWith("<"), true);
+            String str2 = XmlJsonUtil.getJson(mm, var);
+            assertEquals(str2.startsWith("{"), true);
+        } catch (Exception e) {
+            System.out.println("Exception " + e);
+        }
+    }
+
     @Test
     public void removeEmptystructFromXml() {
         String var = "<time>2018 12:04</time>\n"
                 + "<output>t2</output>\n"
-                + "<start>bad\n"
+                + "<start></start>\n"
                 + "<status>200</status>";
-        Map<String, String> mm = new HashMap<>();
+
+        String verify = "<time>2018 12:04</time>\n"
+                + "<output>t2</output>\n"
+                + "<status>200</status>";
         try {
             String str = XmlJsonUtil.removeEmptyStructXml(var);
-
+            assertEquals(verify, str);
         } catch (Exception e) {
             System.out.println("Exception " + e);
         }
@@ -77,6 +156,7 @@ public class XmlJsonUtilTest {
 
         try {
             String str = XmlJsonUtil.removeEmptyStructJson(var);
+            assertEquals("", str);
         } catch (Exception e) {
             System.out.println("Exception " + e);
         }
@@ -85,8 +165,15 @@ public class XmlJsonUtilTest {
     @Test
     public void removeLastCommaJson() {
         String var2 = "{\"name\":\"john\",\"age\":22,\"class\":\"mca\", \"data\":{}, \"arr\" : [\"some\" : {},],}";
+        String var3 = "{\"name\":\"john\",\"age\":22,\"class\":\"mca\"}";
+        String var4 = "{\"name\":\"john\",\"age\":22,\"class\":\"mca\", \"data\":{},}";
         try {
-            String str = XmlJsonUtil.removeLastCommaJson(var2);
+            String str2 = XmlJsonUtil.removeLastCommaJson(var2);
+            assertEquals("{\"name\":\"john\",\"age\":22,\"class\":\"mca\", \"data\":{}, \"arr\" : [\"some\" : {}]}", str2);
+            String str3 = XmlJsonUtil.removeLastCommaJson(var3);
+            assertEquals("{\"name\":\"john\",\"age\":22,\"class\":\"mca\"}", str3);
+            String str4 = XmlJsonUtil.removeLastCommaJson(var4);
+            assertEquals("{\"name\":\"john\",\"age\":22,\"class\":\"mca\", \"data\":{}}", str4);
         } catch (Exception e) {
             System.out.println("Exception " + e);
         }
@@ -109,5 +196,4 @@ public class XmlJsonUtilTest {
             System.out.println("Exception " + e);
         }
     }
-
 }
