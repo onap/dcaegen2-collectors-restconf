@@ -20,10 +20,13 @@
 package org.onap.dcae.common.publishing;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.onap.dcaegen2.services.sdk.rest.services.dmaap.client.model.MessageRouterPublishResponse;
 import org.springframework.http.HttpStatus;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.onap.dcae.ApplicationSettings.responseCompatibility;
@@ -60,5 +63,22 @@ class MessageRouterHttpStatusMapperTest {
 
         //then
         assertSame(HttpStatus.OK, httpStatusResponse);
+    }
+
+    @ParameterizedTest
+    @EnumSource(
+            value = HttpStatus.class,
+            names = {"NOT_FOUND", "REQUEST_TIMEOUT", "TOO_MANY_REQUESTS", "INTERNAL_SERVER_ERROR", "BAD_GATEWAY",
+                    "SERVICE_UNAVAILABLE", "GATEWAY_TIMEOUT"}
+    )
+    void shouldMapErrorsTo503WhenBackwardsCompatibilityIsNone(HttpStatus httpStatus) {
+        //given
+        responseCompatibility = BACKWARDS_COMPATIBILITY_NONE;
+        MessageRouterPublishResponse messageRouterPublishResponse = mock(MessageRouterPublishResponse.class);
+        when(messageRouterPublishResponse.failReason()).thenReturn(httpStatus.toString());
+
+        //when
+        //then
+        assertThrows(RuntimeException.class,()->getHttpStatus(messageRouterPublishResponse));
     }
 }
