@@ -16,6 +16,24 @@
       "revId": "71b26c4dd5bfde0e3249439a94d6895d51a4a64c",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585709fc_59e067fd",
+        "filename": "src/test/java/org/onap/dcae/restapi/RccRestControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 6073
+      },
+      "writtenOn": "2022-05-31T09:58:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e158c03_468c3ab0",
+      "revId": "71b26c4dd5bfde0e3249439a94d6895d51a4a64c",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
