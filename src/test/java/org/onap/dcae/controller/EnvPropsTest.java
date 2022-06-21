@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * org.onap.dcaegen2.restconfcollector
  * ================================================================================
- * Copyright (C) 2018-2019 Huawei. All rights reserved.
+ * Copyright (C) 2018-2022 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@
 package org.onap.dcae.controller;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
@@ -40,5 +41,34 @@ public class EnvPropsTest {
                 "http", "CBSName", "restconfcollector")
                 .equals(new EnvProps("http", "localhost", wireMockRule.port(),
                         "http", "CBSName", "restconfcollector")), true);
+    }
+
+    @Test
+    public void fromStringTest() {
+        assertEquals(new EnvProps("http", "localhost", wireMockRule.port(),
+                "http", "CBSName", "restconfcollector")
+                .equals(null), false);
+    }
+
+    @Test
+    public void fromStringSameObjTest() {
+        EnvProps envProps = new EnvProps("http", "localhost", wireMockRule.port(),
+                "http", "CBSName", "restconfcollector");
+        assertEquals(envProps.equals(envProps), true);
+    }
+
+    @Test
+    public void toStringTest() {
+        String envProps = new EnvProps("http", "localhost", wireMockRule.port(),
+                "http", "CBSName", "restconfcollector").toString();
+        String str = "EnvProps{consulProtocol='http', consulHost='localhost', consulPort="+wireMockRule.port()+", cbsProtocol='http', cbsName='CBSName', appName='restconfcollector'}";
+        assertEquals(envProps, str);
+    }
+
+    @Test
+    public void hashCodeTest() {
+        int envHashCode = new EnvProps("http", "localhost", wireMockRule.port(),
+                "http", "CBSName", "restconfcollector").hashCode();
+        assertNotNull(envHashCode);
     }
 }

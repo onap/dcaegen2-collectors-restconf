@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * org.onap.dcaegen2.restconfcollector
  * ================================================================================
- * Copyright (C) 2018-2022 Huawei. All rights reserved.
+ * Copyright (C) 2022 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,31 +17,23 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
-
 package org.onap.dcae.common;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class XmlParserTest {
-
+public class HttpMethodTest {
     @Test
-    public void setAttribute() {
-        String convert =  "<root><time>2018 12:04</time>\n"
-                + "<output>t2</output>\n"
-                + "<status>200</status></root>";
-        Set<String> listNameList = new HashSet<>();
-        listNameList.add("result");
-        Map<String, String> propMap;
-        try {
-            propMap = XmlParser.convertToProperties(convert, listNameList);
-            assertEquals("200", propMap.get("root.status"));
-        } catch (Exception e) {
-            System.out.println("Exception " + e);
-        }
+    public void fromStringTest () throws Exception {
+        assertEquals(HttpMethod.GET, HttpMethod.fromString("get"));
+        assertEquals(HttpMethod.POST, HttpMethod.fromString("post"));
+        assertEquals(HttpMethod.PUT, HttpMethod.fromString("put"));
+        assertEquals(HttpMethod.PATCH, HttpMethod.fromString("patch"));
+        assertEquals(HttpMethod.DELETE, HttpMethod.fromString("delete"));
+        assertNull(null, HttpMethod.fromString(null));
+        assertThrows(IllegalArgumentException.class,()->HttpMethod.fromString("test"));
     }
 }
