@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be74f1f7_b20d47ef",
+        "filename": "src/main/java/org/onap/dcae/controller/PersistentEventConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-06-21T12:54:45Z",
+      "side": 1,
+      "message": "import * is not allowed",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c2dee9_3de9b3e9",
+        "filename": "src/main/java/org/onap/dcae/controller/PersistentEventConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-06-21T12:54:45Z",
+      "side": 1,
+      "message": "import * is not allowed",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1008c922_b99e098d",
+        "filename": "src/main/java/org/onap/dcae/controller/PersistentEventConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-06-21T12:54:45Z",
+      "side": 1,
+      "message": "check your IDE settings. Tab indentation should be changed to spaces.",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68f0c79d_0e9e6d98",
+        "filename": "src/test/java/org/onap/dcae/common/XmlParserTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-06-21T12:54:45Z",
+      "side": 1,
+      "message": "no NL at the end of the file",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc587a03_409c4784",
+        "filename": "src/test/java/org/onap/dcae/controller/AccessControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-06-21T12:54:45Z",
+      "side": 1,
+      "message": "something should be done here to make the test fail",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a9c8cde_41fc95dd",
+        "filename": "src/test/java/org/onap/dcae/controller/ConfigLoaderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-06-21T12:54:45Z",
+      "side": 1,
+      "message": "something should be done here to make the test fail",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1cef994_234da8d3",
+        "filename": "src/test/java/org/onap/dcae/controller/EnvPropsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-06-21T12:54:45Z",
+      "side": 1,
+      "message": "no NL at the end of the file",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd394ff_e92a8f46",
+        "filename": "src/test/java/org/onap/dcae/controller/PersistentEventConnectionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-06-21T12:54:45Z",
+      "side": 1,
+      "message": "something should be done here to force a test failure",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "232c7b89_f5efba6e",
+        "filename": "src/test/resources/testTemplatefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-06-21T12:54:45Z",
+      "side": 1,
+      "message": "no NL at the end of the file",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
