@@ -77,12 +77,12 @@ public class MessageRouterHttpStatusMapper {
     }
 
     @NotNull
-    private static String resolveHttpCode(MessageRouterPublishResponse messageRouterPublishResponse) {
+    static String resolveHttpCode(MessageRouterPublishResponse messageRouterPublishResponse) {
         return Objects.requireNonNull(messageRouterPublishResponse.failReason()).substring(0, 3);
     }
 
     @NotNull
-    private static ApiException responseBody(String substring) {
+    static ApiException responseBody(String substring) {
         switch (substring) {
             case "404":
                 return ApiException.NOT_FOUND;

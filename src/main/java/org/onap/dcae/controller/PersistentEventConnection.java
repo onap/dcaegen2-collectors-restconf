@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * org.onap.dcaegen2.collectors.restconf
  * ================================================================================
- * Copyright (C) 2018-2021 Huawei. All rights reserved.
+ * Copyright (C) 2018-2022 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -156,7 +156,7 @@ public class PersistentEventConnection implements Runnable {
     }
 
 
-    private PersistentEventConnection(PersistentEventConnectionBuilder builder){
+    public PersistentEventConnection(PersistentEventConnectionBuilder builder){
 
             this.event_name = builder.event_name;
             this.event_description = builder.event_description;
@@ -234,7 +234,7 @@ public class PersistentEventConnection implements Runnable {
         log.info("Closed connection to SSE source");
     }
 
-    private void subscribe() {
+    public void subscribe() {
         try {
             modifyEventParamMap(Constants.KSETTING_REST_API_URL, getUriMethod(parentCtrllr.getProperties().authorizationEnabled())
                     + parentCtrllr.getCfgInfo().getController_restapiUrl()
@@ -265,7 +265,7 @@ public class PersistentEventConnection implements Runnable {
 
         log.info("SSE received url " + event_sseventsUrl);
     }
-    private EventSource OpenSseConnection() throws Exception {
+    public EventSource OpenSseConnection() throws Exception {
         Parameters p = null;
 
         try {

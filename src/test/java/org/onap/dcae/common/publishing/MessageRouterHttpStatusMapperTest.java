@@ -22,15 +22,20 @@ package org.onap.dcae.common.publishing;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.onap.dcae.restapi.ApiException;
 import org.onap.dcaegen2.services.sdk.rest.services.dmaap.client.model.MessageRouterPublishResponse;
 import org.springframework.http.HttpStatus;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.onap.dcae.ApplicationSettings.responseCompatibility;
 import static org.onap.dcae.common.publishing.MessageRouterHttpStatusMapper.getHttpStatus;
+import static org.onap.dcae.common.publishing.MessageRouterHttpStatusMapper.resolveHttpCode;
+import static org.onap.dcae.common.publishing.MessageRouterHttpStatusMapper.responseBody;
 
 class MessageRouterHttpStatusMapperTest {
 
@@ -39,6 +44,20 @@ class MessageRouterHttpStatusMapperTest {
 
     @Test
     void shouldResponse202() {
+        //given
+        responseCompatibility = BACKWARDS_COMPATIBILITY;
+        MessageRouterPublishResponse messageRouterPublishResponse = mock(MessageRouterPublishResponse.class);
+        when(messageRouterPublishResponse.successful()).thenReturn(true);
+
+        //when
+        HttpStatus httpStatusResponse = getHttpStatus(messageRouterPublishResponse);
+
+        //then
+        assertSame(HttpStatus.ACCEPTED, httpStatusResponse);
+    }
+
+    @Test
+    void shouldResponse202Test() {
         //given
         responseCompatibility = BACKWARDS_COMPATIBILITY;
         MessageRouterPublishResponse messageRouterPublishResponse = mock(MessageRouterPublishResponse.class);
@@ -80,5 +99,31 @@ class MessageRouterHttpStatusMapperTest {
         //when
         //then
         assertThrows(RuntimeException.class,()->getHttpStatus(messageRouterPublishResponse));
+    }
+
+    @Test
+    public void responseBodyTest () throws Exception {
+        ApiException result = responseBody("404");
+        assertEquals(404, result.httpStatusCode);
+        result = responseBody("408");
+        assertEquals(408, result.httpStatusCode);
+        result = responseBody("429");
+        assertEquals(429, result.httpStatusCode);
+        result = responseBody("502");
+        assertEquals(502, result.httpStatusCode);
+        result = responseBody("503");
+        assertEquals(503, result.httpStatusCode);
+        result = responseBody("504");
+        assertEquals(504, result.httpStatusCode);
+        result = responseBody("test");
+        assertEquals(500, result.httpStatusCode);
+    }
+
+    @Test
+    public void resolveHttpCodeTest () throws Exception {
+        MessageRouterPublishResponse messageRouterPublishResponse = mock(MessageRouterPublishResponse.class);
+        when(messageRouterPublishResponse.failReason()).thenReturn("error code");
+        String result = resolveHttpCode(messageRouterPublishResponse);
+        assertNotNull(result);
     }
 }
