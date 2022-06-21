@@ -156,7 +156,7 @@ public class PersistentEventConnection implements Runnable {
     }
 
 
-    private PersistentEventConnection(PersistentEventConnectionBuilder builder){
+    public PersistentEventConnection(PersistentEventConnectionBuilder builder){
 
             this.event_name = builder.event_name;
             this.event_description = builder.event_description;
