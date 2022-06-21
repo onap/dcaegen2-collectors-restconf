@@ -17,27 +17,39 @@
  * limitations under the License.
  * ============LICENSE_END=========================================================
  */
+package org.onap.dcae.controller;
 
-package org.onap.dcae;
-
-import org.apache.commons.configuration.ConfigurationException;
+import io.vavr.collection.List;
+import io.vavr.control.Try;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class ApplicationExceptionTest {
+public class ConversionTest implements Conversions {
     @Test
-    public void TestApplicationException() {
-        ConfigurationException confEx = new ConfigurationException();
-        ApplicationException example3 = new ApplicationException(confEx);
-        Exception ex = new Exception();
-        ApplicationException example1 = new ApplicationException("Exception", ex);
-        ApplicationException example2 = new ApplicationException(ex);
-        ApplicationException example = new ApplicationException("Exception");
-        assertTrue(example3.getMessage().contains("ConfigurationException"));
-        assertEquals(example1.getMessage(), "Exception");
-        assertEquals(example2.getMessage(), "java.lang.Exception");
-        assertEquals(example.getMessage(), "Exception");
+    public void toJsonTest () throws Exception {
+        Try<JSONObject> jo = Conversions.toJson("{\"name\":\"Test\",\"description\":\"description\"}");
+        jo.onSuccess(value -> assertEquals(value.get("name"), "Test"));
+    }
+
+    @Test
+    public void toJsonArrayTest () throws Exception {
+        Try<JSONArray> jo = Conversions.toJsonArray("[{\"name\":\"Test\",\"description\":\"description\"}]");
+        jo.onSuccess(value -> assertTrue(value.get(0).toString().contains("Test")));
+    }
+
+    @Test
+    public void toListTest () throws Exception {
+        ArrayList<String> al = new ArrayList<String>();
+        al.add("Test");
+        Iterator<String> itr = al.iterator();
+        List<String> jo = Conversions.toList(itr);
+        assertEquals(jo.get(0), "Test");
     }
 }
