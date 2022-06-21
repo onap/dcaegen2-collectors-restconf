@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c602e9c8_cc278b59",
+        "filename": "src/main/java/org/onap/dcae/controller/PersistentEventConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 6073
+      },
+      "writtenOn": "2022-06-21T15:15:04Z",
+      "side": 1,
+      "message": "This code is not written as part of UT.",
+      "parentUuid": "be74f1f7_b20d47ef",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62c2dee9_3de9b3e9",
         "filename": "src/main/java/org/onap/dcae/controller/PersistentEventConnection.java",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8000c656_9d8eaa9c",
+        "filename": "src/main/java/org/onap/dcae/controller/PersistentEventConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 6073
+      },
+      "writtenOn": "2022-06-21T15:15:04Z",
+      "side": 1,
+      "message": "This code is not written as part of UT.",
+      "parentUuid": "62c2dee9_3de9b3e9",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "548682e1_aabfbfe4",
+        "filename": "src/main/java/org/onap/dcae/controller/PersistentEventConnection.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 6073
+      },
+      "writtenOn": "2022-06-21T15:15:04Z",
+      "side": 1,
+      "message": "@Tony..It is difficult to review all the existing code to make one line change. IDE setting is ok for me. If there is any changes in tab from my side It would show in the difference.",
+      "parentUuid": "1008c922_b99e098d",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68f0c79d_0e9e6d98",
         "filename": "src/test/java/org/onap/dcae/common/XmlParserTest.java",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb26161a_26304062",
+        "filename": "src/test/java/org/onap/dcae/common/XmlParserTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 6073
+      },
+      "writtenOn": "2022-06-21T15:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68f0c79d_0e9e6d98",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "91a21e1a_b91b7bfd",
+        "filename": "src/test/java/org/onap/dcae/controller/AccessControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6073
+      },
+      "writtenOn": "2022-06-21T15:15:04Z",
+      "side": 1,
+      "message": "How other test cases are handling the exceptions, similarly I also handled the exception. If you can suggest to me a better way to handle it please let me know. I will make the changes.",
+      "parentUuid": "bc587a03_409c4784",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9c8cde_41fc95dd",
         "filename": "src/test/java/org/onap/dcae/controller/ConfigLoaderTest.java",
         "patchSetId": 2
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "eea45c40_57aefb27",
+        "filename": "src/test/java/org/onap/dcae/controller/ConfigLoaderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 6073
+      },
+      "writtenOn": "2022-06-21T15:15:04Z",
+      "side": 1,
+      "message": "How other test cases are handling the exceptions, similarly I also handled the exception. If you can suggest to me a better way to handle it please let me know. I will make the changes.",
+      "parentUuid": "1a9c8cde_41fc95dd",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1cef994_234da8d3",
         "filename": "src/test/java/org/onap/dcae/controller/EnvPropsTest.java",
         "patchSetId": 2
@@ -118,6 +226,24 @@
       "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9b904a4_bfc76159",
+        "filename": "src/test/java/org/onap/dcae/controller/EnvPropsTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 6073
+      },
+      "writtenOn": "2022-06-21T15:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1cef994_234da8d3",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +278,24 @@
       "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1dad6b8_dd2ff447",
+        "filename": "src/test/resources/testTemplatefile",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 6073
+      },
+      "writtenOn": "2022-06-21T15:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "232c7b89_f5efba6e",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
