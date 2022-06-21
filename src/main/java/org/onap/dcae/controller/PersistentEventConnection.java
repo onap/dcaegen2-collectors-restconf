@@ -2,7 +2,7 @@
  * ============LICENSE_START=======================================================
  * org.onap.dcaegen2.collectors.restconf
  * ================================================================================
- * Copyright (C) 2018-2021 Huawei. All rights reserved.
+ * Copyright (C) 2018-2022 Huawei. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,14 +20,14 @@
 
 package org.onap.dcae.controller;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.glassfish.jersey.media.sse.EventSource;
 import org.glassfish.jersey.media.sse.SseFeature;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.onap.dcae.common.*;
+import org.onap.dcae.common.EventConnectionState;
+import org.onap.dcae.common.RestConfContext;
+import org.onap.dcae.common.AdditionalHeaderWebTarget;
+import org.onap.dcae.common.DataChangeEventListener;
+import org.onap.dcae.common.Constants;
+import org.onap.dcae.common.Parameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,16 +42,16 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.HttpHeaders;
-import java.security.KeyManagementException;
 import java.security.KeyStore;
-import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.onap.dcae.common.RestapiCallNodeUtil.*;
+import static org.onap.dcae.common.RestapiCallNodeUtil.getUriMethod;
+import static org.onap.dcae.common.RestapiCallNodeUtil.getParameters;
+import static org.onap.dcae.common.RestapiCallNodeUtil.addAuthType;
 
 public class PersistentEventConnection implements Runnable {
     private String event_name;
@@ -156,7 +156,7 @@ public class PersistentEventConnection implements Runnable {
     }
 
 
-    private PersistentEventConnection(PersistentEventConnectionBuilder builder){
+    public PersistentEventConnection(PersistentEventConnectionBuilder builder){
 
             this.event_name = builder.event_name;
             this.event_description = builder.event_description;
@@ -234,7 +234,7 @@ public class PersistentEventConnection implements Runnable {
         log.info("Closed connection to SSE source");
     }
 
-    private void subscribe() {
+    public void subscribe() {
         try {
             modifyEventParamMap(Constants.KSETTING_REST_API_URL, getUriMethod(parentCtrllr.getProperties().authorizationEnabled())
                     + parentCtrllr.getCfgInfo().getController_restapiUrl()
@@ -265,7 +265,7 @@ public class PersistentEventConnection implements Runnable {
 
         log.info("SSE received url " + event_sseventsUrl);
     }
-    private EventSource OpenSseConnection() throws Exception {
+    public EventSource OpenSseConnection() throws Exception {
         Parameters p = null;
 
         try {

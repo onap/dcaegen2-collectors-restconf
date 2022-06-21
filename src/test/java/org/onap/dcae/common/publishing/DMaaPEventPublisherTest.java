@@ -72,4 +72,19 @@ public class DMaaPEventPublisherTest {
         dMaaPEventPublisher.sendEvent(jo,"test");
         assertEquals("test", publisherCache.get()._1);
     }
+
+    @Test
+    public void sendEventclosePublisherTest () throws Exception {
+        List<String> destination = List.of("test");
+        PublisherConfig publisherConfig = new PublisherConfig(destination, "Test", "test",
+                "test123");
+        DMaaPPublishersCache.CambriaPublishersCacheLoader publishersCache =
+                Mockito.mock(DMaaPPublishersCache.CambriaPublishersCacheLoader.class);
+        Map<String, PublisherConfig> publisherCache = HashMap.of("test", publisherConfig);
+        publisherCache.put("test", publisherConfig);
+        DMaaPEventPublisher dMaaPEventPublisher = new DMaaPEventPublisher(publisherCache);
+        JSONObject jo = null;
+        dMaaPEventPublisher.sendEvent(jo,"test");
+        assertEquals("test", publisherCache.get()._1);
+    }
 }
