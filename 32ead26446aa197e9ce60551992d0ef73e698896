@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "48d2b776_f43ad102",
+        "filename": "src/test/java/org/onap/dcae/controller/AccessControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2022-06-22T15:36:27Z",
+      "side": 1,
+      "message": "please change the code to read\n\nfail(\"Exception \" + e);\n\n(with the appropriate import of ....Assert.fail)\n\nThe only cases where an exception should EVER be allowed in test code is when one is expected to be generated, and then use @Test(expected \u003d XYZExceptionClass.class) (replacing XYZExceptionClass as appropriate with the name of the exception class that IS expected).",
+      "parentUuid": "91a21e1a_b91b7bfd",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a9c8cde_41fc95dd",
         "filename": "src/test/java/org/onap/dcae/controller/ConfigLoaderTest.java",
         "patchSetId": 2
