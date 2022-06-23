@@ -318,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "bb3bc8c8_cba0dfec",
+        "filename": "src/test/java/org/onap/dcae/controller/PersistentEventConnectionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-06-23T19:53:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cd394ff_e92a8f46",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "232c7b89_f5efba6e",
         "filename": "src/test/resources/testTemplatefile",
         "patchSetId": 2
