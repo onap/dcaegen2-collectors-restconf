@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "9adbe9f5_8a30823e",
+        "filename": "src/test/java/org/onap/dcae/controller/AccessControllerTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 6073
+      },
+      "writtenOn": "2022-06-23T08:06:33Z",
+      "side": 1,
+      "message": "removed the try-catch ...let test case fail if there is any issue.",
+      "parentUuid": "6d1df2ad_6c8125dc",
+      "revId": "32ead26446aa197e9ce60551992d0ef73e698896",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a9c8cde_41fc95dd",
         "filename": "src/test/java/org/onap/dcae/controller/ConfigLoaderTest.java",
         "patchSetId": 2
