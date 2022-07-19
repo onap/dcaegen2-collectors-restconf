@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d894565_cfac1668",
+        "filename": "Changelog.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-07-19T21:42:05Z",
+      "side": 1,
+      "message": "This change shouldn\u0027t require major version upgrade; modify minor/patch version",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 9
+      },
+      "revId": "907d07275d0a1504fe7e958011063cf79309ffdc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76417154_baf8166c",
+        "filename": "pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2022-07-19T21:42:05Z",
+      "side": 1,
+      "message": "The ch.qos.logback : logback-core : 1.3.0-alpha0 is introduced from this lib. Either remove this dependency or upgrade to latest version",
+      "range": {
+        "startLine": 513,
+        "startChar": 2,
+        "endLine": 517,
+        "endChar": 21
+      },
+      "revId": "907d07275d0a1504fe7e958011063cf79309ffdc",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
