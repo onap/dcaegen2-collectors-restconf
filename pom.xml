@@ -3,6 +3,7 @@
 ============LICENSE_START=======================================================
 Copyright (c) 2019,2022 Huawei. All rights reserved.
 Copyright (c) 2019,2021-2022 AT&T. All rights reserved.
+Copyright (c) 2023 Deutsche Telekom AG. All rights reserved.
 ================================================================================
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,7 +28,7 @@ limitations under the License.
     </parent>
     <groupId>org.onap.dcaegen2.collectors.restconf</groupId>
     <artifactId>restconfcollector</artifactId>
-    <version>1.3.4-SNAPSHOT</version>
+    <version>1.4.0-SNAPSHOT</version>
     <name>dcaegen2-collectors-restconf</name>
     <description>RestConfCollector</description>
     <properties>
@@ -52,7 +53,7 @@ limitations under the License.
             ${project.reporting.outputDirectory}/jacoco-ut/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
         <sdk.version>1.8.10</sdk.version>
-        <jackson.core.version>2.13.3</jackson.core.version>
+        <jackson.core.version>2.14.1</jackson.core.version>
     </properties>
     <build>
         <pluginManagement>
@@ -415,7 +416,7 @@ limitations under the License.
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.10.5</version>
+            <version>3.0.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -472,7 +473,7 @@ limitations under the License.
         <dependency>
             <groupId>org.codehaus.jettison</groupId>
             <artifactId>jettison</artifactId>
-            <version>1.3.7</version>
+            <version>1.5.2</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
