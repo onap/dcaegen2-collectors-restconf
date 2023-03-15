@@ -3,6 +3,7 @@
  * org.onap.dcaegen2.collectors.restconf
  * ================================================================================
  * Copyright (C) 2018-2019 Huawei. All rights reserved.
+ * Copyright (C) 2023 Deutsche Telekom AG. All rights reserved.
  * ================================================================================
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,14 +44,13 @@ public class RestapiCallNodeUtil {
     }
 
     public static String getUriMethod(Boolean authEnabled) {
-        /*@TODO: As per configuration */
-//        String uri;
-//        if (authEnabled) {
-//            uri = "https://";
-//        } else {
-//            uri = "http://";
-//        }
-        return "https://";
+        String uri;
+        if (authEnabled) {
+            uri = "https://";
+        } else {
+            uri = "http://";
+        }
+        return uri;
     }
 
     public static Parameters getParameters(Map<String, String> paramMap) throws Exception {
