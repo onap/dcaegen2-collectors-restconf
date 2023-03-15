@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70578424_e5517d3f",
+        "filename": "src/main/java/org/onap/dcae/common/RestapiCallNodeUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 105
+      },
+      "writtenOn": "2023-03-15T18:05:15Z",
+      "side": 1,
+      "message": "The choice should always be \"if configured to do http, then do http, else do https\". The default MUST be https if there is no configuration to do otherwise. That is, using http must always be a conscious pro-active choice.\n\nAlso remove the \"@TODO\" in the above comment.",
+      "revId": "7d7ee20512e7bc10bdf1c279bf011088e06b5aab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
+    }
+  ]
+}
