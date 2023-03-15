@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
+## [1.4.1] - 2023/03/15
+         - [DCAEGEN2-3336] - Restconf-collector cannot be set to HTTP
+
 ## [1.4.0] - 2023/02/1
          - [DCAEGEN2-3337] - dcaegen2-collectors-restconf vulnerability updates
        
