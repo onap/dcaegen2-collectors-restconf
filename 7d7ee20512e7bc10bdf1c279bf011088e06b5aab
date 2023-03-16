@@ -16,6 +16,24 @@
       "revId": "7d7ee20512e7bc10bdf1c279bf011088e06b5aab",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e275439f_d95ca712",
+        "filename": "src/main/java/org/onap/dcae/common/RestapiCallNodeUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 8243
+      },
+      "writtenOn": "2023-03-16T11:22:35Z",
+      "side": 1,
+      "message": "\u003e The choice should always be \"if configured to do http, then do http, else do https\". The default MUST be https if there is no configuration to do otherwise. That is, using http must always be a conscious pro-active choice.\n\u003e \n\u003e Also remove the \"@TODO\" in the above comment.\n\nThe change does not remove the configuration option to use HTTP or HTTPS. If \"collector.rcc.service.secure.port\" is set to 0, it\u0027s HTTP otherwise it is HTTPS.\nThe commented code was not allowing to use HTTP even if this cofiguration parameter was set to 0.\nDefault remains HTTPS only. If needed, ApplicationSettings.java can be referred to.\n\nI will remove @TODO",
+      "parentUuid": "70578424_e5517d3f",
+      "revId": "7d7ee20512e7bc10bdf1c279bf011088e06b5aab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": true
     }
   ]
 }
