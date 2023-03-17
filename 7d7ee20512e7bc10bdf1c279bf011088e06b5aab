@@ -34,6 +34,24 @@
       "revId": "7d7ee20512e7bc10bdf1c279bf011088e06b5aab",
       "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b4f64b_a9c6597a",
+        "filename": "src/main/java/org/onap/dcae/common/RestapiCallNodeUtil.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 93
+      },
+      "writtenOn": "2023-03-17T14:07:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e275439f_d95ca712",
+      "revId": "7d7ee20512e7bc10bdf1c279bf011088e06b5aab",
+      "serverId": "14b4e41f-c4e3-4fb9-9955-6a9b5656895a",
+      "unresolved": false
     }
   ]
 }
