@@ -1,0 +1,10 @@
+distribution_type: 'container'
+container_release_tag: '1.4.1'
+project: 'dcaegen2/collectors/restconf'
+log_dir: 'dcaegen2-collectors-restconf-maven-docker-stage-master/1339'
+ref: 17e1aa838fa6185f10cf0838c73d67f6ccae8e3a
+containers:
+    - name: 'org.onap.dcaegen2.collectors.restconfcollector'
+      version: '1.4.1-20230331T020345Z'
+git_tag: '1.4.1'
+
